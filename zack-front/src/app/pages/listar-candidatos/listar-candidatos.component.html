@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>CRP</th>
+        <th>Curriculo</th>
+        <th>Status</th>
+        <th>Selecionar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let candidato of candidatos">
+        <td>{{ candidato.nome }}</td>
+        <td>{{ candidato.email }}</td>
+        <td>{{ candidato.telefone }}</td>
+        <td>{{ candidato.crp }}</td>
+        <td><a (click)="downloadFile(candidato.curriculoNome)">{{ candidato.curriculoNome }}</a></td> <!-- Exibindo o nome do arquivo do currículo -->
+        <td>{{ candidato.status }}</td>
+        <td><input type="checkbox" [(ngModel)]="candidato.selecionado"></td> <!-- Checkbox para seleção -->
+      </tr>
+    </tbody>
+  </table>
+</div>

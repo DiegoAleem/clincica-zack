@@ -1,0 +1,30 @@
+
+<app-default-login-layout
+    title="Acesse seu perfil de psicólogo"
+    primaryBtnText="Entrar"
+    secondaryBtnText="Quero fazer parte da equipe"
+    (submit)="submit()"
+    (navigate)="navigate()"
+    [disablePrimaryBtn]="!loginForm.valid"
+>
+    <form [formGroup]="loginForm">
+        <app-primary-input
+            formControlName="email"
+            inputName="email"
+            type="email"
+            label="Email"
+            placeholder="johndoe@gmail.com"
+        >
+            <img src="/assets/svg/email-icon.svg" class=" icones"/>
+        </app-primary-input>
+        <app-primary-input
+            formControlName="password"
+            inputName="password"
+            type="password"
+            label="Your Password"
+        >
+        <img src="/assets/svg/password-icon.svg" class=" icones"/>
+    </app-primary-input>
+    <span>Esqueceu a senha?</span>
+    </form>
+</app-default-login-layout>

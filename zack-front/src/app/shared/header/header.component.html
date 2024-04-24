@@ -1,0 +1,77 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="menu">
+    <div id="header-component">
+        <div class="site-branding">
+            <div class="ast-site-identity">
+                <span class="site-logo-img">
+                    <a href="https://www.clinicazack.com.br/" class="custom-logo-link" rel="home" aria-current="page">
+                        <img width="145" height="64" src="assets/logo.zack.png" class="custom-logo" alt="Clinica Zack"
+                            decoding="async"
+                            srcset="https://www.clinicazack.com.br/wp-content/uploads/2024/03/logo-zack-145x64.png 145w, https://www.clinicazack.com.br/wp-content/uploads/2024/03/logo-zack.png 295w"
+                            sizes="(max-width: 145px) 100vw, 145px">
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="main-header-bar-navigation">
+            <nav class="site-navigation ast-flex-grow-1 navigation-accessibility" id="primary-site-navigation"
+                aria-label="Navegação do site" itemtype="https://schema.org/SiteNavigationElement"
+                itemscope="itemscope">
+                <div class="main-navigation">
+                    <ul id="primary-menu"
+                        class="main-header-menu ast-menu-shadow ast-nav-menu ast-flex ast-justify-content-flex-end submenu-with-border astra-menu-animation-slide-up ast-mega-menu-enabled"
+                        aria-expanded="false" aria-haspopup="true">
+                        <li
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-42 current_page_item menu-item-424">
+                            <a class="menu-link" (click)="navigate('/home')">
+                                <span class="ast-icon icon-arrow"></span>
+                                <span class="menu-text">Home</span>
+                                <span class="sub-arrow"></span>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-42 current_page_item menu-item-424">
+                            <a routerLink="/como-funciona" class="menu-link">
+                                <span class="ast-icon icon-arrow"></span>
+                                <span class="menu-text">Agendamento Online</span>
+                                <span class="sub-arrow"></span>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-42 current_page_item menu-item-424">
+                            <a href="https://www.clinicazack.com.br/" class="menu-link">
+                                <span class="ast-icon icon-arrow"></span>
+                                <span class="menu-text">Atendimento Presencial</span>
+                                <span class="sub-arrow"></span>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-42 current_page_item menu-item-424">
+                            <a (click)="navigate('/convenio')" class="menu-link">
+                                <span class="ast-icon icon-arrow"></span>
+                                <span class="menu-text">Convênios</span>
+                                <span class="sub-arrow"></span>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-42 current_page_item menu-item-424">
+                            <a (click)="navigate('/como-funciona')" class="menu-link">
+                                <span class="ast-icon icon-arrow"></span>
+                                <span class="menu-text">Como Funciona</span>
+                                <span class="sub-arrow"></span>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-42 current_page_item menu-item-424">
+                            <a (click)="navigate('/fale-conosco')" class="menu-link">
+                                <span class="ast-icon icon-arrow"></span>
+                                <span class="menu-text">Contatos</span>
+                                <span class="sub-arrow"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>

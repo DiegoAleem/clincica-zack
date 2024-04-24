@@ -1,0 +1,40 @@
+.card{
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    border-color: transparent; /* torna a cor da borda transparente */
+    box-shadow: none; /* remove a sombra do card */
+  }
+
+  i{
+    font-size: 65px;
+    color: #49654E;
+  }
+
+  .card-group{
+    margin-top: 3%;
+  }
+
+  .titulo{
+    margin-top: 3%;
+    color:#49654E;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    text-align: -webkit-center;;
+  }
+
+  .linha {
+    margin: 0 auto; /* Define margens automáticas horizontalmente */
+    margin-top: 3%;
+    width: 15%;
+    height: 1px; /* Altura da linha */
+    background-color: #49654E; /* Cor da linha */
+  }
+
+  .formulario{
+    margin-top: 3%;
+  }
+
+  .input{
+    margin-bottom: 2%;
+  }

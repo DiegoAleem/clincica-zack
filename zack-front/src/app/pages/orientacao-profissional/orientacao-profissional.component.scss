@@ -1,0 +1,17 @@
+.titulo{
+    margin-top: 3%;
+    color:#49654E;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    text-align: -webkit-center;;
+  }
+
+  .imagem{
+    text-align: center;
+  }
+
+  .imagem img {
+    display: block; /* Torna a imagem um bloco para poder definir margens */
+    margin-left: auto; /* Define margem esquerda automática */
+    margin-right: auto; /* Define margem direita automática */
+}

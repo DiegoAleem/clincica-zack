@@ -1,0 +1,21 @@
+<div class="submenu row">
+    <ul class="menu">
+        <!-- Esse é o 1 nivel ou o nivel principal -->
+        <li><a (click)="navigateAndScroll('perguntasFrequentes')">Perguntas Frequentes</a></li>
+        <li><a (click)="navigateAndScroll('sobre')">Sobre Nós</a></li>
+        <li><a href="#">Paciente</a></li>
+        <li><a (click)="navigate('/sou-psicologo')">Sou Psicólogo</a></li>
+        <li><a>Serviços <i class="bi bi-caret-down"></i></a> 
+            <ul class="submenu-1">
+                <!-- Esse é o 2 nivel ou o primeiro Drop Down -->
+                <li><a (click)="navigate('/consultoria')">Consultoria</a></li>
+                <li><a (click)="navigate('/atendimento-psicologico')">Atendimento Psicológico</a></li>
+                <li><a (click)="navigate('/orientacao-profissional-e-vocacional')">Orienação Profissional e Vocacional</a></li>
+                <li><a (click)="navigate('/recrutamento-e-selecao')">Recrutamento e Seleção</a></li>
+                
+            </ul>
+        </li>
+        <li><a (click)="navigate('/termos-uso')">Termo de Uso</a></li>
+        <li><a (click)="navigate('/politica-privacidade')">Política de Privacidade</a></li>
+    </ul>
+</div>
