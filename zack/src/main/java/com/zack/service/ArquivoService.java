@@ -10,4 +10,6 @@ public interface ArquivoService {
     
     Path getFilePathName(String nomeArquivo);
 
+    boolean excluirArquivo(String nomeArquivo);
+
 }

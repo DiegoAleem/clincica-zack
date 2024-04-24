@@ -1,15 +1,21 @@
 package com.zack.controllers;
 
-import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zack.domain.model.Candidato;
-import com.zack.dto.RespostaCandidatoDTO;
-import com.zack.repositories.CandidatoRepository;
+import com.zack.service.CandidatoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,13 +23,42 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/candidato")
 @RequiredArgsConstructor
 public class CandidatoController {
-    
-    private final CandidatoRepository candidatoRepository;
-    
-    @GetMapping("/todos")
-    public ResponseEntity<List<Candidato>> getAll(){
-        List<Candidato> candidatos = candidatoRepository.findAll();
-        return ResponseEntity.ok(candidatos);
+
+    private final CandidatoService candidatoService;
+
+    @GetMapping("/filtrados")
+    public ResponseEntity<Page<Candidato>> getAll(
+            @RequestParam(defaultValue = "") String filtro,
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "10") int tamanhoPagina,
+            @RequestParam(required = false, defaultValue = "nome") String campoOrdenado,
+            @RequestParam(required = false, defaultValue = "ASC") String ordem) {
+        Pageable pageable = PageRequest.of(pagina-1, tamanhoPagina);
+        return ResponseEntity.ok(candidatoService.getCandidatos(filtro, campoOrdenado, ordem, pageable));
     }
-    
+
+    @PutMapping("/editar/{id}/{status}")
+    public ResponseEntity<Optional<Candidato>> arquivar(@PathVariable String id, @PathVariable String status) {
+        Optional<Candidato> candidato = candidatoService.findById(id);
+        if (!candidato.isEmpty()) {
+            if (status.equals("aprovar")) {
+                candidatoService.aprovarCandidato(candidato.get());
+            } else {
+                candidatoService.arquivarCandidato(candidato.get());
+            }
+            return ResponseEntity.ok(candidato);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/excluir/{id}")
+    public ResponseEntity<Boolean> excluirCandidato(@PathVariable String id) {
+        Optional<Candidato> candidato = candidatoService.findById(id);
+        if (!candidato.isEmpty()) {
+            return ResponseEntity.ok( candidatoService.excluirCandidato(candidato.get()));
+        }
+
+        return ResponseEntity.badRequest().build();
+
+    }
 }

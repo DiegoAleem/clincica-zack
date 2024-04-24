@@ -1,26 +1,62 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Telefone</th>
-        <th>CRP</th>
-        <th>Curriculo</th>
-        <th>Status</th>
-        <th>Selecionar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let candidato of candidatos">
-        <td>{{ candidato.nome }}</td>
-        <td>{{ candidato.email }}</td>
-        <td>{{ candidato.telefone }}</td>
-        <td>{{ candidato.crp }}</td>
-        <td><a (click)="downloadFile(candidato.curriculoNome)">{{ candidato.curriculoNome }}</a></td> <!-- Exibindo o nome do arquivo do currículo -->
-        <td>{{ candidato.status }}</td>
-        <td><input type="checkbox" [(ngModel)]="candidato.selecionado"></td> <!-- Checkbox para seleção -->
-      </tr>
-    </tbody>
-  </table>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="loading-overlay" *ngIf="carregando">
+  <div class="loader"></div>
+</div>
+<h1 class="titulo">Lista de Candidatos</h1>
+<div class="col-md-4 offset-md-4 inputPesquisa">
+  <div class="input-group">
+    <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
+    <input type="text" [(ngModel)]="filtro" (input)="filtrarCandidatos()" class="form-control"
+      placeholder="Pesquise por: Nome, E-mail, CRP ou Telefone" aria-label="Username" aria-describedby="addon-wrapping">
+  </div>
+</div>
+<div class="col-md-10 offset-md-1">
+  <div class="table-responsive">
+    <table class="table" style="font-size: small;">
+      <thead>
+        <tr>
+          <th (click)="ordenarPor('nome')">Nome <span *ngIf="campoOrdenado === 'nome'"
+              [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
+          <th (click)="ordenarPor('email')">Email <span *ngIf="campoOrdenado === 'email'"
+              [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
+          <th (click)="ordenarPor('telefone')">Telefone <span *ngIf="campoOrdenado === 'telefone'"
+              [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
+          <th (click)="ordenarPor('crp')">CRP <span *ngIf="campoOrdenado === 'crp'"
+              [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
+          <th (click)="ordenarPor('curriculoNome')">Curriculo <span *ngIf="campoOrdenado === 'curriculoNome'"
+              [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
+          <th (click)="ordenarPor('status')">Status <span *ngIf="campoOrdenado === 'status'"
+              [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let candidato of candidatos">
+          <td>{{ candidato.nome }}</td>
+          <td>{{ candidato.email }}</td>
+          <td>{{ candidato.telefone }}</td>
+          <td>{{ candidato.crp }}</td>
+          <td><a (click)="downloadFile(candidato.curriculoNome)">
+              <p class="download">{{ candidato.curriculoNome }}</p>
+            </a></td> <!-- Exibindo o nome do arquivo do currículo -->
+          <td>{{ candidato.status }}</td>
+          <td>
+            <div class="btn-group">
+              <button (click)="mudarStatus(candidato.id,'aprovar')" type="button"
+                class="btn btn-success">Aprovar</button>
+              <button (click)="mudarStatus(candidato.id,'arquivar')" type="button"
+                class="btn btn-warning">Arquivar</button>
+            </div>
+            <br>
+            <div class="btn-group offset-md-4">
+              <button (click)="excluir(candidato.id)" type="button" class="btn btn-danger">Excluir</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="totalPaginas > 1" class="pagination-buttons">
+    <button *ngFor="let pagina of paginas" (click)="irParaPagina(pagina)" [class.active]="pagina === paginaAtual" class="pagination-button">{{ pagina }}</button>
+  </div>
 </div>

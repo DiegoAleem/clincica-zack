@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrService } from 'ngx-toastr';
 import { Candidato } from '../../model/candidato.component';
 import { CandidatoService } from '../../services/candidato.service';
 import { TokenInterceptor } from '../../services/HttpInterceptor.service';
@@ -12,32 +14,62 @@ import { TokenInterceptor } from '../../services/HttpInterceptor.service';
     FormsModule,
     CommonModule
   ],
-  providers:[TokenInterceptor],
+  providers: [TokenInterceptor],
   templateUrl: './listar-candidatos.component.html',
   styleUrl: './listar-candidatos.component.scss'
 })
 export class ListarCandidatosComponent implements OnInit {
 
   candidatos: Candidato[] = [];
+  filtro: string = '';
+  paginaAtual: number = 1;
+  totalPaginas: number = 1;
+  paginas: number[] = [];
+  campoOrdenado: string = '';
+  ordem: string = 'ASC';
+  carregando: boolean = false;
 
-  constructor(private candidatoService: CandidatoService) { 
+  constructor(private candidatoService: CandidatoService,  private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
-    this.getAllObjetos();
+    this.getCandidatos();
   }
 
-  getAllObjetos(): void {
-    this.candidatoService.getAllCandidatos().subscribe({
-      next: (objetos) => {
-        console.log(objetos);
-        this.candidatos = objetos;
-        console.log(this.candidatos);
+  getCandidatos(): void {
+    this.carregando = true;
+    this.candidatoService.getCandidatos(this.paginaAtual, this.filtro, this.campoOrdenado, this.ordem).subscribe(
+      (objetos) => {
+        this.candidatos = objetos.content;
+        this.totalPaginas = objetos.totalPages;
+        this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+        this.carregando = false;
       },
-      error: (error) => {
+      (error) => {
         console.error('Erro ao recuperar objetos:', error);
+        this.carregando = false;
       }
-    });
+    );
+  }
+
+  filtrarCandidatos(): void {
+    this.paginaAtual = 1; // Resetar para a primeira página ao filtrar
+    this.getCandidatos();
+  }
+
+  irParaPagina(pagina: number): void {
+    this.paginaAtual = pagina;
+    this.getCandidatos();
+  }
+
+  ordenarPor(campo: string): void {
+    if (campo === this.campoOrdenado) {
+      this.ordem = 'DESC';
+    } else {
+      this.campoOrdenado = campo;
+      this.ordem = 'ASC';
+    }
+    this.getCandidatos();
   }
 
   downloadFile(nomeArquivo: string) {
@@ -49,5 +81,49 @@ export class ListarCandidatosComponent implements OnInit {
       link.click();
     });
   }
+
+  mudarStatus(id: number, opcao: string){
+    this.carregando = true;
+    this.candidatoService.mudarStatus(id, opcao).subscribe(
+      retorno => {
+        this.getCandidatos();
+        this.toastService.success("Ação: '"+opcao.toUpperCase()+"' feita com sucesso!", "Sucesso", {
+          timeOut: 7000,
+          closeButton: true 
+        });
+      },
+      error => {
+        this.carregando = false;
+        this.toastService.error("Tente novamente mais tarde.", "Erro inesperado!", {
+          timeOut: 7000, 
+          closeButton: true 
+        });
+      }
+
+    );
+    
   }
+
+  excluir(id: number){
+    this.carregando = true;
+    this.candidatoService.excluirCandidato(id).subscribe(
+      retorno => {
+        this.getCandidatos();
+        this.toastService.success("Exclusão feita com sucesso!", "Sucesso", {
+          timeOut: 7000,
+          closeButton: true 
+        });
+
+      },
+      error => {
+        this.carregando = false;
+        this.toastService.error("Tente novamente mais tarde.", "Erro inesperado!", {
+          timeOut: 7000,
+          closeButton: true  
+        });
+      }
+    );
+  }
+
+}
 

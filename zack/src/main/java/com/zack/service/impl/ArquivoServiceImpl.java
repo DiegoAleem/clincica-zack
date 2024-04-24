@@ -1,6 +1,7 @@
 package com.zack.service.impl;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.apache.commons.io.FilenameUtils;
@@ -16,36 +17,45 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class ArquivoServiceImpl implements ArquivoService {
-    
+
     private final Path fileStorageLocation;
-    
+
     @Override
     public String salvarArquivoCandidato(String crp, MultipartFile curriculo) {
         String originalFilename = curriculo.getOriginalFilename();
-        
+
         String extension = FilenameUtils.getExtension(originalFilename);
-        
+
         String fileName = StringUtils.cleanPath(new StringBuilder(crp.replaceAll("[^0-9]", "")).append("-curriculo.").append(extension).toString());
 
         try {
-          Path targetLocation = fileStorageLocation.resolve(fileName);
-          curriculo.transferTo(targetLocation);
+            Path targetLocation = fileStorageLocation.resolve(fileName);
+            curriculo.transferTo(targetLocation);
 
-           ServletUriComponentsBuilder.fromCurrentContextPath()
-              .path("/api/files/download/")
-              .path(fileName)
-              .toUriString();
-           return fileName;
+            ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/files/download/").path(fileName).toUriString();
+            return fileName;
         } catch (IOException ex) {
-          ex.printStackTrace();
-          return "";
+            ex.printStackTrace();
+            return "";
         }
-        
+
     }
 
     @Override
     public Path getFilePathName(String nomeArquivo) {
         return fileStorageLocation.resolve(nomeArquivo).normalize();
+    }
+
+    @Override
+    public boolean excluirArquivo(String nomeArquivo) {
+        try {
+            Path filePath = getFilePathName(nomeArquivo);
+            Files.deleteIfExists(filePath);
+            return !Files.exists(filePath);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
