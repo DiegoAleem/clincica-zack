@@ -1,12 +1,16 @@
 package com.zack.domain.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +40,13 @@ public class Usuario {
     @Column(name = "SENHA")
     private String senha;
 
-    @Column(name = "ID_ROLE")
-    private Integer role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "USUARIO_ROLE",
+               joinColumns = @JoinColumn(name = "ID_USUARIO"),
+               inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
+    private List<Role> roles;
+    
+    @Column(name = "ATIVO")
+    private boolean ativo;
     
 }

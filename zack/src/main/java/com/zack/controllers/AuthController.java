@@ -44,7 +44,7 @@ public class AuthController {
         Usuario usuario = usuarioRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário: " + body.email() + " não encontrado"));
         if (passwordEncoder.matches(body.password(), usuario.getSenha()) || body.password().equals(usuario.getSenha())) {
             String token = this.tokenService.generateToken(usuario);
-            return ResponseEntity.ok(new ResponseDTO(usuario.getEmail(), token, usuario.getRole().toString()));
+            return ResponseEntity.ok(new ResponseDTO(usuario.getEmail(), token, usuario.getRoles().toString()));
         }
 
         return ResponseEntity.badRequest().build();

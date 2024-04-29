@@ -18,8 +18,10 @@ export class RoleGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    if (this.getToken()) {
-      if(this.getRoleFromToken() == '2'){
+    const token = this.getToken();
+    if (token) {
+      const roles = this.getRolesFromToken(token);
+      if (roles && roles.includes(2)) {
         return true;
       } else {
         this.router.navigate(['/menu-usuario']);
@@ -35,11 +37,10 @@ export class RoleGuard implements CanActivate {
     return sessionStorage.getItem('auth-token');
   }
 
-  getRoleFromToken(): string | null {
-    const token = this.getToken();
-    if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      return decodedToken.role; // Supondo que a role esteja armazenada no payload do token como 'role'
+  getRolesFromToken(token: string): number[] | null {
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.roles) {
+      return decodedToken.roles;
     }
     return null;
   }

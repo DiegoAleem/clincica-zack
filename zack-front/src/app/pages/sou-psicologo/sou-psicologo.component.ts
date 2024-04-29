@@ -23,16 +23,39 @@ export class SouPsicologoComponent implements OnInit {
     crp: '',
   };
   curriculo!: File;
+  enviado = false;
+  carregando: boolean = false;
 
   constructor(private candidatoService: CandidatoService,  private toastService: ToastrService) { }
 
   ngOnInit(): void {
   }
 
+  removeSpaces() {
+    if (this.candidato.email) {
+      this.candidato.email = this.candidato.email.replace(/\s/g, '');
+    }
+  }
+
   submitForm() {
-    console.log( this.candidato);
+    this.carregando = true;
     if (this.candidatoForm.valid && this.candidatoForm.submitted) {
-      
+      if (!this.validateEmail(this.candidato.email)) {
+        this.candidatoForm.controls['email'].setErrors({ 'invalidEmail': true });
+        this.carregando = false;
+        return;
+      }
+      if (this.candidato.crp.length !== 8) {
+        this.candidatoForm.controls['crp'].setErrors({ 'invalidCRP': true });
+        this.carregando = false;
+        return;
+      }
+      console.log(this.candidato.telefone.length);
+      if (this.candidato.telefone.length < 10) {
+        this.candidatoForm.controls['telefone'].setErrors({ 'invalidTelefone': true });
+        this.carregando = false;
+        return;
+      }
       const formData = new FormData();
       formData.append('nome', this.candidato.nome);
       formData.append('email', this.candidato.email);
@@ -41,26 +64,33 @@ export class SouPsicologoComponent implements OnInit {
       const json = JSON.stringify(this.candidato);
       this.candidatoService.registrarCandidato(json, this.curriculo).subscribe(
         response => {
-          console.log('Candidato salvo com sucesso!', response);
-          // Limpar os campos do formulário após o envio bem sucedido
-          this.candidato = {
-            nome: '',
-            email: '',
-            telefone: '',
-            crp: '',
-          };
+          this.enviado = true;
+          this.carregando = false;
           this.curriculo = new File([], '', { type: '' });
           this.toastService.success("Cadastro feito com sucesso!  Mais informações por e-mail.", "Sucesso", {
             timeOut: 7000,
           });
         },
         error => {
+          this.carregando = false;
           this.toastService.error("Tente novamente mais tarde.", "Erro inesperado!", {
             timeOut: 7000, 
           });
         }
       );
+      this.carregando = false;
     }
+  }
+
+  clearFormErrors() {
+    Object.keys(this.candidatoForm.controls).forEach(key => {
+      this.candidatoForm.controls[key].setErrors(null);
+    });
+  }
+
+  validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 
   formatTelefone(event: any) {
@@ -87,7 +117,6 @@ export class SouPsicologoComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.curriculo = file;
-      console.log(this.candidatoForm.controls['curriculo']);
       // Verificar se o controle 'curriculo' está definido no NgForm
       if (this.candidatoForm.controls['curriculo']) {
         // Validar tipo de arquivo

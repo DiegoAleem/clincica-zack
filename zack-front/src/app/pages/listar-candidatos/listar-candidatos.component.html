@@ -2,6 +2,7 @@
 <div class="loading-overlay" *ngIf="carregando">
   <div class="loader"></div>
 </div>
+<app-btn-voltar-menu></app-btn-voltar-menu>
 <h1 class="titulo">Lista de Candidatos</h1>
 <div class="col-md-4 offset-md-4 inputPesquisa">
   <div class="input-group">
@@ -12,7 +13,7 @@
 </div>
 <div class="col-md-10 offset-md-1">
   <div class="table-responsive">
-    <table class="table" style="font-size: small;">
+    <table class="table  table-striped table-hover" style="font-size: small;">
       <thead>
         <tr>
           <th (click)="ordenarPor('nome')">Nome <span *ngIf="campoOrdenado === 'nome'"

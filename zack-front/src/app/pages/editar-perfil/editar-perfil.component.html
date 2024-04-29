@@ -1,0 +1,181 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="col-md-10 offset-md-1">
+  <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="nome">Nome:</label>
+      <input type="text" class="form-control form-control-md input" formControlName="nome">
+    </div>
+    <div>
+      <label for="sobrenome">Sobrenome:</label>
+      <input type="text" class="form-control form-control-md input" formControlName="sobrenome">
+    </div>
+    <div>
+      <label for="crp">CRP:</label>
+      <input type="text" class="form-control form-control-md input" formControlName="crp">
+    </div>
+
+    <label for="valorConsulta">Valor da Consulta:</label>
+    <div class="input-group mb-3">
+      <span class="input-group-text">R$</span>
+      <input type="text" class="form-control" formControlName="valorConsulta"
+        aria-label="Amount (to the nearest dollar)">
+      <span class="input-group-text">,00</span>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col">
+            <label>Aceita cartão:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="cartaoSim" name="isCartao" formControlName="isCartao"
+                [value]="true">
+              <label class="form-check-label" for="cartaoSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="cartaoNao" name="isCartao" formControlName="isCartao"
+                [value]="false">
+              <label class="form-check-label" for="cartaoNao">Não</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Aceita PIX:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="pixSim" name="isPix" formControlName="isPix"
+                [value]="true">
+              <label class="form-check-label" for="pixSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="pixNao" name="isPix" formControlName="isPix"
+                [value]="false">
+              <label class="form-check-label" for="pixNao">Não</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col">
+            <label>Aceita transferência:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="transferenciaSim" name="isTransferencia"
+                formControlName="isTransferencia" [value]="true">
+              <label class="form-check-label" for="transferenciaSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="transferenciaNao" name="isTransferencia"
+                formControlName="isTransferencia" [value]="false">
+              <label class="form-check-label" for="transferenciaNao">Não</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Aceita plano:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="planoSim" name="isPlano" formControlName="isPlano"
+                [value]="true">
+              <label class="form-check-label" for="planoSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="planoNao" name="isPlano" formControlName="isPlano"
+                [value]="false">
+              <label class="form-check-label" for="planoNao">Não</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col">
+            <label for="atendeCrianca">Atende crianças:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeCriancaSim" name="atendeCrianca"
+                formControlName="atendeCrianca" [value]="true">
+              <label class="form-check-label" for="atendeCriancaSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeCriancaNao" name="atendeCrianca"
+                formControlName="atendeCrianca" [value]="false">
+              <label class="form-check-label" for="atendeCriancaNao">Não</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="atendeAdolescente">Atende adolescentes:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeAdolescenteSim" name="atendeAdolescente"
+                formControlName="atendeAdolescente" [value]="true">
+              <label class="form-check-label" for="atendeAdolescenteSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeAdolescenteNao" name="atendeAdolescente"
+                formControlName="atendeAdolescente" [value]="false">
+              <label class="form-check-label" for="atendeAdolescenteNao">Não</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col">
+            <label for="atendeAdulto">Atende adultos:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeAdultoSim" name="atendeAdulto"
+                formControlName="atendeAdulto" [value]="true">
+              <label class="form-check-label" for="atendeAdultoSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeAdultoNao" name="atendeAdulto"
+                formControlName="atendeAdulto" [value]="false">
+              <label class="form-check-label" for="atendeAdultoNao">Não</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="atendeIdoso">Atende idosos:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeIdosoSim" name="atendeIdoso"
+                formControlName="atendeIdoso" [value]="true">
+              <label class="form-check-label" for="atendeIdosoSim">Sim</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="atendeIdosoNao" name="atendeIdoso"
+                formControlName="atendeIdoso" [value]="false">
+              <label class="form-check-label" for="atendeIdosoNao">Não</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    <div class="row col-md-5">
+      <label for="tempoConsulta1">Tempo de consulta de:</label>
+      <div class="cs-form col-md-5">
+        <input type="time" class="form-control" formControlName="tempoConsulta1" value="10:05 AM" />
+      </div>
+      à
+      <div class="cs-form col-md-5">
+        <input type="time" class="form-control" formControlName="tempoConsulta2" value="10:05 AM" />
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <label for="sexo">Sexo:</label>
+      <select formControlName="sexo" class="form-control form-control-md input">
+        <option value="M">Masculino</option>
+        <option value="F">Feminino</option>
+      </select>
+    </div>
+  </div>
+
+
+    <div>
+      <label for="formacaoECursos">Formação e Cursos:</label>
+      <textarea formControlName="formacaoECursos" class="form-control form-control-md input"></textarea>
+    </div>
+    <div>
+      <label for="sobreMim">Sobre mim:</label>
+      <textarea formControlName="sobreMim" class="form-control form-control-md input"></textarea>
+    </div>
+    <button type="submit" [disabled]="!perfilForm.valid">Cadastrar</button>
+  </form>
+</div>

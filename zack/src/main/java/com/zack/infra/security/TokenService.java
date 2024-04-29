@@ -3,6 +3,8 @@ package com.zack.infra.security;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.management.RuntimeErrorException;
 
@@ -13,6 +15,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.zack.domain.model.Role;
 import com.zack.domain.model.Usuario;
 
 @Service
@@ -24,9 +27,15 @@ public class TokenService {
     public String generateToken(Usuario user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
+            
+            List<Long> roleIds = user.getRoles().stream()
+                    .map(Role::getIdRole)
+                    .collect(Collectors.toList());
+            
             return JWT.create().withIssuer("login-auth-api")
                     .withSubject(user.getEmail())
-                    .withClaim("role", user.getRole())
+                    .withClaim("roles",  roleIds)
+                    .withClaim("userId", user.getId())
                     .withExpiresAt(generateExpiretionDate())
                     .sign(algorithm);
         } catch (JWTCreationException e) {

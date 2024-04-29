@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +34,13 @@ public class CandidatoController {
             @RequestParam(defaultValue = "10") int tamanhoPagina,
             @RequestParam(required = false, defaultValue = "nome") String campoOrdenado,
             @RequestParam(required = false, defaultValue = "ASC") String ordem) {
-        Pageable pageable = PageRequest.of(pagina-1, tamanhoPagina);
-        return ResponseEntity.ok(candidatoService.getCandidatos(filtro, campoOrdenado, ordem, pageable));
+        Pageable pageable; 
+        if(ordem.equals("ASC")) {
+            pageable = PageRequest.of(pagina-1, tamanhoPagina, Sort.by(Sort.Direction.ASC, campoOrdenado));
+        } else {
+            pageable = PageRequest.of(pagina-1, tamanhoPagina, Sort.by(Sort.Direction.DESC, campoOrdenado));
+        }
+        return ResponseEntity.ok(candidatoService.getCandidatos(filtro, pageable));
     }
 
     @PutMapping("/editar/{id}/{status}")

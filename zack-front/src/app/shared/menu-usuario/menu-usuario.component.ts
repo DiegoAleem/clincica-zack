@@ -17,23 +17,24 @@ import { LoginComponent } from '../../pages/login/login.component';
 })
 export class MenuUsuarioComponent implements OnInit{
   
-  role:any;
+  roles: any[] = [];
 
   constructor(
     private router: Router, private login: LoginComponent, private jwtHelper: JwtHelperService){
     }
   
   ngOnInit(): void {
-    this.role = this.getUserRole();
+    this.roles = this.getUserRole();
+    console.log(this.roles);
   }
 
-  getUserRole(): string | null {
+  getUserRole(): any[]  {
     const token = sessionStorage.getItem('auth-token'); // Obtém o token JWT armazenado no localStorage
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      return decodedToken.role; // Extrai a role do payload do token
+      return decodedToken.roles; // Extrai a role do payload do token
     }
-    return null; // Retorna null se o token não estiver disponível
+    return []; // Retorna null se o token não estiver disponível
   }
 
   navigate(url: string){

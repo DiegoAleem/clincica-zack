@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrService } from 'ngx-toastr';
-import { Candidato } from '../../model/candidato.component';
+import { BtnVoltarMenuComponent } from '../../components/btn-voltar-menu/btn-voltar-menu.component';
+import { Candidato } from '../../model/candidato.model';
 import { CandidatoService } from '../../services/candidato.service';
 import { TokenInterceptor } from '../../services/HttpInterceptor.service';
 
@@ -12,7 +12,8 @@ import { TokenInterceptor } from '../../services/HttpInterceptor.service';
   standalone: true,
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    BtnVoltarMenuComponent
   ],
   providers: [TokenInterceptor],
   templateUrl: './listar-candidatos.component.html',
@@ -63,12 +64,14 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   ordenarPor(campo: string): void {
-    if (campo === this.campoOrdenado) {
+   
+    this.campoOrdenado = campo;
+    if(this.ordem == 'ASC') {
       this.ordem = 'DESC';
     } else {
-      this.campoOrdenado = campo;
       this.ordem = 'ASC';
     }
+    console.log(this.ordem);
     this.getCandidatos();
   }
 

@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { Candidato } from '../model/candidato.component';
 import { TokenInterceptor } from './HttpInterceptor.service';
 
 @Injectable({

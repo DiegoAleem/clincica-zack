@@ -1,16 +1,38 @@
 package com.zack.controllers;
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zack.domain.model.Usuario;
+import com.zack.service.UsuarioService;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/usuario")
+@RequiredArgsConstructor
 public class UsuarioController {
+    
+    private final UsuarioService usuarioService;
     
     @GetMapping
     public ResponseEntity<String> getUser(){
+        return ResponseEntity.ok("sucesso!");
+    }
+    
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<String> desativarUsuario(@PathVariable String id){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if(usuario.isPresent()) {
+            usuarioService.desativarUsuario(usuario.get());
+            return ResponseEntity.ok("sucesso!");
+        }
         return ResponseEntity.ok("sucesso!");
     }
 }

@@ -1,3 +1,7 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="loading-overlay" *ngIf="carregando">
+  <div class="loader"></div>
+</div>
 <div class="col-md-10 offset-md-1">
   <div class="conveio">
     <h1 class="titulo"> Faça parte da Zack</h1>
@@ -30,43 +34,52 @@
     </div>
   </div>
 
-  <div class="candidato">
+  <div class="candidato" *ngIf="!enviado">
     <form (ngSubmit)="submitForm()" #candidatoForm="ngForm" enctype="multipart/form-data">
       <div class="form-group">
         <input type="text" placeholder="Nome Completo" class="form-control form-control-md input" id="nome" name="nome"
           [(ngModel)]="candidato.nome" required>
-        <div *ngIf="candidatoForm.submitted && !candidato.nome" class="text-danger">
+        <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['nome']?.errors?.['required']" class="text-danger">
           O nome é obrigatório.
         </div>
       </div>
       <div class="form-group">
         <input type="email" class="form-control form-control-md input" placeholder="E-mail" id="email" name="email"
-          [(ngModel)]="candidato.email" required>
-        <div *ngIf="candidatoForm.submitted && !candidato.email" class="text-danger">
-          O email é obrigatório e deve ser um endereço de email válido.
+       [(ngModel)]="candidato.email" required (input)="removeSpaces()">
+        <div *ngIf="candidatoForm.submitted && candidatoForm.controls['email']?.errors?.['required']" class="text-danger">
+          O email é obrigatório.
+        </div>
+        <div *ngIf="candidatoForm.controls['email']?.errors?.['invalidEmail']" class="text-danger">
+         E-mail informado inválido!
         </div>
       </div>
       <div class="form-group">
         <input type="text" class="form-control form-control-md input" id="telefone" name="telefone"
           [(ngModel)]="candidato.telefone" (input)="formatTelefone($event)" maxlength="15" placeholder="Telefone"
           required>
-        <div *ngIf="candidatoForm.submitted && !candidato.telefone" class="text-danger">
+        <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['telefone']?.errors?.['required']" class="text-danger">
           O telefone é obrigatório.
         </div>
+        <div *ngIf="candidatoForm.controls['telefone']?.errors?.['invalidTelefone']" class="text-danger">
+         Telefone informado inválido!
+         </div>
       </div>
       <div class="form-group">
         <input type="text" class="form-control form-control-md input" placeholder="CRP" id="crp" name="endereco"
           [(ngModel)]="candidato.crp" (input)="formatCRP($event)" maxlength="8" minlength="8" required>
-        <div *ngIf="candidatoForm.submitted && !candidato.crp" class="text-danger">
+        <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['crp']?.errors?.['required']" class="text-danger">
           O CRP é obrigatório.
         </div>
+        <div *ngIf="candidatoForm.controls['crp']?.errors?.['invalidCRP']" class="text-danger">
+          CRP informado inválido!
+         </div>
       </div>
       <div class="form-group row">
         <div class="col-md-7">
           <label for="curriculo">Currículo:</label> <br>
           <input type="file" class="form-control-file" id="curriculo" name="curriculo" (change)="onFileChange($event)"
             accept=".pdf,.doc,.docx" required [(ngModel)]="curriculo">
-          <div *ngIf="candidatoForm.submitted && !curriculo" class="text-danger">
+          <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['curriculo']?.errors?.['required']" class="text-danger">
             O currículo é obrigatório.
           </div>
           <div *ngIf="candidatoForm.controls['curriculo']?.errors?.['fileType']" class="text-danger">

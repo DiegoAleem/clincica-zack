@@ -1,7 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="col-md-10 offset-md-1 conteudo">
     <div class="row row-cols-1 row-cols-md-2 g-4 menu">
-        <div class="col-md-3 offset-md-2" *ngIf="role == 2">
+        <div class="col-md-3 offset-md-2" *ngIf="roles && roles.includes(2)">
             <a (click)="navigate('/listar-candidatos')">
                 <div class="card">
                     <i class="bi bi-list-check"></i>
@@ -11,8 +11,8 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3" *ngIf="role == 2">
-            <a>
+        <div class="col-md-3" *ngIf="roles && roles.includes(2)">
+            <a (click)="navigate('/listar-perfis-editar')">
                 <div class="card">
                     <i class="bi bi-list-check"></i>
                     <div class="card-body">
