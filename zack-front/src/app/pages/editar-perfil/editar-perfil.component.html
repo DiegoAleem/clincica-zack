@@ -1,38 +1,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="col-md-10 offset-md-1">
-  <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="nome">Nome:</label>
-      <input type="text" class="form-control form-control-md input" formControlName="nome">
+  <form (ngSubmit)="onSubmit()" #perfilForm="ngForm" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-2 d-flex align-items-center" style="position: relative;">
+        <div class="form-group" style="position: relative; z-index: 1;">
+          <input type="file" id="photo" (change)="onFileSelected($event)" accept="image/*" style="display: none">
+          <button type="button" *ngIf="!selectedFileDataUrl" (click)="selectPhoto()" class="btn btn-primary"
+            style="margin-bottom: 10px;">Selecionar Foto</button>
+        </div>
+        <img *ngIf="selectedFileDataUrl" [src]="selectedFileDataUrl" alt="Imagem selecionada" class="preview-image"
+          style="position: absolute; top: 0; left: 0; max-width: 100%; max-height: 100%;">
+        <button *ngIf="selectedFileDataUrl" type="button" class="btn btn-danger btn-remove-image" (click)="removePhoto()"
+          style="position: absolute;"><i class="bi bi-x" style="background-color: white;"></i></button>
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col">
+            <label for="nome">Nome:</label>
+            <input type="text" class="form-control form-control-md input" [(ngModel)]="perfil.nome" name="nome"
+              required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="sobrenome">Sobrenome:</label>
+            <input type="text" class="form-control form-control-md input" [(ngModel)]="perfil.sobrenome"
+              name="sobrenome" required>
+          </div>
+        </div>
+      </div>
     </div>
     <div>
-      <label for="sobrenome">Sobrenome:</label>
-      <input type="text" class="form-control form-control-md input" formControlName="sobrenome">
-    </div>
-    <div>
-      <label for="crp">CRP:</label>
-      <input type="text" class="form-control form-control-md input" formControlName="crp">
-    </div>
-
-    <label for="valorConsulta">Valor da Consulta:</label>
-    <div class="input-group mb-3">
-      <span class="input-group-text">R$</span>
-      <input type="text" class="form-control" formControlName="valorConsulta"
-        aria-label="Amount (to the nearest dollar)">
-      <span class="input-group-text">,00</span>
+      <label for="linkAtendimentoOnline">Link Atendimento Online:</label>
+      <input type="text" class="form-control form-control-md input" [(ngModel)]="perfil.linkAtendimentoOnline"
+        name="linkAtendimentoOnline">
     </div>
     <div class="row">
+      <div class="col">
+        <label for="crp">CRP:</label>
+        <input type="text" class="form-control form-control-md input" [(ngModel)]="perfil.crp" name="crp" required>
+      </div>
+
+      <div class="col">
+        <label for="valorConsulta">Valor da Consulta:</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">R$</span>
+          <input type="number" class="form-control" [(ngModel)]="perfil.valorConsulta" name="valorConsulta"
+            aria-label="Amount (to the nearest dollar)" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
       <div class="col-md-6">
         <div class="row">
           <div class="col">
             <label>Aceita cartão:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="cartaoSim" name="isCartao" formControlName="isCartao"
-                [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isCartao" name="isCartao" [value]="true">
               <label class="form-check-label" for="cartaoSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="cartaoNao" name="isCartao" formControlName="isCartao"
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isCartao" name="isCartao"
                 [value]="false">
               <label class="form-check-label" for="cartaoNao">Não</label>
             </div>
@@ -41,13 +70,11 @@
           <div class="col">
             <label>Aceita PIX:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="pixSim" name="isPix" formControlName="isPix"
-                [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPix" name="isPix" [value]="true">
               <label class="form-check-label" for="pixSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="pixNao" name="isPix" formControlName="isPix"
-                [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPix" name="isPix" [value]="false">
               <label class="form-check-label" for="pixNao">Não</label>
             </div>
           </div>
@@ -57,13 +84,13 @@
           <div class="col">
             <label>Aceita transferência:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="transferenciaSim" name="isTransferencia"
-                formControlName="isTransferencia" [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isTransferencia" name="isTransferencia"
+                [value]="true">
               <label class="form-check-label" for="transferenciaSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="transferenciaNao" name="isTransferencia"
-                formControlName="isTransferencia" [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isTransferencia" name="isTransferencia"
+                [value]="false">
               <label class="form-check-label" for="transferenciaNao">Não</label>
             </div>
           </div>
@@ -71,13 +98,11 @@
           <div class="col">
             <label>Aceita plano:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="planoSim" name="isPlano" formControlName="isPlano"
-                [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPlano" name="isPlano" [value]="true">
               <label class="form-check-label" for="planoSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="planoNao" name="isPlano" formControlName="isPlano"
-                [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPlano" name="isPlano" [value]="false">
               <label class="form-check-label" for="planoNao">Não</label>
             </div>
           </div>
@@ -85,17 +110,18 @@
       </div>
 
       <div class="col-md-6">
+
         <div class="row">
           <div class="col">
             <label for="atendeCrianca">Atende crianças:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeCriancaSim" name="atendeCrianca"
-                formControlName="atendeCrianca" [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeCrianca" name="atendeCrianca"
+                [value]="true">
               <label class="form-check-label" for="atendeCriancaSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeCriancaNao" name="atendeCrianca"
-                formControlName="atendeCrianca" [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeCrianca" name="atendeCrianca"
+                [value]="false">
               <label class="form-check-label" for="atendeCriancaNao">Não</label>
             </div>
           </div>
@@ -103,13 +129,13 @@
           <div class="col">
             <label for="atendeAdolescente">Atende adolescentes:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeAdolescenteSim" name="atendeAdolescente"
-                formControlName="atendeAdolescente" [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdolescente"
+                name="atendeAdolescente" [value]="true">
               <label class="form-check-label" for="atendeAdolescenteSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeAdolescenteNao" name="atendeAdolescente"
-                formControlName="atendeAdolescente" [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdolescente"
+                name="atendeAdolescente" [value]="false">
               <label class="form-check-label" for="atendeAdolescenteNao">Não</label>
             </div>
           </div>
@@ -119,13 +145,13 @@
           <div class="col">
             <label for="atendeAdulto">Atende adultos:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeAdultoSim" name="atendeAdulto"
-                formControlName="atendeAdulto" [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdulto" name="atendeAdulto"
+                [value]="true">
               <label class="form-check-label" for="atendeAdultoSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeAdultoNao" name="atendeAdulto"
-                formControlName="atendeAdulto" [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdulto" name="atendeAdulto"
+                [value]="false">
               <label class="form-check-label" for="atendeAdultoNao">Não</label>
             </div>
           </div>
@@ -133,13 +159,13 @@
           <div class="col">
             <label for="atendeIdoso">Atende idosos:</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeIdosoSim" name="atendeIdoso"
-                formControlName="atendeIdoso" [value]="true">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeIdoso" name="atendeIdoso"
+                [value]="true">
               <label class="form-check-label" for="atendeIdosoSim">Sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="atendeIdosoNao" name="atendeIdoso"
-                formControlName="atendeIdoso" [value]="false">
+              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeIdoso" name="atendeIdoso"
+                [value]="false">
               <label class="form-check-label" for="atendeIdosoNao">Não</label>
             </div>
           </div>
@@ -147,35 +173,58 @@
       </div>
     </div>
     <div class="row">
-    <div class="row col-md-5">
-      <label for="tempoConsulta1">Tempo de consulta de:</label>
-      <div class="cs-form col-md-5">
-        <input type="time" class="form-control" formControlName="tempoConsulta1" value="10:05 AM" />
+      <div class="row col-md-6">
+        <label for="tempoConsulta1">Tempo de consulta de:</label>
+        <div class="cs-form col-md-5">
+          <input type="time" class="form-control" [(ngModel)]="perfil.tempoConsulta1" name="tempoConsulta1"
+            value="10:05 AM" />
+        </div>
+        à
+        <div class="cs-form col-md-5">
+          <input type="time" class="form-control" [(ngModel)]="perfil.tempoConsulta2" name="tempoConsulta2"
+            value="10:05 AM" />
+        </div>
       </div>
-      à
-      <div class="cs-form col-md-5">
-        <input type="time" class="form-control" formControlName="tempoConsulta2" value="10:05 AM" />
+
+      <div class="col-md-3">
+        <label for="sexo">Sexo:</label>
+        <select class="form-control form-control-md input" [(ngModel)]="perfil.sexo" name="sexo">
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
       </div>
     </div>
-
-    <div class="col-md-3">
-      <label for="sexo">Sexo:</label>
-      <select formControlName="sexo" class="form-control form-control-md input">
-        <option value="M">Masculino</option>
-        <option value="F">Feminino</option>
-      </select>
+    <div class="col-md-12">
+      <h5 class="titulo">Tipos de Abordagem</h5>
+      <div class="d-flex flex-wrap">
+        <div *ngFor="let tipoAbordagem of tiposAbordagem; let i = index" class="mr-4 mb-4 espacoOpcao">
+          <input class="form-check-input" type="checkbox" [id]="'checkbox' + i"
+          [checked]="tipoAbordagem.selected"
+            (change)="onCheckboxChangeTiposAbordagem($event, tipoAbordagem)">
+          <label class="form-check-label" [for]="'checkbox' + i">{{tipoAbordagem.tipo}}</label>
+        </div>
+      </div>
     </div>
-  </div>
-
-
+    <div class="col-md-12">
+      <h5 class="titulo">Especialidades</h5>
+      <div class="d-flex flex-wrap">
+        <div *ngFor="let especialidade of especialidades; let i = index" class="mr-4 mb-4 espacoOpcao">
+          <input class="form-check-input" type="checkbox" [id]="'checkbox' + i"
+          [checked]="especialidade.selected"
+            (change)="onCheckboxChangeEspecialidade($event, especialidade)">
+          <label class="form-check-label" [for]="'checkbox' + i">{{especialidade.nome}}</label>
+        </div>
+      </div>
+    </div>
     <div>
       <label for="formacaoECursos">Formação e Cursos:</label>
-      <textarea formControlName="formacaoECursos" class="form-control form-control-md input"></textarea>
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.formacaoECursos"
+        name="formacaoECursos"></textarea>
     </div>
     <div>
       <label for="sobreMim">Sobre mim:</label>
-      <textarea formControlName="sobreMim" class="form-control form-control-md input"></textarea>
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.sobreMim" name="sobreMim"></textarea>
     </div>
-    <button type="submit" [disabled]="!perfilForm.valid">Cadastrar</button>
+    <button type="submit">Cadastrar</button>
   </form>
 </div>

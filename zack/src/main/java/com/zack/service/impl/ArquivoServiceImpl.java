@@ -1,5 +1,6 @@
 package com.zack.service.impl;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,12 +22,8 @@ public class ArquivoServiceImpl implements ArquivoService {
     private final Path fileStorageLocation;
 
     @Override
-    public String salvarArquivoCandidato(String crp, MultipartFile curriculo) {
-        String originalFilename = curriculo.getOriginalFilename();
-
-        String extension = FilenameUtils.getExtension(originalFilename);
-
-        String fileName = StringUtils.cleanPath(new StringBuilder(crp.replaceAll("[^0-9]", "")).append("-curriculo.").append(extension).toString());
+    public String salvarArquivo(String crp, MultipartFile curriculo, String tipo) {
+        String fileName = this.getFileName(curriculo, crp, tipo);
 
         try {
             Path targetLocation = fileStorageLocation.resolve(fileName);
@@ -56,6 +53,27 @@ public class ArquivoServiceImpl implements ArquivoService {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    private String getFileName(MultipartFile arquivo, String crp, String tipo) {
+        String originalFilename = arquivo.getOriginalFilename();
+
+        String extension = FilenameUtils.getExtension(originalFilename);
+
+        return StringUtils.cleanPath(new StringBuilder(crp.replaceAll("[^0-9]", "")).append(tipo).append(extension).toString());
+    }
+
+    @Override
+    public byte[] recuperarArquivoPeloNome(String nomeArquivo) throws IOException {
+        if (nomeArquivo != null && !nomeArquivo.isEmpty()) {
+            Path filePath = getFilePathName(nomeArquivo);
+            if (Files.exists(filePath)) {
+                return Files.readAllBytes(filePath);
+            } else {
+                throw new FileNotFoundException("O arquivo não foi encontrado: " + nomeArquivo);
+            }
+        }
+        return new byte[0];
     }
 
 }

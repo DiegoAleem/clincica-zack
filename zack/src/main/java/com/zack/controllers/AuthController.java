@@ -63,7 +63,7 @@ public class AuthController {
             novoCandidato.setNome(body.nome());
             novoCandidato.setEmail(body.email());
             novoCandidato.setStatus("PARA ANÁLISE");
-            novoCandidato.setCurriculoNome(arquivoService.salvarArquivoCandidato(novoCandidato.getCrp() ,curriculo));
+            novoCandidato.setCurriculoNome(arquivoService.salvarArquivo(novoCandidato.getCrp() ,curriculo, "-curriculo."));
             try {
                 return ResponseEntity.ok(new RespostaCandidatoDTO(this.candidatoRepository.save(novoCandidato)));
             } catch (Exception e) {

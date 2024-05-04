@@ -56,11 +56,6 @@ export class SouPsicologoComponent implements OnInit {
         this.carregando = false;
         return;
       }
-      const formData = new FormData();
-      formData.append('nome', this.candidato.nome);
-      formData.append('email', this.candidato.email);
-      formData.append('telefone', this.candidato.telefone);
-      formData.append('crp', this.candidato.crp);
       const json = JSON.stringify(this.candidato);
       this.candidatoService.registrarCandidato(json, this.curriculo).subscribe(
         response => {

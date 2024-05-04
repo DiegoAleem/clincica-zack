@@ -1,0 +1,25 @@
+.espacoOpcao{
+    margin-right: 1%;
+}
+
+.titulo{
+    text-align: center;   
+    margin-top: 2%;
+}
+
+.btn-remove-image {
+    position: absolute;
+    top: -5px;
+    right: -9px;
+    z-index: 2;
+    background: none;
+    border: none;
+    color: black; /* Cor do ícone "x" */
+    cursor: pointer;
+  }
+  
+  .btn-remove-image i {
+    font-size: 1.2em;
+
+
+  }

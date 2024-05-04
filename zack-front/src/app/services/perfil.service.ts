@@ -26,6 +26,18 @@ export class PerfilService {
     return this.http.post<any>(this.apiUrl+'/register', formData, { headers });
   }
 
+  getPerfil(id: string) : Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/perfil/${id}`, {headers: this.getHeader()}).pipe(
+      catchError((error: any) => this.handleError(error)) 
+    );
+  }
+
+  getPerfilPorUsuario(id: string) : Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/perfil/buscarPorUsuario/${id}`, {headers: this.getHeader()}).pipe(
+      catchError((error: any) => this.handleError(error)) 
+    );
+  }
+
   getPerfis(pagina: number, filtro: string, campoOrdenado: string, ordemAscendente: string): Observable<any> {
     const params = new HttpParams()
     .set('pagina', pagina.toString())
@@ -34,6 +46,23 @@ export class PerfilService {
     .set('ordem', ordemAscendente);
 
     return this.http.get<any[]>('http://localhost:8080/perfil/filtrados', {headers: this.getHeader(), params: params}).pipe(
+      catchError((error: any) => this.handleError(error)) 
+    );
+  }
+
+  salvarPerfil(json: string, foto: File | undefined){
+    const formData = new FormData();
+    formData.append('json', json);
+    if(foto != undefined) {
+      formData.append('foto', foto);
+    } else {
+      formData.append('foto', "");
+    }
+
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+    return this.http.put<any>(`http://localhost:8080/perfil/editar`, formData ,{headers:this.getHeader()}).pipe(
       catchError((error: any) => this.handleError(error)) 
     );
   }

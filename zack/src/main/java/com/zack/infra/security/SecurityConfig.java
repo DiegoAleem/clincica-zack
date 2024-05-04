@@ -30,6 +30,8 @@ public class SecurityConfig {
                         //aqui é onde permite acessar url sem estar logado.
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/tipo-abordagem/todos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/especialidade/todos").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

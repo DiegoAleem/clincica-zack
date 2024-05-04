@@ -17,7 +17,6 @@ export class EditarGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log( next.params['id'] == this. getId() );
     const token = this.getToken();
     if (token) {
       const roles = this.getRolesFromToken(token);

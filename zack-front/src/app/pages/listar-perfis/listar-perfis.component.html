@@ -35,7 +35,7 @@
           <td><p *ngFor=" let role of perfil.usuario.roles">{{role.nome}}</p></td>
           <td>
             <div class="d-flex justify-content-evenly">
-                <button (click)="editar(perfil.usuario.id)" type="button"
+                <button (click)="editar(perfil.id)" type="button"
                   class="btn btn-success">Editar</button>
                 <button (click)="desativar(perfil.id)" type="button"
                   class="btn btn-danger">Desativar</button>
