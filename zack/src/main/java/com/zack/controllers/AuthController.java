@@ -52,11 +52,13 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<RespostaCandidatoDTO> register(@RequestParam("json") String json, @RequestParam("curriculo") MultipartFile curriculo) throws IOException {
+    public ResponseEntity<RespostaCandidatoDTO> register(
+            @RequestParam("json") String json, 
+            @RequestParam("curriculo") MultipartFile curriculo,
+            @RequestParam("historico") MultipartFile historico) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         RegisterRequestDTO body = objectMapper.readValue(json, RegisterRequestDTO.class);
         if (this.candidatoRepository.findBycrp(body.crp()).isEmpty() && this.candidatoRepository.findByEmail(body.email()).isEmpty()) {
-
             Candidato novoCandidato = new Candidato();
             novoCandidato.setCrp(body.crp());
             novoCandidato.setTelefone(body.telefone());
@@ -64,6 +66,7 @@ public class AuthController {
             novoCandidato.setEmail(body.email());
             novoCandidato.setStatus("PARA ANÁLISE");
             novoCandidato.setCurriculoNome(arquivoService.salvarArquivo(novoCandidato.getCrp() ,curriculo, "-curriculo."));
+            novoCandidato.setHistoricoNome(arquivoService.salvarArquivo(novoCandidato.getCrp() ,historico, "-historico."));
             try {
                 return ResponseEntity.ok(new RespostaCandidatoDTO(this.candidatoRepository.save(novoCandidato)));
             } catch (Exception e) {

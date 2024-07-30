@@ -88,6 +88,10 @@
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc11</artifactId> <!-- ou ojdbc8 para Oracle 12c -->
 		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -1,5 +1,7 @@
 package com.zack.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -7,6 +9,7 @@ import com.zack.domain.model.Candidato;
 import com.zack.domain.model.Perfil;
 import com.zack.domain.model.Usuario;
 import com.zack.dto.PerfilDTO;
+import com.zack.dto.PesquisaDTO;
 
 public interface PerfilService {
     
@@ -20,5 +23,9 @@ public interface PerfilService {
     Perfil getPerfil(String id);
 
     Perfil getPerfilPorUsuario(Usuario usuario);
+
+   List<Perfil> getTop3ProfilesWithHighestAverageRating();
+
+   Page<Perfil> getPerfisFiltroMelhorAvaliados(PesquisaDTO pesquisa, Pageable pageable);
 
 }

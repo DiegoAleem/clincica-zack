@@ -32,6 +32,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/tipo-abordagem/todos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/especialidade/todos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/perfil/top-rated").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/perfil/filtrados-melhor-avaliados").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -13,17 +14,23 @@ import com.zack.domain.model.PerfilEspecialidade;
 import com.zack.domain.model.PerfilTipoAbordagem;
 import com.zack.domain.model.Usuario;
 import com.zack.dto.PerfilDTO;
+import com.zack.dto.PesquisaDTO;
 import com.zack.repositories.PerfilEspecialidadeRepository;
 import com.zack.repositories.PerfilRepository;
 import com.zack.repositories.PerfilTipoAbordagemRepository;
 import com.zack.service.PerfilService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class PerfilServiceImpl implements PerfilService {
-
+    
+    @PersistenceContext
+    private EntityManager entityManager;
     private final PerfilRepository perfilRepository;
     private final PerfilEspecialidadeRepository perfilEspecialidadeRepository;
     private final PerfilTipoAbordagemRepository perfilTipoAbordagemRepository;
@@ -51,10 +58,10 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setAtendeIdoso(perfilDTO.atendeIdoso());
         perfil.setCrp(perfilDTO.crp());
         perfil.setFormacaoECursos(perfilDTO.formacaoECursos());
-        perfil.setIsCartao(perfilDTO.isCartao());
-        perfil.setIsPix(perfilDTO.isPix());
-        perfil.setIsPlano(perfilDTO.isPlano());
-        perfil.setIsTransferencia(perfilDTO.isTransferencia());
+        perfil.setCartao(perfilDTO.isCartao());
+        perfil.setPix(perfilDTO.isPix());
+        perfil.setPlano(perfilDTO.isPlano());
+        perfil.setTransferencia(perfilDTO.isTransferencia());
         perfil.setNome(perfilDTO.nome());
         perfil.setSexo(perfilDTO.sexo());
         perfil.setSobreMim(perfilDTO.sobreMim());
@@ -64,6 +71,7 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setValorConsulta(perfilDTO.valorConsulta());
         perfil.setNomeFoto(arquivoFoto);
         perfil.setLinkAtendimento(perfilDTO.linkAtendimentoOnline());
+        perfil.setBreveDescricao(perfilDTO.breveDescricao());
         try {
             removerAssociacoes(perfil);
             perfil.setEspecialidades(perfilDTO.especialidades());
@@ -72,7 +80,7 @@ public class PerfilServiceImpl implements PerfilService {
             e.getStackTrace();
             return new Perfil();
         }
-        
+
         perfil = perfilRepository.saveAndFlush(perfil);
         return perfil;
     }
@@ -102,11 +110,125 @@ public class PerfilServiceImpl implements PerfilService {
     @Override
     public Perfil getPerfilPorUsuario(Usuario usuario) {
         Optional<Perfil> perfil = perfilRepository.findByUsuario(usuario);
-        if(perfil.isPresent()) {
+        if (perfil.isPresent()) {
             return perfil.get();
         } else {
             return new Perfil();
         }
+    }
+
+    @Override
+    public List<Perfil> getTop3ProfilesWithHighestAverageRating() {
+        return perfilRepository.findTop3ByOrderByMediaAvaliacoesDesc();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Page<Perfil> getPerfisFiltroMelhorAvaliados(PesquisaDTO pesquisa, Pageable pageable) {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT DISTINCT p.* FROM PERFIL p ");
+        sqlBuilder.append("LEFT JOIN PERFIL_TIPO_ABORDAGEM pta ON p.ID = pta.PERFIL_ID ");
+        sqlBuilder.append("LEFT JOIN TIPO_ABORDAGEM ta ON pta.TIPO_ABORDAGEM_ID = ta.ID ");
+        sqlBuilder.append("WHERE 1=1 ");
+        
+        if (pesquisa.isOnline().equalsIgnoreCase("1")) {
+            sqlBuilder.append("AND p.ATENDE_ONLINE = 'Y' ");
+        } else {
+            sqlBuilder.append("AND p.ATENDE_PRESENCIAL = 'Y' ");
+        }
+                
+        if (pesquisa.tipoAtendimento().equalsIgnoreCase("particular")) {
+            sqlBuilder.append("AND p.ATENDE_PARTICULAR = 'Y' ");
+            if (pesquisa.formaPagamento().pix()) {
+                sqlBuilder.append("AND p.IS_PIX =  'Y'");
+            }
+            if (pesquisa.formaPagamento().cartao()) {
+                sqlBuilder.append("AND p.IS_CARTAO = 'Y' ");
+            }
+            if (pesquisa.formaPagamento().transferencia()) {
+                sqlBuilder.append("AND p.IS_TRANSFERENCIA = 'Y' ");
+            }
+            
+         // Adicionando condições para o valor da consulta
+            Integer valor1 = null;
+            Integer valor2 = null;
+            switch (pesquisa.valorConsulta()) {
+                case "1":
+                    valor1 = 50;
+                    valor2 = 100;
+                    break;
+                case "2":
+                    valor1 = 105;
+                    valor2 = 150;
+                    break;
+                case "3":
+                    valor1 = 155;
+                    valor2 = 200;
+                    break;
+                case "4":
+                    valor1 = 205;
+                    valor2 = 250;
+                    break;
+                case "5":
+                    valor1 = 255;
+                    valor2 = 300;
+                    break;
+                default:
+                    break;
+            }
+
+            if (valor1 != null && valor2 != null) {
+                sqlBuilder.append("AND (p.VALOR_CONSULTA BETWEEN ").append(valor1).append(" AND ").append(valor2).append(") ");
+            }
+
+        } else {
+            sqlBuilder.append("AND p.ATENDE_PLANO = 'Y' ");
+        }
+        
+        if (pesquisa.atendimento().crianca()) {
+            sqlBuilder.append("AND p.ATENDE_CRIANCA = 'Y' ");
+        }
+        if (pesquisa.atendimento().adolescente()) {
+            sqlBuilder.append("AND p.ATENDE_ADOLESCENTE = 'Y' ");
+        }
+        if (pesquisa.atendimento().adultos()) {
+            sqlBuilder.append("AND p.ATENDE_ADULTO = 'Y' ");
+        }
+        if (pesquisa.atendimento().idosos()) {
+            sqlBuilder.append("AND p.ATENDE_IDOSO = 'Y' ");
+        }
+        if (pesquisa.atendimento().casal()) {
+            sqlBuilder.append("AND p.ATENDE_CASAIS = 'Y' ");
+        }
+        
+        // Adicionando condições para abordagens específicas
+        if (pesquisa.abordagem() != null && !pesquisa.abordagem().isEmpty()) {
+            sqlBuilder.append("AND ta.ID IN (");
+            for (int i = 0; i < pesquisa.abordagem().size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(",");
+                }
+                sqlBuilder.append(pesquisa.abordagem().get(i).getId());
+            }
+            sqlBuilder.append(") ");
+        }
+        
+        // Adicionando cláusula ORDER BY
+        sqlBuilder.append("ORDER BY p.MEDIA_AVALIACOES ");
+        
+        Query query = entityManager.createNativeQuery(sqlBuilder.toString(), Perfil.class);
+        
+        List<Perfil> resultados = query.getResultList();
+
+        // Paginando os resultados manualmente (exemplo simplificado)
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+        int startIndex = pageNumber * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, resultados.size());
+        
+        List<Perfil> perfisPaginados = resultados.subList(startIndex, endIndex);
+        return new PageImpl<>(perfisPaginados, pageable, resultados.size());
+
     }
 
 }

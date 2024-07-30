@@ -31,5 +31,6 @@ public class Candidato {
     @Lob
     private byte[] curriculo; 
     private String curriculoNome;
+    private String historicoNome;
     private String status;
 }

@@ -1,5 +1,6 @@
 package com.zack.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -12,18 +13,13 @@ import com.zack.domain.model.Usuario;
 
 public interface PerfilRepository extends JpaRepository<Perfil, String> {
 
-    
-    
-    @Query("SELECT p FROM Perfil p " +
-            "JOIN p.usuario u " +
-            "WHERE " +
-            "(UPPER(p.nome) LIKE CONCAT('%', UPPER(:filtro), '%') OR :filtro IS NULL) AND " +
-            "(UPPER(REPLACE(p.crp, '/', '')) LIKE CONCAT('%', UPPER(:filtro), '%') OR :filtro IS NULL) AND " +
-            "(UPPER(p.sexo) LIKE CONCAT('%', UPPER(:filtro), '%') OR :filtro IS NULL) AND " +
-            "(u.ativo = true)"
-    )
+    @Query("SELECT p FROM Perfil p " + "JOIN p.usuario u " + "WHERE (u.ativo = true) AND (" + "(UPPER(p.nome) LIKE CONCAT('%', UPPER(:filtro), '%') OR :filtro IS NULL) OR "
+            + "(UPPER(REPLACE(p.crp, '/', '')) LIKE CONCAT('%', UPPER(:filtro), '%') OR :filtro IS NULL) OR " + "(UPPER(p.sexo) LIKE CONCAT('%', UPPER(:filtro), '%') OR :filtro IS NULL)) ")
     Page<Perfil> findByAnyFieldContainingIgnoreCase(String filtro, Pageable pageable);
 
     Optional<Perfil> findByUsuario(Usuario usuario);
 
+    @Query("SELECT p FROM Perfil p " + "JOIN p.usuario u " + "WHERE " + "u.ativo = true " + "ORDER BY p.mediaAvaliacoes DESC")
+    List<Perfil> findTop3ByOrderByMediaAvaliacoesDesc();
+    
 }
