@@ -20,16 +20,38 @@
 
 .titulo{
     margin-top: 3%;
-    color:#49654E;
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
+    color:#4B67B1;
+    font-family: Oswald, sans-serif;
+    font-weight: 500;
     text-align: -webkit-center;
   }
   
 th:hover{
     cursor: pointer;
+    background: #a0a0a7;
 }
 
+
+.btn-success {
+  background: #2BC4B6;
+}
+
+.btn-warning{
+  background: #4B67B1;
+  border-color: #09246d;
+  color: white;
+}
+
+.btn-danger{
+  border-color: red;
+}
+
+.btnAction{
+  width: 90px;
+  height: 30px;
+  border-radius: 2px;
+  justify-content: center;
+}
 /* Configurações nivel 2*/
 .li:hover{
     display: block;
@@ -90,4 +112,24 @@ th:hover{
 
   .pagination-button.active {
     background-color: #071f0b;
+  }
+
+  .th{
+    background: #DBDBF8;
+  }
+
+  .status-aprovado {
+    color: green;
+  }
+  
+  .status-arquivado {
+    color: orange;
+  }
+  
+  .status-excluido {
+    color: red;
+  }
+  
+  .status-pendente {
+    color: gray;
   }

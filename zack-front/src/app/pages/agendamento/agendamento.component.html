@@ -1,0 +1,317 @@
+<div class="loading-overlay" *ngIf="carregando">
+    <div class="loader"></div>
+</div>
+<div class="body">
+    <div class="fundoVerde">
+        <br />
+        <br />
+        <br />
+        <div class="container-fluid full-height d-flex justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-3">
+                    <img src="../../../assets/agendamento.png" alt="Agendamento" class="imagem-agendamento" />
+                </div>
+                <div class="col-md-6">
+                    <h1 class="titulo">AGENDE SEU HORÁRIO</h1>
+                </div>
+            </div>
+        </div>
+        <div class="filtro">
+            <form (ngSubmit)="onSubmit()" #pesquisaForm="ngForm">
+                <div class="row col-md-4 offset-md-4">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="options" [(ngModel)]="pesquisa.isOnline" value="1" id="option1"
+                                name="isOnline" class="radio" autocomplete="off">Atendimento<br />online
+                        </label>
+                        <label class="btn btn-primary btn-online-2">
+                            <input type="radio" name="options" [(ngModel)]="pesquisa.isOnline" value="2" id="option2"
+                                class="radio" name="isOnline" autocomplete="off">Atendimento<br />presencial
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <div
+                    class="row input-group flex-nowrap justify-content-center align-items-center col-md-10 offset-md-1">
+                    <input type="text" class="form-control" placeholder="Pesquisar por nome" aria-label="Pesquisar"
+                        aria-describedby="addon-wrapping">
+                </div>
+                <br />
+                <div class="accordion row col-md-10 offset-md-1" id="accordionExample">
+                    <div class="accordion-item">
+                        <a class="accordion-button collapsed center-content" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <h6 class="accordion-header" id="headingTwo" style="margin-left: 45%;">
+                                Mais Filtros
+                            </h6>
+                        </a>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Tipo de atendimento</h5>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="particular"
+                                                        [(ngModel)]="pesquisa.tipoAtendimento" value="particular"
+                                                        id="particular">
+                                                    <label class="form-check-label" for="particular">
+                                                        Particular
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="plano" id="plano"
+                                                        [(ngModel)]="pesquisa.tipoAtendimento" value="plano">
+                                                    <label class="form-check-label" for="plano">
+                                                        Plano de Saúde
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" *ngIf="this.pesquisa.tipoAtendimento == 'particular'">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Forma de pagamento</h5>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexCheckDefault"
+                                                        (change)="onCheckboxChangeFormaPagamento($event, 'pix')">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Pix
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexCheckChecked"
+                                                        (change)="onCheckboxChangeFormaPagamento($event, 'cartao')">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Cartão
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexCheckChecked"
+                                                        (change)="onCheckboxChangeFormaPagamento($event, 'transferencia')">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Transferência
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Que atende</h5>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        (change)="onCheckboxChangeAtendimento($event, 'Criança')"
+                                                        id="flexCheckChecked">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Criança
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        (change)="onCheckboxChangeAtendimento($event, 'Adolescentes (mais 14 anos)')"
+                                                        id="flexCheckChecked">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Adolescentes (mais 14 anos)
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        (change)="onCheckboxChangeAtendimento($event, 'Adultos')"
+                                                        id="flexCheckChecked">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Adultos
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        (change)="onCheckboxChangeAtendimento($event, 'Idosos')"
+                                                        id="flexCheckChecked">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Idosos
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        (change)="onCheckboxChangeAtendimento($event, 'Casais')"
+                                                        id="flexCheckChecked">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Casais
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 *ngIf="this.pesquisa.tipoAtendimento == 'particular'">Valor da consulta: </h5>
+                                    <div class="btn-group" role="group"
+                                        *ngIf="this.pesquisa.tipoAtendimento == 'particular'"
+                                        aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                            autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="1">
+                                        <label class="btn btn-outline-primary" for="btnradio1">R$ 50 a 100</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                            autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="2">
+                                        <label class="btn btn-outline-primary" for="btnradio2">R$ 105 a 150</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                            autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="3">
+                                        <label class="btn btn-outline-primary" for="btnradio3">R$ 155 a 200</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                            autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="4">
+                                        <label class="btn btn-outline-primary" for="btnradio4">R$ 205 a 250</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio5"
+                                            autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="5">
+                                        <label class="btn btn-outline-primary" for="btnradio5">R$ 255 a 300</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio6"
+                                            autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="6">
+                                        <label class="btn btn-outline-primary" style="
+                                        border-radius: 0px;
+                                    " for="btnradio6">Todos</label>
+                                    </div>
+                                    <br />
+                                    <ng-multiselect-dropdown [placeholder]="'Abordagem Terapêutica'"
+                                        id="multi"
+                                        [settings]="dropdownSettings" [data]="tiposAbordagem"
+                                        [(ngModel)]="pesquisa.abordagem" name="abordagem">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-11 d-flex justify-content-end botoes-pesquisa">
+                    <button type="button" class="btn btn-labeled btn-secondary me-2" (click)="limparForm()">
+                        <span class="btn-label"><i class="bi bi-trash"></i></span> Limpar Filtros
+                    </button>
+                    <button type="button" class="btn btn-labeled btn-primary" (click)="onSubmit()">
+                        <span class="btn-label"><i class="bi bi-search"></i></span> Buscar
+                    </button>
+                </div>
+            </form>
+            <br />
+            <br />
+            <br />
+            <div *ngIf="perfis.length === 0 && !carregando">
+                <p>Nenhum perfil encontrado.</p>
+            </div>
+            <div class="lista-psicologos col-md-10 offset-md-1" *ngFor="let perfil of perfis">
+                <div class="card-group vgr-cards">
+                    <div class="card" style="background: #75C6BE;">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="card-img-body" style="margin-top: 2%;">
+                                    <img class="img-thumbnail" style="height: 210px !important; border-radius: 30px;"
+                                        [src]="perfil.selectedFileDataUrl" alt="Card image cap">
+                                </div>
+                                <div class="card-body" style="margin-top: 2%;">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4 class="card-title nomePsicologo">{{perfil.nome}}</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-secondary" disabled>R$
+                                                {{perfil.valorConsulta}}</button>
+                                        </div>
+                                    </div>
+                                    <h6 class="crp">CRP {{perfil.crp}}</h6>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="d-flex flex-wrap">
+                                                <ng-container
+                                                    *ngFor="let especialidade of perfil.especialidades?.slice(0, 4); let i = index">
+                                                    <div class="p-2">
+                                                        <button type="button" class="btn btn-light" disabled>{{
+                                                            especialidade.nome }}</button>
+                                                    </div>
+                                                </ng-container>
+                                                <div *ngIf="perfil.mostrarTodasEspecialidades" class="d-flex flex-wrap">
+                                                    <ng-container *ngFor="let especialidade of perfil.especialidades?.slice(4)">
+                                                      <div class="p-2">
+                                                        <button type="button" class="btn btn-light" disabled>{{ especialidade.nome }}</button>
+                                                      </div>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="perfil.especialidades != null && perfil.especialidades.length > 4" class="mt-2">
+                                                <a type="button" class="btn btn-link" (click)="perfil.mostrarTodasEspecialidades = !perfil.mostrarTodasEspecialidades">
+                                                  {{ perfil.mostrarTodasEspecialidades ? 'Mostrar menos' : 'Mostrar mais' }}
+                                                </a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="sobre">
+                                    <h5 class="sobrePsicologo">Sobre o Psicólogo</h5>
+                                    <p class="textoSobre">
+                                        {{perfil.sobreMim}}
+                                    </p>
+                                    <a type="button" class="btn btn-link"(click)="navigate(perfil)">
+                                        Ver Perfil Completo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="col-md-4 fundoBranco d-md-flex flex-md-column justify-content-center align-items-center">
+                            <div class="mb-3 row col-md-12" style="margin-top: 4%;">
+                                <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
+                                    style="height: 100%;">
+                                    <div class="align-items-center circle" style="margin-right: 4rem;">
+                                        <i class="bi bi-whatsapp icon"></i>
+                                    </div>
+                                    <div class="d-flex flex-column align-items-start text-center">
+                                        <h6 class="textoRoxo mb-0">Dúvidas? Fale Conosco</h6>
+                                        <p class="subtexto mb-0">Enviar Mensagem No Whatsapp</p>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="mb-3 row col-md-12">
+                                <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
+                                    style="height: 100%;">
+                                    <div class="align-items-center circle me-5">
+                                        <i class="bi bi-globe icon"></i>
+                                    </div>
+                                    <div class="d-flex flex-column align-items-start">
+                                        <h6 class="textoRoxo mb-0">Agende Sua Consulta Online</h6>
+                                        <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="mb-3 row col-md-12">
+                                <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
+                                    style="height: 100%;" (click)='whatsApp("https://wa.me/5561982573833?text=Ol%C3%A1%2C+gostaria+de+agendar+uma+consulta.")'>
+                                    <div class="align-items-center circle me-4">
+                                        <i class="bi bi-geo-alt icon"></i>
+                                    </div>
+                                    <div class="d-flex flex-column align-items-start">
+                                        <h6 class="textoRoxo mb-0">Agende Sua Consulta Presencial</h6>
+                                        <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+</div>

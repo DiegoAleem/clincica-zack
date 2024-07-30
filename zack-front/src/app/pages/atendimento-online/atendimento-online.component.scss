@@ -1,0 +1,493 @@
+.body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.background-image-container {
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+
+  @media screen and (max-width: 768px) {
+    img {
+      width: 100%;
+      /* Define a largura da imagem como 100% da largura da tela */
+      height: auto;
+      /* Mantém a proporção da imagem */
+    }
+  }
+
+}
+
+.btn-agendamento {
+  background: #FAC317E3;
+  border: 1px solid #FFFFFF;
+
+  @media screen and (max-width: 768px) {
+    font-size: 4vw;
+    padding: 2% 4%;
+  }
+}
+
+.titulo-foto {
+
+  font-family: "Oswald";
+  font-size: 70px;
+  font-weight: 500;
+  line-height: 118px;
+  text-align: center;
+
+  @media screen and (max-width: 992px) {
+
+    font-size: 40px;
+
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 5vw;
+    line-height: 9vw;
+  }
+}
+
+img {
+  width: -webkit-fill-available;
+ 
+  @media screen and (max-width: 992px) {
+    /* Tablets */
+    width: auto;
+    display: flex;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    width: auto;
+    display: flex;
+  }
+}
+
+.card-text{
+  text-align: left;
+}
+
+.center {
+  position: absolute;
+  text-align: center;
+  font-family: "Poppins, sans-serif";
+  font-weight: 400;
+  font-size: 37px;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    padding: 10%;
+  }
+}
+
+h2 {
+
+  font-family: "Oswald";
+  font-size: 70px;
+  font-weight: 500;
+  line-height: 94.14px;
+  text-align: left;
+
+  @media screen and (max-width: 992px) {
+    /* Tablets */
+    font-size: 40px;
+    /* Tamanho para tablets */
+    line-height: 50.14px;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    font-size: 40px;
+    /* Tamanho para celulares */
+    line-height: 50.14px;
+  }
+}
+
+.vetor-cima2 {
+  width: 475.76px;
+  height: 100.67px;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    display: none;
+  }
+
+}
+
+.vetor-cima {
+  width: 531px;
+  height: 113.19px;
+  top: 661px;
+  gap: 0px;
+  opacity: 0px;
+  margin-left: -50%;
+  margin-top: -3%;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    display: none;
+  }
+
+}
+
+.vetor-baixo {
+  width: 534.96px;
+  height: 113.2px;
+  top: 1512.74px;
+  left: 1447.34px;
+  margin-top: 3%;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    display: none;
+  }
+}
+
+.vetor-baixo2 {
+  width: 450.76px;
+  height: 120.67px;
+  margin-bottom: 1%;
+  top: 2931.18px;
+  left: 1615.3px;
+  gap: 0px;
+  opacity: 0px;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    display: none;
+  }
+}
+
+.titulo {
+  width: 500px;
+  height: 215px;
+  top: 758px;
+  left: 60px;
+  gap: 0px;
+  opacity: 0px;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    height: 110px;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+  }
+
+}
+
+.titulo2 {
+  font-family: "Oswald";
+  font-size: 45px;
+  font-weight: 500;
+  line-height: 133.38px;
+  text-align: center;
+  color: #2EC4B6;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    text-align: center;
+    margin: auto;
+  }
+}
+
+.imagem2 {
+  width: 450.76px;
+  height: 353.43px;
+}
+
+.sub-titulo {
+  margin-top: 3%;
+  color: black;
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  text-align: -webkit-center;
+  ;
+}
+
+.paragrafo {
+  font-family: "Rubik";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0.09em;
+  text-align: left;
+
+  @media screen and (max-width: 768px) {
+    width: 75%;
+    font-size: 15px;
+    text-align: center;
+    margin: auto;
+  }
+
+}
+
+.linha {
+  margin-top: 3%;
+  width: 100%;
+  height: 2px;
+  background-color: #49654E;
+}
+
+.card {
+  align-content: center;
+  align-items: center;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 36px;
+  opacity: 0px;
+
+  @media screen and (max-width: 992px) {
+    /* Tablets */
+    margin-bottom: 3%;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    margin-bottom: 5%;
+  }
+}
+
+i {
+  font-size: 65px;
+  color: #49654E;
+}
+
+
+.card-title {
+  color: #4B67B1;
+  font-family: "Oswald";
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 59.28px;
+  text-align: center;
+
+}
+
+.card-group {
+  margin-top: 3%;
+  margin-bottom: 3%;
+
+  /* Para o iPhone XR */
+  @media only screen and (min-device-width: 375px)
+  /* largura mínima do dispositivo iPhone XR */
+  and (max-device-width: 414px)
+
+  /* largura máxima do dispositivo iPhone XR */
+    {
+    margin-left: 4%;
+  }
+
+  /* Para o iPhone 14 Pro Max */
+  @media only screen and (min-device-width: 428px)
+  /* largura mínima do dispositivo iPhone 14 Pro Max */
+  and (max-device-width: 926px)
+
+  /* largura máxima do dispositivo iPhone 14 Pro Max */
+    {
+    margin-left: 8%;
+  }
+}
+
+
+.comoFunciona {
+  text-align: center;
+  background: #ecede9;
+  opacity: 0.8px;
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    align-items: center;
+  }
+}
+
+.imagem-pesquise {
+  width: 123.01px;
+  height: 184.98px;
+  top: 1533px;
+  left: 172px;
+  gap: 0px;
+  opacity: 0px;
+
+
+}
+
+.imagem-mulher {
+  width: 637px;
+  height: 605px;
+  border-radius: 37px 0px 0px 0px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  margin-top: 10%;
+  margin-left: auto;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+    display: none;
+  }
+}
+
+.imagem-agendamento {
+  width: 192.01px;
+  height: 158px;
+  top: 1535px;
+  left: 629px;
+  gap: 0px;
+  opacity: 0px;
+
+}
+
+.imagem-compromisso {
+  width: 171.16px;
+  height: 118.4px;
+  top: 1565px;
+  left: 1123px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+.titulo2 {
+  text-align: center;
+  font-size: 4em;
+  margin: 1em 0;
+}
+
+.descricao {
+  font-family: Rubik;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0.09em;
+  text-align: center;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+@media (max-width: 768px) {
+  .titulo2 {
+      font-size: 1.5em;
+      margin: 1em 0.5em;
+  }
+
+  .descricao {
+      font-size: 18px;
+      line-height: 28px;
+      padding: 0.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .titulo2 {
+      font-size: 1.8em;
+      text-align: center;
+  }
+
+  .descricao {
+      font-size: 16px;
+      line-height: 24px;
+      padding: 0.5em;
+  }
+}
+
+.sobreNos {
+  background: #ecede9;
+  margin-top: -2%;
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    align-items: center;
+  }
+}
+
+.saibaMais {
+  width: 244px;
+  height: 62px;
+  border-radius: 20px;
+  border: 2px;
+  background: #FAC317;
+  border: 2px solid #4B67B1;
+  font-family: "Rubik";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.logo-laranja1 {
+  width: 180.64px;
+  height: 178.55px;
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+   display: none;
+  }
+
+}
+
+.logo-verde {
+  width: 145.41px;
+  height: 143.73px;
+  top: 2294px;
+  left: 1312.23px;
+  gap: 0px;
+  opacity: 0px;
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+   display: none;
+  }
+}
+
+.logo-azul {
+  width: 125.67px;
+  height: 124.21px;
+  top: 2504px;
+  left: 1241.44px;
+  gap: 0px;
+  opacity: 0px;
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+   display: none;
+  }
+}
+
+.logo-laranja2 {
+  width: 163.38px;
+  height: 161.48px;
+  top: 2650px;
+  left: 1385.13px;
+  gap: 0px;
+  opacity: 0px;
+  rotate: -35.4 deg;
+
+
+  @media screen and (max-width: 768px) {
+    /* Celulares */
+   display: none;
+  }
+  
+}
+
+

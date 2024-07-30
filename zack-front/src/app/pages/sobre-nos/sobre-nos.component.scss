@@ -1,0 +1,154 @@
+.titulo {
+    margin-top: 8%;
+    margin-bottom: 5%;
+    color: #4B67B1;
+    font-family: Oswald;
+    font-size: 80px;
+    text-align: -webkit-center;
+    font-weight: bolder;
+}
+
+.titulo2 {
+    margin-top: 8%;
+    margin-bottom: 5%;
+    color: #4B67B1;
+    font-family: Oswald;
+    font-size: 60px;
+    font-weight: bolder;
+}
+
+.body {
+    overflow-x: hidden;
+}
+
+.retangulo {
+    background: #60C5BCD4;
+    width: 100%;
+    height: fit-content;
+    border-radius: 41px;
+    text-align: center;
+}
+
+.textoRet {
+    font-family: 'Rubik';
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 22px;
+    letter-spacing: 0.09em;
+    text-align: center;
+    color: #054943;
+}
+
+.vetor{
+    width: 100%;
+}
+
+.final{
+    @media screen and (max-width: 768px) {
+        text-align: center;
+     }
+}
+
+.logo{
+    @media screen and (max-width: 768px) {
+       display: none;
+    }
+}
+
+.textoFinal {
+    font-family: 'Rubik';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28.44px;
+    text-align: left;
+
+}
+
+.textoFinalR {
+    font-family: 'Rubik';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28.44px;
+    text-align: right;
+
+    @media screen and (max-width: 768px) {
+        text-align: left;
+        margin-left: -5%;
+    }
+
+}
+
+.tituloRet {
+    font-family: 'Oswald';
+    font-size: 70px;
+    font-weight: 500;
+    line-height: 94.14px;
+    text-align: center;
+    color: white;
+
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+}
+
+
+.justificado {
+    font-family: Rubik;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.09em;
+    text-align: center;
+}
+
+.esquerda {
+    font-family: Rubik;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.09em;
+    text-align: left;
+
+    @media screen and (max-width: 768px) {
+        text-align: center;
+        margin-left: 5%;
+    }
+}
+
+.direita {
+    font-family: 'Rubik';
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.09em;
+    text-align: right;
+
+    @media screen and (max-width: 768px) {
+        text-align: center;
+        margin-left: 5%;
+    }
+}
+
+.arrangement {
+    width: 400px;
+    height: 350px;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 25%;
+        width: 200px;
+        height: 175px;
+    }
+}
+
+.arrangement2 {
+    width: 400px;
+    height: 300px;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 25%;
+        width: 200px;
+        height: 175px;
+    }
+}

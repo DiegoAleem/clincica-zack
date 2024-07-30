@@ -1,43 +1,101 @@
-.titulo{
-    margin-top: 3%;
-    color:#49654E;
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
-    text-align: -webkit-center;;
-  }
-
-  .imagem{
-    text-align: center;
-  }
-
-  .imagem img {
-    display: block; /* Torna a imagem um bloco para poder definir margens */
-    margin-left: auto; /* Define margem esquerda automática */
-    margin-right: auto; /* Define margem direita automática */
+.imagem {
+  text-align: center;
 }
 
-.formulario{
-  margin-top: 3%;
+.imagem img {
+  display: block;
+  /* Torna a imagem um bloco para poder definir margens */
+  margin-left: auto;
+  /* Define margem esquerda automática */
+  margin-right: auto;
+  /* Define margem direita automática */
 }
 
-.input{
+.fundoRoxo {
+  background: #A0A1DF8F;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140%;
+}
+
+input {
+  background-color: #EAEAFF;
+}
+
+.titulo {
+  font-family: Oswald;
+  font-size: 55px;
+  font-weight: 500;
+  line-height: 133.38px;
+  text-align: center;
+  color: #4B67B1;
+
+}
+
+.anexosTitulo {
+  font-family: Oswald;
+  font-weight: bold;
+  color: #4B67B1;
+}
+
+label {
+  font-family: Oswald;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: center;
+  color: #4B67B1;
+}
+
+.formulario {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 10%;
+  margin-bottom: 15%;
+  width: 55%;
+}
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* Ajuste conforme necessário */
+}
+
+.btnEnviar {
+  background: #4B67B1;
+  color: white;
+  width: 50% !important;
+}
+
+.form-group {
+  margin-bottom: 0rem;
+}
+
+.input {
   margin-bottom: 1%;
 }
 
-.card{
+.card {
   align-content: center;
   align-items: center;
   text-align: center;
-  border-color: transparent; /* torna a cor da borda transparente */
-  box-shadow: none; /* remove a sombra do card */
+  border-color: transparent;
+  /* torna a cor da borda transparente */
+  box-shadow: none;
+  /* remove a sombra do card */
 }
 
-i{
+i {
   font-size: 65px;
   color: #49654E;
 }
 
-.card-group{
+.card-group {
   margin-top: 3%;
 }
 
@@ -46,7 +104,7 @@ i{
   color: #49654E;
 }
 
-.card-text{
+.card-text {
   font-size: small;
 }
 
@@ -64,9 +122,9 @@ i{
   text-transform: uppercase;
 
   div {
-      flex-grow: 1;
-      height: 2px;
-      background-color: #49654E;
+    flex-grow: 1;
+    height: 2px;
+    background-color: #49654E;
   }
 }
 
@@ -76,23 +134,33 @@ i{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.7); /* Fundo branco transparente */
-  z-index: 9999; /* Z-index alto para garantir que fique acima de outros elementos */
+  background-color: rgba(255, 255, 255, 0.7);
+  /* Fundo branco transparente */
+  z-index: 9999;
+  /* Z-index alto para garantir que fique acima de outros elementos */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .loader {
-  border: 4px solid #f3f3f3; /* Cor do círculo de carregamento */
-  border-top: 4px solid #3498db; /* Cor do círculo de carregamento */
+  border: 4px solid #f3f3f3;
+  /* Cor do círculo de carregamento */
+  border-top: 4px solid #3498db;
+  /* Cor do círculo de carregamento */
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  animation: spin 1s linear infinite; /* Animação de rotação */
+  animation: spin 1s linear infinite;
+  /* Animação de rotação */
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

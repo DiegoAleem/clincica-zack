@@ -1,1 +1,121 @@
-<p>perfil works!</p>
+<div class="fundoVerde">
+    <br />
+    <div class="card-group vgr-cards" style="margin-left: 5%; margin-right: 5%;">
+        <div class="card" style="background: #75C6BE;">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="card-img-body" style="margin-top: 2%;">
+                        <img class="img-thumbnail" style="height: 210px !important; border-radius: 30px;"
+                            [src]="perfil.selectedFileDataUrl" alt="Card image cap">
+                    </div>
+                    <div class="card-body" style="margin-top: 2%;">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="card-title nomePsicologo">{{perfil.nome}}</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-secondary" disabled>R$
+                                    {{perfil.valorConsulta}}</button>
+                            </div>
+                        </div>
+                        <h6 class="crp">CRP {{perfil.crp}}</h6>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex flex-wrap">
+                                    <ng-container
+                                        *ngFor="let especialidade of perfil.especialidades?.slice(0, 4); let i = index">
+                                        <div class="p-2">
+                                            <button type="button" class="btn btn-light" disabled>{{
+                                                especialidade.nome }}</button>
+                                        </div>
+                                    </ng-container>
+                                    <div *ngIf="perfil.mostrarTodasEspecialidades" class="d-flex flex-wrap">
+                                        <ng-container *ngFor="let especialidade of perfil.especialidades?.slice(4)">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-light" disabled>{{
+                                                    especialidade.nome }}</button>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div *ngIf="perfil.especialidades != null && perfil.especialidades.length > 4"
+                                    class="mt-2">
+                                    <a type="button" class="btn btn-link"
+                                        (click)="perfil.mostrarTodasEspecialidades = !perfil.mostrarTodasEspecialidades">
+                                        {{ perfil.mostrarTodasEspecialidades ? 'Mostrar menos' : 'Mostrar mais' }}
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="sobre">
+                        <h5 class="sobrePsicologo">Sobre o Psicólogo</h5>
+                        <p class="textoSobre">
+                            {{perfil.sobreMim}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="sobre">
+                        <h5 class="sobrePsicologo">Formações e Cursos</h5>
+                        <p class="textoSobre">
+                            {{perfil.formacaoECursos}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="sobre">
+                        <h5 class="sobrePsicologo">Pagamento</h5>
+                       
+                            <button type="button" class="btn btn-light" disabled><i class="fa-brands fa-pix"></i>PIX</button>
+                            <button type="button" class="btn btn-light" disabled>CARTÃO</button>
+                            <button type="button" class="btn btn-light" disabled>TRANSFERÊNCIA</button>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 fundoBranco d-md-flex flex-md-column justify-content-center align-items-center">
+                <div class="mb-3 row col-md-12" style="margin-top: 4%;">
+                    <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
+                        style="height: 100%;">
+                        <div class="align-items-center circle" style="margin-right: 5rem;">
+                            <i class="bi bi-whatsapp icon"></i>
+                        </div>
+                        <div class="d-flex flex-column align-items-start text-center">
+                            <h6 class="textoRoxo mb-0">Dúvidas? Fale Conosco</h6>
+                            <p class="subtexto mb-0">Enviar Mensagem No Whatsapp</p>
+                        </div>
+                    </button>
+                </div>
+                <div class="mb-3 row col-md-12">
+                    <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
+                        style="height: 100%;">
+                        <div class="align-items-center circle me-5">
+                            <i class="bi bi-globe icon"></i>
+                        </div>
+                        <div class="d-flex flex-column align-items-start">
+                            <h6 class="textoRoxo mb-0">Agende Sua Consulta Online</h6>
+                            <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                        </div>
+                    </button>
+                </div>
+                <div class="mb-3 row col-md-12">
+                    <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
+                        style="height: 100%;"
+                        (click)='whatsApp("https://wa.me/5561982573833?text=Ol%C3%A1%2C+gostaria+de+agendar+uma+consulta.")'>
+                        <div class="align-items-center circle me-4">
+                            <i class="bi bi-geo-alt icon"></i>
+                        </div>
+                        <div class="d-flex flex-column align-items-start">
+                            <h6 class="textoRoxo mb-0">Agende Sua Consulta Presencial</h6>
+                            <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BtnVoltarMenuComponent } from '../../components/btn-voltar-menu/btn-voltar-menu.component';
 import { Especialidade } from '../../model/especialidade.model';
 import { TipoAbordagem } from '../../model/tipo-abordagem.model';
 import { EspecialidadeService } from '../../services/especialidade.service';
@@ -15,6 +17,8 @@ import { TipoAbordagemService } from '../../services/tipo-abordagem.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgMultiSelectDropDownModule,
+    BtnVoltarMenuComponent
   ],
   templateUrl: './editar-perfil.component.html',
   styleUrl: './editar-perfil.component.scss'
@@ -24,6 +28,10 @@ export class EditarPerfilComponent implements OnInit {
   @ViewChild('perfilForm')
   perfilForm!: NgForm;
 
+  dropdownList: DropdownItem[] = [];
+  selectedItems: DropdownItem[] = [];
+  dropdownSettingsAbordagem: IDropdownSettings = {};  
+  dropdownSettingsEspecialidades: IDropdownSettings = {};  
   variavel = "";
   tiposAbordagem: TipoAbordagem[] = [];
   especialidades: Especialidade[] = [];
@@ -38,21 +46,24 @@ export class EditarPerfilComponent implements OnInit {
     crp: null,
     sexo: null,
     valorConsulta: null,
-    isCartao: null,
-    isPix: null,
-    isTransferencia: null,
-    isPlano: null,
+    cartao: null,
+    pix: null,
+    transferencia: null,
+    plano: null,
+    particular: null,
     tempoConsulta1: null,
     tempoConsulta2: null,
     atendeCrianca: null,
     atendeAdolescente: null,
     atendeAdulto: null,
     atendeIdoso: null,
+    atendeCasais: null,
     tiposAbordagem: [] as TipoAbordagem[],
     especialidades: [] as Especialidade[],
     linkAtendimentoOnline: null,
     formacaoECursos: null,
-    sobreMim: null
+    sobreMim: null,
+    breveDescricao: null
   };
   curriculo!: File;
   constructor(private fb: FormBuilder,
@@ -64,9 +75,10 @@ export class EditarPerfilComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.variavel = params['id'];
-      this.buscarPerfil();     
+      this.buscarPerfil();   
+      this.configurarDropDownAbordagem();  
+      this.configurarDropDownEspecialidades();  
     });
-
 
   }
 
@@ -74,15 +86,58 @@ export class EditarPerfilComponent implements OnInit {
   buscarPerfil() {
     this.perfilService.getPerfil(this.variavel).subscribe(
       (resposta) => {
+
         this.perfil = resposta.perfil;
+        this.perfil.linkAtendimentoOnline = resposta.perfil.linkAtendimento;
         this.selectedFileDataUrl = `data:image/${resposta.foto.tipo};base64,${resposta.foto.fotoBase64}`;
+        const blob = this.base64ToBlob(resposta.foto.fotoBase64, `image/${resposta.foto.tipo}`);
+        this.selectedFile = new File([blob], resposta.foto.outrasInformacoes, { type: `image/${resposta.foto.tipo}` });
         this.buscaTipoAbordagem();
         this.buscaEspecialidade();
+        console.log(this.perfil);
       },
       (error) => {
 
       }
     );
+  }
+
+  configurarDropDownAbordagem(){
+    this.dropdownSettingsAbordagem = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'tipo',
+      selectAllText: 'Marcar Todos',
+      unSelectAllText: 'Desmarcar Todos',
+      itemsShowLimit: 10,
+      searchPlaceholderText: 'Procurar:',
+      noDataAvailablePlaceholderText: 'Não foi possível carregar os dados',
+      allowSearchFilter: true
+    };
+  }
+
+  configurarDropDownEspecialidades(){
+    this.dropdownSettingsEspecialidades = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'nome',
+      selectAllText: 'Marcar Todos',
+      unSelectAllText: 'Desmarcar Todos',
+      itemsShowLimit: 10,
+      searchPlaceholderText: 'Procurar:',
+      noDataAvailablePlaceholderText: 'Não foi possível carregar os dados',
+      allowSearchFilter: true
+    };
+  }
+
+  base64ToBlob(base64: string, mime: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mime });
   }
 
   removePhoto() {
@@ -167,7 +222,7 @@ export class EditarPerfilComponent implements OnInit {
   onSubmit() {
  
 
-    if (this.perfilForm.valid) {
+    if (this.perfilForm.valid && this.selectedFileDataUrl != undefined) {
       this.ajusteDeCheckOptions();
       const json = JSON.stringify(this.perfil);
       this.perfilService.salvarPerfil(json, this.selectedFile).subscribe(
@@ -199,6 +254,11 @@ export class EditarPerfilComponent implements OnInit {
   }
 
 
+}
+
+interface DropdownItem {
+  item_id: number;
+  item_text: string;
 }
 
 

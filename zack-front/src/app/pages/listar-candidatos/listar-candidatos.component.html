@@ -4,31 +4,31 @@
 </div>
 <app-btn-voltar-menu></app-btn-voltar-menu>
 <h1 class="titulo">Lista de Candidatos</h1>
-<div class="col-md-4 offset-md-4 inputPesquisa">
+<div class="col-md-6 offset-md-3 inputPesquisa">
   <div class="input-group">
-    <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
-    <input type="text" [(ngModel)]="filtro" (input)="filtrarCandidatos()" class="form-control"
+    <span class="input-group-text" id="addon-wrapping" style="border: none; background: #E3F5FFC2; color: #397C76B2;"><i class="bi bi-search"></i></span>
+    <input type="text" [(ngModel)]="filtro" (input)="filtrarCandidatos()" class="form-control" style="border: none; background: #E3F5FFC2; color: #397C76B2;"
       placeholder="Pesquise por: Nome, E-mail, CRP ou Telefone" aria-label="Username" aria-describedby="addon-wrapping">
   </div>
 </div>
-<div class="col-md-10 offset-md-1">
+<div class="col-md-12">
   <div class="table-responsive">
-    <table class="table  table-striped table-hover" style="font-size: small;">
+    <table class="table table-striped table-hover" style="font-size: small;">
       <thead>
         <tr>
-          <th (click)="ordenarPor('nome')">Nome <span *ngIf="campoOrdenado === 'nome'"
+          <th class="th" (click)="ordenarPor('nome')">Nome <span *ngIf="campoOrdenado === 'nome'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th (click)="ordenarPor('email')">Email <span *ngIf="campoOrdenado === 'email'"
+          <th class="th" (click)="ordenarPor('email')">Email <span *ngIf="campoOrdenado === 'email'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th (click)="ordenarPor('telefone')">Telefone <span *ngIf="campoOrdenado === 'telefone'"
+          <th class="th" (click)="ordenarPor('telefone')">Telefone <span *ngIf="campoOrdenado === 'telefone'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th (click)="ordenarPor('crp')">CRP <span *ngIf="campoOrdenado === 'crp'"
+          <th class="th" (click)="ordenarPor('crp')">CRP <span *ngIf="campoOrdenado === 'crp'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th (click)="ordenarPor('curriculoNome')">Curriculo <span *ngIf="campoOrdenado === 'curriculoNome'"
+          <th class="th" (click)="ordenarPor('curriculoNome')">Curriculo <span *ngIf="campoOrdenado === 'curriculoNome'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th (click)="ordenarPor('status')">Status <span *ngIf="campoOrdenado === 'status'"
+          <th class="th" (click)="ordenarPor('status')">Status <span *ngIf="campoOrdenado === 'status'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th>Ação</th>
+          <th class="th">Ação</th>
         </tr>
       </thead>
       <tbody>
@@ -40,17 +40,27 @@
           <td><a (click)="downloadFile(candidato.curriculoNome)">
               <p class="download">{{ candidato.curriculoNome }}</p>
             </a></td> <!-- Exibindo o nome do arquivo do currículo -->
-          <td>{{ candidato.status }}</td>
+          <td [ngClass]="{
+            'status-aprovado': candidato.status === 'APROVADO',
+            'status-arquivado': candidato.status === 'ARQUIVADO',
+            'status-excluido': candidato.status === 'EXCLUIDO',
+            'status-pendente': candidato.status === 'PARA ANÁLISE'
+          }">{{ candidato.status }}</td>
           <td>
             <div class="btn-group">
               <button (click)="mudarStatus(candidato.id,'aprovar')" type="button"
-                class="btn btn-success">Aprovar</button>
-              <button (click)="mudarStatus(candidato.id,'arquivar')" type="button"
-                class="btn btn-warning">Arquivar</button>
+                class="btn btn-success btnAction">Aprovar</button>
             </div>
             <br>
-            <div class="btn-group offset-md-4">
-              <button (click)="excluir(candidato.id)" type="button" class="btn btn-danger">Excluir</button>
+            <br>
+            <div class="btn-group">
+              <button (click)="mudarStatus(candidato.id,'arquivar')" type="button"
+                class="btn btn-warning btnAction">Arquivar</button>
+            </div>
+            <br>
+            <br>
+            <div class="btn-group">
+              <button (click)="excluir(candidato.id)" type="button" class="btn btn-danger btnAction">Excluir</button>
             </div>
           </td>
         </tr>

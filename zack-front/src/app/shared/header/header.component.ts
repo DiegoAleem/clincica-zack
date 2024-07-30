@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,16 +9,44 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+
+  @ViewChild('myTopnav') myTopnav!: ElementRef;
   
   constructor(
-    private router: Router){
-    }
-  
+    private router: Router) {
+  }
   ngOnInit(): void {
+  
   }
 
-  navigate(url: string){
+  toggleNav() {
+    const x = this.myTopnav.nativeElement;
+    x.classList.toggle('responsive');
+  }
+
+  navigate(url: string) {
     this.router.navigate([url])
   }
 
+  toggleMenu() {
+    var menu = document.querySelector('.menu');
+    menu?.classList.toggle('active');
+  }
+
+  navigateAndScroll(subOpcao: string): void {
+    const urlWithAnchor = '/home';
+    this.router.navigate([urlWithAnchor]).then(() => {
+      setTimeout(() => {
+        const element = document.getElementById(subOpcao);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    });
+  }
+
+  
+
+
 }
+

@@ -5,9 +5,9 @@
 
 .titulo {
   margin-top: 3%;
-  color: #49654E;
-  font-family: Poppins, sans-serif;
-  font-weight: 400;
+  color: #4B67B1;
+  font-family: 'Oswald';
+  font-weight: bold;
   text-align: -webkit-center;
 }
 
@@ -36,6 +36,29 @@
   height: 50px;
   animation: spin 1s linear infinite;
   /* Animação de rotação */
+}
+
+.btn-success {
+  width: 96px;
+  height: 33px;
+  border-radius: 4px;
+  background: #60C5BC;
+}
+
+.btn-danger {
+  width: 96px;
+  height: 33px;
+  border-radius: 4px;
+  background: rgb(179, 56, 56);
+}
+
+th:hover{
+  cursor: pointer;
+  background: #a0a0a7;
+}
+
+th{
+  background: #DBDBF8;
 }
 
 @keyframes spin {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-como-funciona',
@@ -9,7 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComoFuncionaComponent implements OnInit {
   ngOnInit(): void {
-    console.log("Foi");
+  }
+
+  constructor(
+    private router: Router){
+    }
+
+  navigate(url: string){
+    this.router.navigate([url])
   }
   
 }

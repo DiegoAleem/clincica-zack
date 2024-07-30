@@ -3,6 +3,7 @@ import { Usuario } from "./usuario.model";
 export interface Perfil {
     id: number;
     nome: string;
+    sobrenome: string;
     crp: string;
     sexo: string;
     valorConsulta: number;
@@ -18,5 +19,7 @@ export interface Perfil {
     atendeIdoso: boolean;
     formacaoCurso: string;
     sobreMim: string;
+    breveDescricao: string;
     usuario: Usuario;
+    selectedFileDataUrl?: string | ArrayBuffer;
   }

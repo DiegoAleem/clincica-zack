@@ -1,17 +1,72 @@
-.titulo{
-    margin-top: 3%;
-    color:#49654E;
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
-    text-align: -webkit-center;;
-  }
+.titulo {
+  color: #397C76;
+  font-family: Oswald, sans-serif;
+  font-weight: 500;
+  font-size: 60px;
+}
 
-  .imagem{
-    text-align: center;
-  }
+.titulo2 {
+  font-family: Oswald, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
 
-  .imagem img {
-    display: block; /* Torna a imagem um bloco para poder definir margens */
-    margin-left: auto; /* Define margem esquerda automática */
-    margin-right: auto; /* Define margem direita automática */
+.btnContato {
+  width: Hug (296.18px)px;
+  height: Hug (62px)px;
+  top: 1230px;
+  left: 127px;
+  gap: 25px;
+  border-radius: 20px;
+  border: 2px 0px 0px 0px;
+  opacity: 0px;
+  background-color: #397C76;
+  color: #FFFFFF;
+  margin-bottom: 3%;
+
+}
+
+.texto {
+  font-family: Oswald, sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  text-align: left;
+
+}
+
+.centered-div {
+  background-color: #4B67B1;
+  border-radius: 15px;
+  align-content: center;
+}
+
+.imagem {
+  text-align: center;
+}
+
+.imagem img {
+  display: block;
+  /* Torna a imagem um bloco para poder definir margens */
+  margin-left: auto;
+  /* Define margem esquerda automática */
+  margin-right: auto;
+  /* Define margem direita automática */
+}
+
+.convenio {
+  background: #c9c9ea;
+}
+
+li {
+  color: white;
+  font-family: Rubik;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 28.46px;
+  text-align: left;
+
 }

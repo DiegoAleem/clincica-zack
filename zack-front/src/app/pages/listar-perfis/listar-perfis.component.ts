@@ -85,7 +85,7 @@ export class ListarPerfisComponent implements OnInit {
     this.perfilService.desativarUsuario(id).subscribe(
       retorno => {
         this.getPerfis();
-        this.toastService.success("Exclusão feita com sucesso!", "Sucesso", {
+        this.toastService.success("Usuário desativado com sucesso!", "Sucesso", {
           timeOut: 7000,
           closeButton: true 
         });

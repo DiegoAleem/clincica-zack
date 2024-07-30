@@ -1,0 +1,348 @@
+.fundoVerde {
+    background: #D1EFEF;
+}
+
+.body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+::ng-deep {
+    #multi .dropdown-list {
+        position: relative;
+   }
+ }
+
+.imagem-agendamento {
+    width: 150px;
+    height: 120px;
+    @media (max-width: 600px) {
+        margin-left: 32%;
+    }
+}
+
+.input-group>.form-control,
+.input-group>.form-floating,
+.input-group>.form-select {
+    height: 55px;
+}
+
+.btn-secondary:disabled{
+    background-color: #ACFAFA !important;
+    color: #397C76 !important;
+    opacity: 1;
+    font-family: 'Oswald';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 23.71px;
+    text-align: center;
+
+
+}
+
+.card {
+    margin-bottom: 5%;
+}
+
+.titulo {
+    font-family: 'Oswald';
+    font-size: 70px;
+    font-weight: 700;
+    text-align: center;
+    color: #06897D;
+}
+
+.btn-online-2.btn.active{
+    border-radius: 0px 10px 10px 0px !important;
+}
+
+.radio {
+    display: none;
+    /* Hide the default radio button */
+}
+
+.btn-primary {
+    border-radius: 15px;
+    border: 1px solid #FFFFFF;
+    background: #4B67B1;
+    font-family: 'Rubik';
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 30.88px;
+    text-align: center;
+}
+
+.botoes-pesquisa {
+    margin-top: 2%;
+}
+
+.btn-secondary {
+    border-radius: 15px;
+    border: 1px solid #FFFFFF;
+    background: #6c757d;
+    font-family: 'Rubik';
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 30.88px;
+    text-align: center;
+}
+
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+    background: #4B67B1;
+    border-color: #A0A1DF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active {
+    border: 1px solid #FFFFFF;
+    background: #A0A1DF;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #FFFFFF;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-outline-primary {
+    background: #A0A1DF;
+    border-color: #4B67B1;
+    color: #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    margin: 1%;
+}
+
+.accordion-button {
+    width: 100%;
+    text-decoration: none;
+}
+
+.accordion-button:hover {
+    cursor: pointer;
+}
+
+.accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    /* Fundo branco transparente */
+    z-index: 9999;
+    /* Z-index alto para garantir que fique acima de outros elementos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    /* Cor do círculo de carregamento */
+    border-top: 4px solid #3498db;
+    /* Cor do círculo de carregamento */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    /* Animação de rotação */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+// Bootstrap resets
+.card {
+    border: none;
+}
+
+.card-img {
+    border-radius: 0;
+}
+
+.vgr-cards {
+    .card {
+        display: flex;
+        flex-flow: wrap;
+        flex: 100%;
+        margin-bottom: 40px;
+
+        &:nth-child(even) .card-img-body {
+            order: 2;
+        }
+
+        &:nth-child(even) .card-body {
+            padding-left: 0;
+            padding-right: 1.25rem;
+        }
+
+        @media (max-width: 576px) {
+            display: block;
+        }
+
+    }
+
+    .card-img-body {
+        flex: 1;
+        position: relative;
+
+        @media (max-width: 576px) {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+    }
+
+    .card-img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        margin-left: 50%;
+        transform: translateX(-50%);
+
+        @media (max-width: 1140px) {
+            margin: 0;
+            transform: none;
+            width: 100%;
+            height: auto;
+        }
+
+    }
+
+    .card-body {
+        flex: 2;
+        padding: 0 0 0 1.25rem;
+
+        @media (max-width: 576px) {
+            padding: 0;
+        }
+
+    }
+}
+
+.nomePsicologo{
+    font-family: 'Oswald';
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 71.14px;
+    color: white;
+}
+
+.crp {
+    font-family: 'Oswald';
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 47.42px;
+    text-align: left;
+    color: #FFFFFF;
+
+}
+
+.sobrePsicologo {
+    font-family: 'Oswald';
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 41.5px;
+    color: white;
+}
+
+.textoSobre {
+    font-family: 'Rubik';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21.33px;
+    text-align: left;
+    color: white;
+}
+
+.fundoBranco {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+}
+
+.fundoRoxo {
+    border: 1px solid #4B67B1;
+    background: #A0A1DF4D;
+
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.fundoRoxo:hover {
+    cursor: pointer;
+}
+
+.vgr-cards .card-img {
+    width: 240px;
+    height: 260px;
+    position: absolute;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+}
+
+.textoRoxo {
+    font-family: 'Oswald';
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 29.64px;
+    text-align: center;
+    color: #4B67B1;
+
+}
+
+.icon {
+    font-size: 35px;
+    color: white;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    background-color: #4B67B1;
+    border-radius: 50%;
+}
+
+.subtexto {
+    font-family: 'Oswald';
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 22.23px;
+    text-align: center;
+    color: #4B67B1;
+    text-decoration: underline;
+}
+
+.sobre {
+    margin-top: 3%;
+}

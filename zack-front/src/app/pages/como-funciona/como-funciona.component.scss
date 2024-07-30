@@ -1,19 +1,152 @@
 .comoFunciona {
-    margin-top: 12%;
+  margin-top: 6%;
+  text-align: center;
+  background: white;
 }
 
-.comoFunciona{
-    text-align: center;
-  }
+.titulo {
+  margin-top: 1%;
+  color: #FC8E33;
+  font-family: Oswald;
+  font-size: 80px;
+  text-align: -webkit-center;
+  font-weight: bolder;
+  margin-bottom: 5%;
+}
 
-  .titulo{
-    margin-top: 3%;
-    color:#49654E;
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
-    text-align: -webkit-center;;
-  }
+.titulo2 {
+  font-family: "Oswald";
+  font-size: 45px;
+  font-weight: 500;
+  line-height: 133.38px;
+  text-align: center;
+  color: #2EC4B6;
+}
 
-  .lista {
-    text-align: left;
+.imagem2 {
+  width: 450.76px;
+  height: 353.43px;
+}
+
+.lista {
+  text-align: left;
+}
+
+.img-fluid {
+  border: 0.82px solid #AFE8D9;
+  width: 100px;
+  height: 100px;
+  width: 114.76px;
+  height: 79.43px;
+}
+
+.backgroudDiv {
+  background: #2BC4B65E;
+  width: 162px;
+  height: 162px;
+  top: 429.5px;
+  left: 123px;
+  gap: 0px;
+  border: 0.82px solid #AFE8D9;
+  border-radius: 17px 17px 17px 17px;
+
+}
+
+.card-text-r {
+  font-family: Rubik;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0.09em;
+  text-align: right;
+}
+
+.card-text-l {
+  font-family: Rubik;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0.09em;
+  text-align: left;
+}
+
+.card-title-r {
+  font-family: "Rubik";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0.09em;
+  text-align: right;
+}
+
+.card-title-l {
+  font-family: "Rubik";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0.09em;
+  text-align: left;
+}
+
+.btnAgendamento {
+  width: 244px;
+  height: 62px;
+  top: 2825px;
+  left: 120px;
+  gap: 0px;
+  border-radius: 20px;
+  border: 2px;
+  opacity: 0px;
+  background: #FAC317;
+  border: 2px solid #4B67B1;
+  font-family: "Rubik";
+  font-size: 20px;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 20%;
   }
+}
+
+.conteinerImg{
+  width: 162px;
+  height: 162px;
+  border-radius: 17px;
+  background: #2BC4B65E;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.no-border {
+  border: none;
+}
+
+.saibaMais {
+  width: 244px;
+  height: 62px;
+  top: 2825px;
+  left: 120px;
+  gap: 0px;
+  border-radius: 20px;
+  border: 2px;
+  opacity: 0px;
+  background: #397C76;
+  border: 2px solid #4B67B1;
+  font-family: "Rubik";
+  font-size: 20px;
+  margin-top: 2%;
+  margin-bottom: 3%;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 20%;
+  }
+}
+
+.centralizado {
+  text-align: -webkit-center;
+}

@@ -2,105 +2,103 @@
 <div class="loading-overlay" *ngIf="carregando">
   <div class="loader"></div>
 </div>
-<div class="col-md-10 offset-md-1">
-  <div class="conveio">
-    <h1 class="titulo"> Faça parte da Zack</h1>
-  </div>
-  <div class="card-group">
-    <div class="card">
-      <i class="bi bi-1-circle"></i>
-      <div class="card-body">
-        <h5 class="card-title">Envie seus dados básicos pelo formulário abaixo</h5>
-        <p class="card-text">Envie seus dados básicos como nome, número do CRP, e-mail e telefone através do formulário
-          abaixo.</p>
-      </div>
-    </div>
-    <div class="card">
-      <i class="bi bi-2-circle"></i>
-      <div class="card-body">
-        <h5 class="card-title">Receba o link de inscrição no seu e-mail</h5>
-        <p class="card-text">Enviaremos para o e-mail do psicólogo um link através do qual o psicólogo vai anexar o seu
-          currículo e informar detalhes como a(s) abordagem(ns) que atua.</p>
-      </div>
-    </div>
-    <div class="card">
-      <i class="bi bi-3-circle"></i>
-      <div class="card-body">
-        <h5 class="card-title">A Zack vai analisar o seu CV e retornará por e-mail</h5>
-        <p class="card-text">A equipe da Zack vai analisar o seu curriculo e em até 7 dias você receberá uma reposta
-          definitiva sobre a sua aprovação. Se você for aprovado, então você informará seus horários disponíveis para
-          incluirmos seu perfil no site.</p>
-      </div>
-    </div>
-  </div>
+<div class="fundoRoxo">
+  <div class="formulario" *ngIf="!enviado">
+    <div class="candidato">
+      <h1 class="center-div titulo">FORMULÁRIO DE CADASTRO</h1>
+      <form (ngSubmit)="submitForm()" #candidatoForm="ngForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" class="form-control form-control-md input" id="nome"
+            name="nome" [(ngModel)]="candidato.nome" required>
+          <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['nome']?.errors?.['required']"
+            class="text-danger">
+            O nome é obrigatório.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" class="form-control form-control-md input" id="email" name="email"
+            [(ngModel)]="candidato.email" required (input)="removeSpaces()">
+          <div *ngIf="candidatoForm.submitted && candidatoForm.controls['email']?.errors?.['required']"
+            class="text-danger">
+            O email é obrigatório.
+          </div>
+          <div *ngIf="candidatoForm.controls['email']?.errors?.['invalidEmail']" class="text-danger">
+            E-mail informado inválido!
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>CRP</label>
+            <input type="text" class="form-control form-control-md input" id="crp" name="endereco"
+              [(ngModel)]="candidato.crp" (input)="formatCRP($event)" maxlength="8" minlength="8" required>
+            <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['crp']?.errors?.['required']"
+              class="text-danger">
+              O CRP é obrigatório.
+            </div>
+            <div *ngIf="candidatoForm.controls['crp']?.errors?.['invalidCRP']" class="text-danger">
+              CRP informado inválido!
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Telefone</label>
+            <input type="text" class="form-control form-control-md input" id="telefone" name="telefone"
+              [(ngModel)]="candidato.telefone" (input)="formatTelefone($event)" maxlength="15" 
+              required>
+            <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['telefone']?.errors?.['required']"
+              class="text-danger">
+              O telefone é obrigatório.
+            </div>
+            <div *ngIf="candidatoForm.controls['telefone']?.errors?.['invalidTelefone']" class="text-danger">
+              Telefone informado inválido!
+            </div>
+          </div>
+        </div>
+        <br/>
+        <h4 class="anexosTitulo">ANEXO DE DOCUMENTOS</h4>
+        <div class="form-group center-div">
+          <div class="col-md-9">
+            <label for="curriculo">Currículo</label> <br>
+            <input type="file" class="form-control-file" id="curriculo" name="curriculo" (change)="onFileChange($event, 'curriculo')"
+              accept=".pdf,.doc,.docx" required [(ngModel)]="curriculo">
+            <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['curriculo']?.errors?.['required']"
+              class="text-danger">
+              O currículo é obrigatório.
+            </div>
+            <div *ngIf="candidatoForm.controls['curriculo']?.errors?.['fileType']" class="text-danger">
+              Apenas arquivos PDF, DOC e DOCX são permitidos.
+            </div>
+            <div *ngIf="candidatoForm.controls['curriculo']?.errors?.['fileSize']" class="text-danger">
+              O tamanho do arquivo não pode exceder 5MB.
+            </div>
+          </div>
+        </div>
 
-  <div class="candidato" *ngIf="!enviado">
-    <form (ngSubmit)="submitForm()" #candidatoForm="ngForm" enctype="multipart/form-data">
-      <div class="form-group">
-        <input type="text" placeholder="Nome Completo" class="form-control form-control-md input" id="nome" name="nome"
-          [(ngModel)]="candidato.nome" required>
-        <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['nome']?.errors?.['required']" class="text-danger">
-          O nome é obrigatório.
-        </div>
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-control form-control-md input" placeholder="E-mail" id="email" name="email"
-       [(ngModel)]="candidato.email" required (input)="removeSpaces()">
-        <div *ngIf="candidatoForm.submitted && candidatoForm.controls['email']?.errors?.['required']" class="text-danger">
-          O email é obrigatório.
-        </div>
-        <div *ngIf="candidatoForm.controls['email']?.errors?.['invalidEmail']" class="text-danger">
-         E-mail informado inválido!
-        </div>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control form-control-md input" id="telefone" name="telefone"
-          [(ngModel)]="candidato.telefone" (input)="formatTelefone($event)" maxlength="15" placeholder="Telefone"
-          required>
-        <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['telefone']?.errors?.['required']" class="text-danger">
-          O telefone é obrigatório.
-        </div>
-        <div *ngIf="candidatoForm.controls['telefone']?.errors?.['invalidTelefone']" class="text-danger">
-         Telefone informado inválido!
-         </div>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control form-control-md input" placeholder="CRP" id="crp" name="endereco"
-          [(ngModel)]="candidato.crp" (input)="formatCRP($event)" maxlength="8" minlength="8" required>
-        <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['crp']?.errors?.['required']" class="text-danger">
-          O CRP é obrigatório.
-        </div>
-        <div *ngIf="candidatoForm.controls['crp']?.errors?.['invalidCRP']" class="text-danger">
-          CRP informado inválido!
-         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-md-7">
-          <label for="curriculo">Currículo:</label> <br>
-          <input type="file" class="form-control-file" id="curriculo" name="curriculo" (change)="onFileChange($event)"
-            accept=".pdf,.doc,.docx" required [(ngModel)]="curriculo">
-          <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['curriculo']?.errors?.['required']" class="text-danger">
-            O currículo é obrigatório.
-          </div>
-          <div *ngIf="candidatoForm.controls['curriculo']?.errors?.['fileType']" class="text-danger">
-            Apenas arquivos PDF, DOC e DOCX são permitidos.
-          </div>
-          <div *ngIf="candidatoForm.controls['curriculo']?.errors?.['fileSize']" class="text-danger">
-            O tamanho do arquivo não pode exceder 5MB.
+        <div class="form-group center-div">
+          <div class="col-md-9">
+            <label for="historico">Histórico Acadêmico</label> <br>
+            <input type="file" class="form-control-file" id="historico" name="historico" (change)="onFileChange($event, 'historico')"
+              accept=".pdf,.doc,.docx" required [(ngModel)]="historico">
+            <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['historico']?.errors?.['required']"
+              class="text-danger">
+              O histórico é obrigatório.
+            </div>
+            <div *ngIf="candidatoForm.controls['historico']?.errors?.['fileType']" class="text-danger">
+              Apenas arquivos PDF, DOC e DOCX são permitidos.
+            </div>
+            <div *ngIf="candidatoForm.controls['historico']?.errors?.['fileSize']" class="text-danger">
+              O tamanho do arquivo não pode exceder 5MB.
+            </div>
           </div>
         </div>
-        <div class="col-md-2 offset-md-3">
-          <button type="submit" class="btn w-100" style="background-color:#49654E; color: white; font-size: 22px;">
+        <br/>
+        <div class="center-div">
+          <button type="submit" class="btn w-100 btnEnviar" [disabled]="!this.candidatoForm.valid">
             <i class="bi bi-send" style="font-size: 20px; color: white;"></i> Enviar
           </button>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-  <div class="divider">
-    <div></div>
-    <span>ou</span>
-    <div></div>
-  </div>
-  <app-login></app-login>
 </div>

@@ -1,25 +1,86 @@
-.espacoOpcao{
-    margin-right: 1%;
+.espacoOpcao {
+  margin-right: 1%;
 }
 
-.titulo{
-    text-align: center;   
-    margin-top: 2%;
+.titulo {
+  text-align: center;
+  margin-top: 2%;
 }
 
 .btn-remove-image {
-    position: absolute;
-    top: -5px;
-    right: -9px;
-    z-index: 2;
-    background: none;
-    border: none;
-    color: black; /* Cor do ícone "x" */
-    cursor: pointer;
-  }
-  
-  .btn-remove-image i {
-    font-size: 1.2em;
+  position: absolute;
+  top: -5px;
+  right: -9px;
+  z-index: 2;
+  background: none;
+  border: none;
+  color: black;
+  /* Cor do ícone "x" */
+  cursor: pointer;
+}
 
+.btn-secondary {
+  border-radius: 15px;
+  border: 1px solid #FFFFFF;
+  background: #6c757d;
+  font-family: 'Rubik';
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 30.88px;
+  text-align: center;
+}
 
-  }
+.btn-primary {
+  border-radius: 15px;
+  border: 1px solid #FFFFFF;
+  background: #0A9C8F;
+  font-family: 'Rubik';
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 30.88px;
+  text-align: center;
+}
+
+.botoes-pesquisa{
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+h2{
+  font-family: Oswald;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 47.42px;
+  color: #0A9C8F;
+}
+
+h1{
+  font-family: Oswald;
+  font-size: 55px;
+  font-weight: 700;
+  text-align: center;
+  color:#0A9C8F
+}
+
+.form-check-label{
+  font-family: Rubik;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 17.78px;
+  text-align: left;
+  color: black;
+}
+
+.btn-remove-image i {
+  font-size: 1.2em;
+}
+
+label {
+  color: #0A9C8F;
+  font-family: Oswald;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 35.57px;
+  text-align: left;
+
+}

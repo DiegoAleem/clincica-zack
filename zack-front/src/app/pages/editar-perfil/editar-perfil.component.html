@@ -1,5 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<app-btn-voltar-menu></app-btn-voltar-menu>
 <div class="col-md-10 offset-md-1">
+  <h1>CADASTRO DE PSICÓLOGOS</h1>
   <form (ngSubmit)="onSubmit()" #perfilForm="ngForm" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-2 d-flex align-items-center" style="position: relative;">
@@ -9,7 +11,7 @@
             style="margin-bottom: 10px;">Selecionar Foto</button>
         </div>
         <img *ngIf="selectedFileDataUrl" [src]="selectedFileDataUrl" alt="Imagem selecionada" class="preview-image"
-          style="position: absolute; top: 0; left: 0; max-width: 100%; max-height: 100%;">
+          style="max-width: 100%; max-height: 100%;">
         <button *ngIf="selectedFileDataUrl" type="button" class="btn btn-danger btn-remove-image" (click)="removePhoto()"
           style="position: absolute;"><i class="bi bi-x" style="background-color: white;"></i></button>
       </div>
@@ -22,7 +24,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col col-md-5">
             <label for="sobrenome">Sobrenome:</label>
             <input type="text" class="form-control form-control-md input" [(ngModel)]="perfil.sobrenome"
               name="sobrenome" required>
@@ -36,6 +38,13 @@
         name="linkAtendimentoOnline">
     </div>
     <div class="row">
+      <div class="col">
+        <label for="sexo">Sexo:</label>
+        <select class="form-control form-control-md input" [(ngModel)]="perfil.sexo" name="sexo">
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+      </div>
       <div class="col">
         <label for="crp">CRP:</label>
         <input type="text" class="form-control form-control-md input" [(ngModel)]="perfil.crp" name="crp" required>
@@ -52,179 +61,122 @@
     </div>
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="row">
-          <div class="col">
-            <label>Aceita cartão:</label>
+          <div class="col-md-4">
+            <h2>Atendimentos</h2>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isCartao" name="isCartao" [value]="true">
-              <label class="form-check-label" for="cartaoSim">Sim</label>
+              <input class="form-check-input" type="checkbox" [(ngModel)]="perfil.atendeCrianca" name="atendeCrianca" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Crianças
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isCartao" name="isCartao"
-                [value]="false">
-              <label class="form-check-label" for="cartaoNao">Não</label>
-            </div>
-          </div>
-
-          <div class="col">
-            <label>Aceita PIX:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPix" name="isPix" [value]="true">
-              <label class="form-check-label" for="pixSim">Sim</label>
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.atendeAdolescente" name="atendeAdolescente">
+              <label class="form-check-label" for="flexCheckDefault">
+                Adolescentes
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPix" name="isPix" [value]="false">
-              <label class="form-check-label" for="pixNao">Não</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-3">
-          <div class="col">
-            <label>Aceita transferência:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isTransferencia" name="isTransferencia"
-                [value]="true">
-              <label class="form-check-label" for="transferenciaSim">Sim</label>
+              <input class="form-check-input" type="checkbox"   id="flexCheckDefault" [(ngModel)]="perfil.atendeAdulto" name="atendeAdulto">
+              <label class="form-check-label" for="flexCheckDefault">
+                Adultos
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isTransferencia" name="isTransferencia"
-                [value]="false">
-              <label class="form-check-label" for="transferenciaNao">Não</label>
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.atendeIdoso" name="atendeIdoso">
+              <label class="form-check-label" for="flexCheckDefault">
+                Idosos
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.atendeCasais" name="atendeCasais">
+              <label class="form-check-label" for="flexCheckDefault">
+                Casais
+              </label>
             </div>
           </div>
 
-          <div class="col">
-            <label>Aceita plano:</label>
+          <div class="col-md-4">
+            <h2>Pagamentos</h2>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPlano" name="isPlano" [value]="true">
-              <label class="form-check-label" for="planoSim">Sim</label>
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.cartao" name="cartao">
+              <label class="form-check-label" for="flexCheckDefault">
+               Cartões Débito/Crédito
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.isPlano" name="isPlano" [value]="false">
-              <label class="form-check-label" for="planoNao">Não</label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-
-        <div class="row">
-          <div class="col">
-            <label for="atendeCrianca">Atende crianças:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeCrianca" name="atendeCrianca"
-                [value]="true">
-              <label class="form-check-label" for="atendeCriancaSim">Sim</label>
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.pix" name="pix">
+              <label class="form-check-label" for="flexCheckDefault">
+                Pix
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeCrianca" name="atendeCrianca"
-                [value]="false">
-              <label class="form-check-label" for="atendeCriancaNao">Não</label>
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.transferencia" name="transferência">
+              <label class="form-check-label" for="flexCheckDefault">
+                Transferência
+              </label>
             </div>
           </div>
 
-          <div class="col">
-            <label for="atendeAdolescente">Atende adolescentes:</label>
+          <div class="col-md-4">
+            <h2>Consultas</h2>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdolescente"
-                name="atendeAdolescente" [value]="true">
-              <label class="form-check-label" for="atendeAdolescenteSim">Sim</label>
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.particular" name="particular">
+              <label class="form-check-label" for="flexCheckDefault">
+                Particular
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdolescente"
-                name="atendeAdolescente" [value]="false">
-              <label class="form-check-label" for="atendeAdolescenteNao">Não</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-3">
-          <div class="col">
-            <label for="atendeAdulto">Atende adultos:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdulto" name="atendeAdulto"
-                [value]="true">
-              <label class="form-check-label" for="atendeAdultoSim">Sim</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeAdulto" name="atendeAdulto"
-                [value]="false">
-              <label class="form-check-label" for="atendeAdultoNao">Não</label>
+              <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="perfil.plano" name="plano">
+              <label class="form-check-label" for="flexCheckDefault">
+               Convênio
+              </label>
             </div>
           </div>
-
-          <div class="col">
-            <label for="atendeIdoso">Atende idosos:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeIdoso" name="atendeIdoso"
-                [value]="true">
-              <label class="form-check-label" for="atendeIdosoSim">Sim</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" [(ngModel)]="perfil.atendeIdoso" name="atendeIdoso"
-                [value]="false">
-              <label class="form-check-label" for="atendeIdosoNao">Não</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="row col-md-6">
-        <label for="tempoConsulta1">Tempo de consulta de:</label>
-        <div class="cs-form col-md-5">
-          <input type="time" class="form-control" [(ngModel)]="perfil.tempoConsulta1" name="tempoConsulta1"
-            value="10:05 AM" />
-        </div>
-        à
-        <div class="cs-form col-md-5">
-          <input type="time" class="form-control" [(ngModel)]="perfil.tempoConsulta2" name="tempoConsulta2"
-            value="10:05 AM" />
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <label for="sexo">Sexo:</label>
-        <select class="form-control form-control-md input" [(ngModel)]="perfil.sexo" name="sexo">
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <h5 class="titulo">Tipos de Abordagem</h5>
-      <div class="d-flex flex-wrap">
-        <div *ngFor="let tipoAbordagem of tiposAbordagem; let i = index" class="mr-4 mb-4 espacoOpcao">
-          <input class="form-check-input" type="checkbox" [id]="'checkbox' + i"
-          [checked]="tipoAbordagem.selected"
-            (change)="onCheckboxChangeTiposAbordagem($event, tipoAbordagem)">
-          <label class="form-check-label" [for]="'checkbox' + i">{{tipoAbordagem.tipo}}</label>
         </div>
       </div>
     </div>
     <div class="col-md-12">
-      <h5 class="titulo">Especialidades</h5>
-      <div class="d-flex flex-wrap">
-        <div *ngFor="let especialidade of especialidades; let i = index" class="mr-4 mb-4 espacoOpcao">
-          <input class="form-check-input" type="checkbox" [id]="'checkbox' + i"
-          [checked]="especialidade.selected"
-            (change)="onCheckboxChangeEspecialidade($event, especialidade)">
-          <label class="form-check-label" [for]="'checkbox' + i">{{especialidade.nome}}</label>
-        </div>
-      </div>
+      <h2 style="text-align: center;">Tipos de Abordagem</h2>
+      <ng-multiselect-dropdown [placeholder]="'Abordagem Terapêutica'"
+        id="multiAbordagem"
+        [settings]="dropdownSettingsAbordagem" 
+        [data]="tiposAbordagem"
+        [(ngModel)]="perfil.tiposAbordagem"
+         name="abordagem">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-12">
+      <h2 style="text-align: center;">Especialidades</h2>
+      <ng-multiselect-dropdown [placeholder]="'Especialidades'"
+        id="multiEspecialidades"
+        [settings]="dropdownSettingsEspecialidades" 
+        [data]="especialidades"
+        [(ngModel)]="perfil.especialidades"
+         name="especialidades">
+      </ng-multiselect-dropdown>
     </div>
     <div>
       <label for="formacaoECursos">Formação e Cursos:</label>
-      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.formacaoECursos"
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.formacaoECursos" style="height: 150px;"
         name="formacaoECursos"></textarea>
     </div>
     <div>
       <label for="sobreMim">Sobre mim:</label>
-      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.sobreMim" name="sobreMim"></textarea>
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.sobreMim" name="sobreMim" style="height: 150px;"></textarea>
     </div>
-    <button type="submit">Cadastrar</button>
+    <div>
+      <label for="sobreMim">Breve descrição(Um resumo do "Sobre mim"):</label>
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.breveDescricao" name="breveDescricao" style="height: 50px;"></textarea>
+    </div>
+    <div class="col-md-12 d-flex justify-content-end botoes-pesquisa">
+      <button type="button" class="btn btn-labeled btn-secondary me-2" >
+          <span class="btn-label"><i class="bi bi-trash"></i></span> Limpar Dados
+      </button>
+      <button type="submit" class="btn btn-labeled btn-primary">
+          <span class="btn-label"><i class="bi bi-floppy"></i></span> Salvar Dados
+      </button>
+  </div>
   </form>
 </div>

@@ -1,7 +1,32 @@
 .footer {
-    background-color: #49654E;
+    background-color: #397C76;
     color: white;
-    text-align: center;
     padding: 30px;
-    margin-top: 5%;
+}
+
+.titulo {
+    font-family: "Rubik";
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23.7px;
+    text-align: left;
+    color: #65CFC6;
+
+}
+
+.info {
+    font-family: "Rubik";
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.59px;
+    text-align: left;
+   
+}
+
+a{
+    margin-right: 3%;
+}
+
+i{
+    font-size: x-large;
 }

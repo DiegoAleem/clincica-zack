@@ -1,0 +1,34 @@
+.container.marketing .row {
+    display: flex;
+    align-items: center;
+}
+
+.container.marketing .col-lg-4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    text-align: center;
+
+    border-radius: 85px;
+    opacity: 0px;
+    background: #FAC3171A;
+
+}
+
+.marketing .perfil{
+    margin: 2%;
+}
+
+
+
+.titulo {
+    font-family: "Oswald";
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 65.21px;
+    text-align: center;
+    color: #4B67B1;
+
+}

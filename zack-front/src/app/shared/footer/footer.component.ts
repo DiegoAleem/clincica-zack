@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -7,6 +8,30 @@ import { Component } from '@angular/core';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit{
 
+  constructor(private router: Router){
+
+  }
+ 
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+ 
+  
+  navigate(url: string){
+    this.router.navigate([url]);
+}
+
+  navigateAndScroll(subOpcao:string): void {
+    const urlWithAnchor = '/home';
+    this.router.navigate([urlWithAnchor]).then(() => {
+      setTimeout(() => {
+        const element = document.getElementById(subOpcao);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    });
+  }
 }

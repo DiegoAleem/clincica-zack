@@ -15,10 +15,11 @@ export class CandidatoService {
     this.tokenInterceptor = new TokenInterceptor();
   }
 
-  registrarCandidato(json: string, curriculo: File) {
+  registrarCandidato(json: string, curriculo: File, historico: File) {
     const formData = new FormData();
     formData.append('json', json);
     formData.append('curriculo', curriculo);
+    formData.append('historico', historico);
 
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');

@@ -1,0 +1,51 @@
+.fundoRoxo {
+    background: #A0A1DF8F;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Centraliza horizontalmente os cards */
+}
+
+.card {
+    margin: 10px;
+    border: none;
+    background: #F4FFFC;
+    width: 647px;
+    height: 200px;
+    border-radius: 25px;
+    max-width: 540px;
+
+    @media screen and (max-width: 768px) {
+        max-width: fit-content;
+      }
+}
+
+.card-title {
+    font-family: Rubik;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: 0.09em;
+    text-align: left;
+}
+
+.card-text {
+    font-family: Rubik;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.09em;
+    text-align: left;
+}
+
+img{
+    margin-top: 6%;
+    width: 170px;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+}

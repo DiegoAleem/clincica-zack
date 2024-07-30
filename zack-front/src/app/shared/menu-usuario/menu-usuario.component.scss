@@ -3,18 +3,22 @@
     align-items: center;
     text-align: center;
     border-color: transparent;
-    /* torna a cor da borda transparente */
     box-shadow: none;
-    /* remove a sombra do card */
+    background: #2BC4B65E;
 }
 
 i {
-    font-size: 40px;
-    color: #49654E;
+    font-size: 80px;
+    color: #4B67B1;
+}
+
+.card-title{
+    font-size: 13px;
+    color: #4B67B1;
 }
 
 .menu {
-    margin-top: 2%;
+    margin-top: 10%;
 }
 
 .conteudo {
