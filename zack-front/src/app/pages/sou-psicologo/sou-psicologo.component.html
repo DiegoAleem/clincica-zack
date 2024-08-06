@@ -101,4 +101,8 @@
       </form>
     </div>
   </div>
+  <div *ngIf="enviado" class="center-div2 col-md-7">
+    <h2 class="titulo">Formulário Enviado!</h2>
+    <button type="button" (click)="navigate('/home')" class="btn btn-agendamento">Clique aqui pra voltar</button>
+  </div>
 </div>

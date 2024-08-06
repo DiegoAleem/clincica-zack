@@ -1,4 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="loading-overlay" *ngIf="carregando">
+  <div class="loader"></div>
+</div>
 <app-btn-voltar-menu></app-btn-voltar-menu>
 <div class="col-md-10 offset-md-1">
   <h1>CADASTRO DE PSICÓLOGOS</h1>
@@ -122,13 +125,13 @@
           <div class="col-md-4">
             <h2>Consultas</h2>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.particular" name="particular">
+              <input class="form-check-input" type="checkbox"  id="flexCheckDefault" [(ngModel)]="perfil.atendeParticular" name="particular">
               <label class="form-check-label" for="flexCheckDefault">
                 Particular
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="perfil.plano" name="plano">
+              <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="perfil.atendePlano" name="plano">
               <label class="form-check-label" for="flexCheckDefault">
                Convênio
               </label>
@@ -160,18 +163,18 @@
     <div>
       <label for="formacaoECursos">Formação e Cursos:</label>
       <textarea class="form-control form-control-md input" [(ngModel)]="perfil.formacaoECursos" style="height: 150px;"
-        name="formacaoECursos"></textarea>
+        name="formacaoECursos" maxlength="2000"></textarea>
     </div>
     <div>
       <label for="sobreMim">Sobre mim:</label>
-      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.sobreMim" name="sobreMim" style="height: 150px;"></textarea>
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.sobreMim" name="sobreMim" style="height: 150px;" maxlength="2000"></textarea>
     </div>
     <div>
       <label for="sobreMim">Breve descrição(Um resumo do "Sobre mim"):</label>
-      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.breveDescricao" name="breveDescricao" style="height: 50px;"></textarea>
+      <textarea class="form-control form-control-md input" [(ngModel)]="perfil.breveDescricao" name="breveDescricao" style="height: 50px;" maxlength="150"></textarea>
     </div>
     <div class="col-md-12 d-flex justify-content-end botoes-pesquisa">
-      <button type="button" class="btn btn-labeled btn-secondary me-2" >
+      <button type="button" class="btn btn-labeled btn-secondary me-2" (click)="limparForm()">
           <span class="btn-label"><i class="bi bi-trash"></i></span> Limpar Dados
       </button>
       <button type="submit" class="btn btn-labeled btn-primary">

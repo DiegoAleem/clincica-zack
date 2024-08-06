@@ -9,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class ConvenioComponent {
 
+  whatsApp(link: string){
+    window.open(link);
+  }
 }

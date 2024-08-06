@@ -28,4 +28,6 @@ public interface PerfilService {
 
    Page<Perfil> getPerfisFiltroMelhorAvaliados(PesquisaDTO pesquisa, Pageable pageable);
 
+   Page<Perfil> getPerfisAll(String filtro, Pageable pageable);
+
 }

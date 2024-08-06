@@ -31,8 +31,18 @@ public class UsuarioController {
         Optional<Usuario> usuario = usuarioService.findById(id);
         if(usuario.isPresent()) {
             usuarioService.desativarUsuario(usuario.get());
-            return ResponseEntity.ok("sucesso!");
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok("sucesso!");
+        return ResponseEntity.notFound().build();
+    }
+    
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<String> ativarUsuario(@PathVariable String id){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if(usuario.isPresent()) {
+            usuarioService.ativarUsuario(usuario.get());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

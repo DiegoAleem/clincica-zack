@@ -39,7 +39,7 @@ export class ListarPerfisComponent implements OnInit {
 
   getPerfis(): void {
     this.carregando = true;
-    this.perfilService.getPerfis(this.paginaAtual, this.filtro, this.campoOrdenado, this.ordem).subscribe(
+    this.perfilService.getAllPerfis(this.paginaAtual, this.filtro, this.campoOrdenado, this.ordem).subscribe(
       (objetos) => {
         this.perfis = objetos.content;
         this.totalPaginas = objetos.totalPages;
@@ -72,7 +72,6 @@ export class ListarPerfisComponent implements OnInit {
     } else {
       this.ordem = 'ASC';
     }
-    console.log(this.ordem);
     this.getPerfis();
   }
 
@@ -83,15 +82,37 @@ export class ListarPerfisComponent implements OnInit {
   desativar(id: number){
     this.carregando = true;
     this.perfilService.desativarUsuario(id).subscribe(
-      retorno => {
+      (retorno) => {
         this.getPerfis();
         this.toastService.success("Usuário desativado com sucesso!", "Sucesso", {
           timeOut: 7000,
           closeButton: true 
         });
-
+        console.log(retorno);
       },
-      error => {
+      (error) => {
+        this.getPerfis();
+        this.carregando = false;
+        this.toastService.error("Tente novamente mais tarde.", "Erro inesperado!", {
+          timeOut: 7000,
+          closeButton: true  
+        });
+      }
+    );
+  }
+
+  ativar(id: number){
+    this.carregando = true;
+    this.perfilService.ativarUsuario(id).subscribe(
+      (retorno) => {
+        this.getPerfis();
+        this.toastService.success("Usuário ativado com sucesso!", "Sucesso", {
+          timeOut: 7000,
+          closeButton: true 
+        });
+        console.log(retorno);
+      },
+      (error) => {
         this.getPerfis();
         this.carregando = false;
         this.toastService.error("Tente novamente mais tarde.", "Erro inesperado!", {

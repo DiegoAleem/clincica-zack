@@ -19,40 +19,38 @@
         <div class="filtro">
             <form (ngSubmit)="onSubmit()" #pesquisaForm="ngForm">
                 <div class="row col-md-4 offset-md-4">
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-primary active">
-                            <input type="radio" name="options" [(ngModel)]="pesquisa.isOnline" value="1" id="option1"
-                                name="isOnline" class="radio" autocomplete="off">Atendimento<br />online
-                        </label>
-                        <label class="btn btn-primary btn-online-2">
-                            <input type="radio" name="options" [(ngModel)]="pesquisa.isOnline" value="2" id="option2"
-                                class="radio" name="isOnline" autocomplete="off">Atendimento<br />presencial
-                        </label>
-                    </div>
                 </div>
                 <br />
                 <div
                     class="row input-group flex-nowrap justify-content-center align-items-center col-md-10 offset-md-1">
-                    <input type="text" class="form-control" placeholder="Pesquisar por nome" aria-label="Pesquisar"
-                        aria-describedby="addon-wrapping">
+                    <input type="text" class="form-control" [(ngModel)]="pesquisa.nome" placeholder="Pesquisar por nome" aria-label="Pesquisar"
+                        aria-describedby="addon-wrapping" name="nome" id="nome">
                 </div>
                 <br />
                 <div class="accordion row col-md-10 offset-md-1" id="accordionExample">
                     <div class="accordion-item">
-                        <a class="accordion-button collapsed center-content" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <a class="accordion-button center-content" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                             <h6 class="accordion-header" id="headingTwo" style="margin-left: 45%;">
                                 Mais Filtros
                             </h6>
                         </a>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Tipo de atendimento</h5>
+                                                <h5 class="card-title">Modalidade de Atendimento</h5>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="null"
+                                                        [(ngModel)]="pesquisa.tipoAtendimento" value="null"
+                                                        id="null">
+                                                    <label class="form-check-label" for="null">
+                                                        Todas as opções
+                                                    </label>
+                                                </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="particular"
                                                         [(ngModel)]="pesquisa.tipoAtendimento" value="particular"
@@ -71,41 +69,40 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4" *ngIf="this.pesquisa.tipoAtendimento == 'particular'">
+                                    <div class="col-sm-3">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Forma de pagamento</h5>
+                                                <h5 class="card-title">Tipo de Atendimento</h5>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="flexCheckDefault"
-                                                        (change)="onCheckboxChangeFormaPagamento($event, 'pix')">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        Pix
+                                                    <input class="form-check-input" type="radio" name="online"
+                                                    [(ngModel)]="pesquisa.isOnline" value="null"
+                                                        id="online">
+                                                    <label class="form-check-label" for="online">
+                                                        Todas as opções
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="flexCheckChecked"
-                                                        (change)="onCheckboxChangeFormaPagamento($event, 'cartao')">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        Cartão
+                                                    <input class="form-check-input" type="radio" name="online"
+                                                        [(ngModel)]="pesquisa.isOnline" value="1"
+                                                        id="online">
+                                                    <label class="form-check-label" for="online">
+                                                        On-Line
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="flexCheckChecked"
-                                                        (change)="onCheckboxChangeFormaPagamento($event, 'transferencia')">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        Transferência
+                                                    <input class="form-check-input" type="radio" name="presencial" id="presencial"
+                                                        [(ngModel)]="pesquisa.isOnline" value="0">
+                                                    <label class="form-check-label" for="presencial">
+                                                        Presencial
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Que atende</h5>
+                                                <h5 class="card-title">Público Atendido</h5>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         (change)="onCheckboxChangeAtendimento($event, 'Criança')"
@@ -149,9 +146,41 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h5 *ngIf="this.pesquisa.tipoAtendimento == 'particular'">Valor da consulta: </h5>
+                                    <div class="col-sm-3" *ngIf="this.pesquisa.tipoAtendimento != 'plano'">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Forma de pagamento</h5>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexCheckDefault"
+                                                        (change)="onCheckboxChangeFormaPagamento($event, 'pix')">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Pix
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexCheckChecked"
+                                                        (change)="onCheckboxChangeFormaPagamento($event, 'cartao')">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Cartão
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexCheckChecked"
+                                                        (change)="onCheckboxChangeFormaPagamento($event, 'transferencia')">
+                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                        Transferência
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h5 *ngIf="this.pesquisa.tipoAtendimento != 'plano'">Valor da consulta: </h5>
                                     <div class="btn-group" role="group"
-                                        *ngIf="this.pesquisa.tipoAtendimento == 'particular'"
+                                        *ngIf="this.pesquisa.tipoAtendimento != 'plano'"
                                         aria-label="Basic radio toggle button group">
                                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
                                             autocomplete="off" [(ngModel)]="pesquisa.valorConsulta" value="1">
@@ -180,7 +209,8 @@
                                     " for="btnradio6">Todos</label>
                                     </div>
                                     <br />
-                                    <ng-multiselect-dropdown [placeholder]="'Abordagem Terapêutica'"
+                                    <h5 class="card-title">Abordagem Psicológica</h5>
+                                    <ng-multiselect-dropdown [placeholder]="'Tipo'"
                                         id="multi"
                                         [settings]="dropdownSettings" [data]="tiposAbordagem"
                                         [(ngModel)]="pesquisa.abordagem" name="abordagem">
@@ -203,15 +233,15 @@
             <br />
             <br />
             <br />
-            <div *ngIf="perfis.length === 0 && !carregando">
-                <p>Nenhum perfil encontrado.</p>
+            <div *ngIf="perfis.length === 0 && !carregando" style="text-align: center;">
+                <p class="noData">Nenhum perfil encontrado.</p>
             </div>
             <div class="lista-psicologos col-md-10 offset-md-1" *ngFor="let perfil of perfis">
                 <div class="card-group vgr-cards">
                     <div class="card" style="background: #75C6BE;">
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="card-img-body" style="margin-top: 2%;">
+                                <div class="card-img-body d-md-flex flex-md-column" style="margin-top: 2%;">
                                     <img class="img-thumbnail" style="height: 210px !important; border-radius: 30px;"
                                         [src]="perfil.selectedFileDataUrl" alt="Card image cap">
                                 </div>
@@ -258,7 +288,7 @@
                                 <div class="sobre">
                                     <h5 class="sobrePsicologo">Sobre o Psicólogo</h5>
                                     <p class="textoSobre">
-                                        {{perfil.sobreMim}}
+                                        {{perfil.breveDescricao}}
                                     </p>
                                     <a type="button" class="btn btn-link"(click)="navigate(perfil)">
                                         Ver Perfil Completo
@@ -269,38 +299,44 @@
                         <div
                             class="col-md-4 fundoBranco d-md-flex flex-md-column justify-content-center align-items-center">
                             <div class="mb-3 row col-md-12" style="margin-top: 4%;">
-                                <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
-                                    style="height: 100%;">
-                                    <div class="align-items-center circle" style="margin-right: 4rem;">
-                                        <i class="bi bi-whatsapp icon"></i>
+                                <button class="fundoRoxo d-flex align-items-center justify-content-between flex-fill"
+                                    style="height: 100%;" (click)='whatsApp("https://wa.me/5561982607070?text=Ol%C3%A1%2C+gostaria+de+tirar+uma+duvida.")'>
+                                    <div class="d-flex align-items-center">
+                                        <div class="circle" style="margin-right: 1rem;">
+                                            <i class="bi bi-whatsapp icon"></i>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-column align-items-start text-center">
+                                    <div class="d-flex flex-column align-items-center text-center flex-grow-1">
                                         <h6 class="textoRoxo mb-0">Dúvidas? Fale Conosco</h6>
                                         <p class="subtexto mb-0">Enviar Mensagem No Whatsapp</p>
                                     </div>
                                 </button>
                             </div>
-                            <div class="mb-3 row col-md-12">
-                                <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
-                                    style="height: 100%;">
-                                    <div class="align-items-center circle me-5">
-                                        <i class="bi bi-globe icon"></i>
+                            <div class="mb-3 row col-md-12" *ngIf="perfil.linkAtendimento != null">
+                                <button class="fundoRoxo d-flex align-items-center justify-content-between flex-fill"
+                                    style="height: 100%;" (click)="whatsApp(perfil.linkAtendimento)">
+                                    <div class="d-flex align-items-center">
+                                        <div class="circle me-2">
+                                            <i class="bi bi-globe icon"></i>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-column align-items-start">
+                                    <div class="d-flex flex-column align-items-center text-center flex-grow-1">
                                         <h6 class="textoRoxo mb-0">Agende Sua Consulta Online</h6>
-                                        <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                                        <p class="subtexto mb-0" >Agendar Agora</p>
                                     </div>
                                 </button>
                             </div>
                             <div class="mb-3 row col-md-12">
-                                <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
-                                    style="height: 100%;" (click)='whatsApp("https://wa.me/5561982573833?text=Ol%C3%A1%2C+gostaria+de+agendar+uma+consulta.")'>
-                                    <div class="align-items-center circle me-4">
-                                        <i class="bi bi-geo-alt icon"></i>
+                                <button class="fundoRoxo d-flex align-items-center justify-content-between flex-fill"
+                                    style="height: 100%;" (click)='whatsApp("https://wa.me/5561982607070?text=Ol%C3%A1%2C+gostaria+de+agendar+uma+consulta.")'>
+                                    <div class="d-flex align-items-center">
+                                        <div class="circle me-2">
+                                            <i class="bi bi-geo-alt icon"></i>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-column align-items-start">
+                                    <div class="d-flex flex-column align-items-center text-center flex-grow-1">
                                         <h6 class="textoRoxo mb-0">Agende Sua Consulta Presencial</h6>
-                                        <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                                        <p class="subtexto mb-0">Agendar Agora</p>
                                     </div>
                                 </button>
                             </div>

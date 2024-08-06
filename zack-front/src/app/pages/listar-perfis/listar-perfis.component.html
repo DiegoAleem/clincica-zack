@@ -37,11 +37,14 @@
           </td>
           <td>
             <div class="d-flex justify-content-evenly">
-              <button (click)="editar(perfil.id)" type="button" class="btn btn-success">Editar</button>
+              <button (click)="editar(perfil.id)" type="button" class="btn btn-info">Editar</button>
             </div>
             <br />
-            <div class="d-flex justify-content-evenly">
-              <button (click)="desativar(perfil.id)" type="button" class="btn btn-danger">Desativar</button>
+            <div class="d-flex justify-content-evenly" *ngIf="perfil.usuario.ativo">
+              <button (click)="desativar(perfil.usuario.id)" type="button" class="btn btn-danger">Desativar</button>
+            </div>
+            <div class="d-flex justify-content-evenly" *ngIf="!perfil.usuario.ativo">
+              <button (click)="ativar(perfil.usuario.id)" type="button" class="btn btn-success">Ativar</button>
             </div>
           </td>
         </tr>

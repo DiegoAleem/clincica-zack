@@ -15,6 +15,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.zack.domain.model.Perfil;
 import com.zack.domain.model.Role;
 import com.zack.domain.model.Usuario;
 
@@ -24,7 +25,7 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(Usuario user) {
+    public String generateToken(Usuario user, Perfil perfil) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             
@@ -36,6 +37,7 @@ public class TokenService {
                     .withSubject(user.getEmail())
                     .withClaim("roles",  roleIds)
                     .withClaim("userId", user.getId())
+                    .withClaim("perfilId", perfil.getId())
                     .withExpiresAt(generateExpiretionDate())
                     .sign(algorithm);
         } catch (JWTCreationException e) {

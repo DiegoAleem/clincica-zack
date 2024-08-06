@@ -12,4 +12,6 @@ public interface UsuarioService {
     Optional<Usuario> findById(String id);
 
     Usuario desativarUsuario(Usuario usuario);
+
+    Usuario ativarUsuario(Usuario usuario);
 }

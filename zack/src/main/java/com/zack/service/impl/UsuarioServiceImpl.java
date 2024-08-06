@@ -13,7 +13,6 @@ import com.zack.domain.model.Role;
 import com.zack.domain.model.Usuario;
 import com.zack.repositories.RoleRepository;
 import com.zack.repositories.UsuarioRepository;
-import com.zack.service.EmailService;
 import com.zack.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ public class UsuarioServiceImpl implements UsuarioService{
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final EmailService emailService;
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
     
     @Override
@@ -40,7 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         String senha = this.generatePassword(12);
         usuario.setSenha(passwordEncoder.encode(senha));
         usuario.setAtivo(true);
-        emailService.enviarSenha(usuario.getEmail(), senha);
+    //    emailService.enviarSenha(usuario, senha);
         return usuarioRepository.save(usuario);
         } catch (Exception e) {
             e.getStackTrace();
@@ -71,6 +69,12 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public Usuario desativarUsuario(Usuario usuario) {
         usuario.setAtivo(false);
+        return usuarioRepository.save(usuario);
+    }
+    
+    @Override
+    public Usuario ativarUsuario(Usuario usuario) {
+        usuario.setAtivo(true);
         return usuarioRepository.save(usuario);
     }
 

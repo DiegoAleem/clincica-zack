@@ -1,35 +1,37 @@
 .fundoRoxo {
     background: #A0A1DF8F;
-    align-items: center;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Garante que o fundo ocupe toda a altura da viewport */
 }
 
 .row {
     flex-wrap: wrap;
-    justify-content: center;
-    /* Centraliza horizontalmente os cards */
+    justify-content: center; /* Centraliza horizontalmente os cards */
 }
 
 .card {
     margin: 10px;
     border: none;
     background: #F4FFFC;
-    width: 647px;
-    height: 200px;
     border-radius: 25px;
-    max-width: 540px;
+    height: 200px; /* Altura fixa para os cartões */
+    display: flex;
+    flex-direction: column; /* Organiza o conteúdo verticalmente */
+}
 
-    @media screen and (max-width: 768px) {
-        max-width: fit-content;
-      }
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza o conteúdo verticalmente dentro do card-body */
+    padding: 15px;
 }
 
 .card-title {
     font-family: Rubik;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
-    line-height: 32px;
-    letter-spacing: 0.09em;
     text-align: left;
 }
 
@@ -37,15 +39,43 @@
     font-family: Rubik;
     font-size: 13px;
     font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 0.09em;
     text-align: left;
 }
 
-img{
-    margin-top: 6%;
-    width: 170px;
-    @media screen and (max-width: 768px) {
-      display: none;
+.img-container {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente a imagem */
+    justify-content: center; /* Centraliza horizontalmente a imagem */
+}
+
+img {
+    display: block; /* Remove o espaço em branco ao redor da imagem */
+    max-width: 85%; /* Garante que a imagem não ultrapasse a largura do cartão */
+    height: auto; /* Mantém a proporção da imagem */
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorção */
+    margin-top: 3%;
+}
+
+.saibaMais {
+    width: 244px;
+    height: 62px;
+    top: 2825px;
+    left: 120px;
+    gap: 0px;
+    border-radius: 20px;
+    border: 2px;
+    opacity: 0px;
+    background: #397C76;
+    border: 2px solid #4B67B1;
+    font-family: "Rubik";
+    font-size: 20px;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    color: white;
+  }
+
+@media screen and (max-width: 768px) {
+    img {
+        display: none; /* Oculta a imagem em telas menores */
     }
 }

@@ -45,7 +45,7 @@ public class PerfilController {
     private final UsuarioService usuarioService;
     
     @GetMapping("/filtrados")
-    public ResponseEntity<Page<Perfil>> getAll(@RequestParam(defaultValue = "") String filtro, @RequestParam(defaultValue = "0") int pagina, @RequestParam(defaultValue = "10") int tamanhoPagina,
+    public ResponseEntity<Page<Perfil>> getFiltrados(@RequestParam(defaultValue = "") String filtro, @RequestParam(defaultValue = "0") int pagina, @RequestParam(defaultValue = "10") int tamanhoPagina,
             @RequestParam(required = false, defaultValue = "nome") String campoOrdenado, @RequestParam(required = false, defaultValue = "ASC") String ordem) {
         Pageable pageable;
         if (ordem.equals("ASC")) {
@@ -54,6 +54,19 @@ public class PerfilController {
             pageable = PageRequest.of(pagina - 1, tamanhoPagina, Sort.by(Sort.Direction.DESC, campoOrdenado));
         }
         return ResponseEntity.ok(perfilService.getPerfis(filtro, pageable));
+    }
+    
+    @GetMapping("/all-filtrados")
+    public ResponseEntity<Page<Perfil>> getAll(@RequestParam(defaultValue = "") String filtro, @RequestParam(defaultValue = "0") int pagina, @RequestParam(defaultValue = "10") int tamanhoPagina,
+            @RequestParam(required = false, defaultValue = "nome") String campoOrdenado, @RequestParam(required = false, defaultValue = "ASC") String ordem) {
+        Pageable pageable;
+        if (ordem.equals("ASC")) {
+            pageable = PageRequest.of(pagina - 1, tamanhoPagina, Sort.by(Sort.Direction.ASC, campoOrdenado));
+        } else {
+            pageable = PageRequest.of(pagina - 1, tamanhoPagina, Sort.by(Sort.Direction.DESC, campoOrdenado));
+        }
+        Page<Perfil> perfis = perfilService.getPerfisAll(filtro, pageable);
+        return ResponseEntity.ok(perfis);
     }
     
     @GetMapping("/filtrados-melhor-avaliados")

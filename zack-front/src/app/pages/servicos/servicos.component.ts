@@ -9,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class ServicosComponent {
 
+  whatsApp(link: string|undefined){
+    window.open(link);
+  }
+
 }

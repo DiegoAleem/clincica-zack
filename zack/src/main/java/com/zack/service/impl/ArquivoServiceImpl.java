@@ -1,6 +1,5 @@
 package com.zack.service.impl;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,8 +68,6 @@ public class ArquivoServiceImpl implements ArquivoService {
             Path filePath = getFilePathName(nomeArquivo);
             if (Files.exists(filePath)) {
                 return Files.readAllBytes(filePath);
-            } else {
-                throw new FileNotFoundException("O arquivo não foi encontrado: " + nomeArquivo);
             }
         }
         return new byte[0];

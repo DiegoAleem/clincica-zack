@@ -11,24 +11,7 @@
   margin: auto;
 }
 
-.background-image-container {
-  background-size: cover;
-  background-position: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-top: 2%;
 
-  @media screen and (max-width: 768px) {
-    img {
-      width: 100%;
-      /* Define a largura da imagem como 100% da largura da tela */
-      height: auto;
-      /* Mantém a proporção da imagem */
-    }
-  }
-
-}
 
 .btn-agendamento {
   background: #FAC317E3;
@@ -40,12 +23,22 @@
   }
 }
 
+.background-image-container {
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+
+}
+
 .titulo-foto {
 
-  font-family: "Oswald";
-  font-size: 70px;
-  font-weight: 500;
-  line-height: 118px;
+  font-family: Oswald;
+  font-size: 60px;
+  font-weight: bolder;
+  line-height: 118.12px;
   text-align: center;
 
   @media screen and (max-width: 992px) {
@@ -55,8 +48,8 @@
   }
 
   @media screen and (max-width: 768px) {
-    font-size: 5vw;
-    line-height: 9vw;
+    font-size: 14vw;
+    line-height: 15vw;
   }
 }
 

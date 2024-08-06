@@ -20,7 +20,7 @@ export class EditarGuard implements CanActivate {
     const token = this.getToken();
     if (token) {
       const roles = this.getRolesFromToken(token);
-      if (roles && roles.includes(2) || (this.getId() == next.params['id'])) {
+      if (roles && roles.includes(2) || (this.getId(token) == next.params['id'])) {
         return true;
       } else {
         this.router.navigate(['/menu-usuario']);
@@ -36,8 +36,12 @@ export class EditarGuard implements CanActivate {
     return sessionStorage.getItem('auth-token');
   }
 
-  getId(): string | null {
-    return sessionStorage.getItem('userId');
+  getId(token: string): string | null {
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.perfilId) {
+      return decodedToken.perfilId;
+    }
+    return null;
   }
 
   getRolesFromToken(token: string): number[] | null {

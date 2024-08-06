@@ -66,6 +66,15 @@ label {
   /* Ajuste conforme necessário */
 }
 
+.center-div2 {
+  display: flex;
+  flex-direction: column; /* Alinha os itens verticalmente */
+  align-items: center; /* Centraliza os itens horizontalmente */
+  justify-content: center;
+  height: 100%; /* Ajuste conforme necessário */
+
+}
+
 .btnEnviar {
   background: #4B67B1;
   color: white;
@@ -125,6 +134,24 @@ i {
     flex-grow: 1;
     height: 2px;
     background-color: #49654E;
+  }
+}
+
+
+.btn-agendamento {
+  background: #4B67B1;
+  border: 1px solid #FFFFFF;
+  width: 284px;
+  height: 50px;
+  font-weight: bold;
+  font-size: 21px;
+  color: #FFFFFF;
+
+  @media screen and (max-width: 768px) {
+      font-size: 3vw;
+      padding: 2% 4%;
+      width: 180px;
+      height: 50px;
   }
 }
 

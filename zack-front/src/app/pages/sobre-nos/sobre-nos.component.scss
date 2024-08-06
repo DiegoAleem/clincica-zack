@@ -4,8 +4,8 @@
     color: #4B67B1;
     font-family: Oswald;
     font-size: 80px;
-    text-align: -webkit-center;
     font-weight: bolder;
+
 }
 
 .titulo2 {
@@ -27,6 +27,7 @@
     height: fit-content;
     border-radius: 41px;
     text-align: center;
+    box-shadow: 15px 15px 5px #397C76;
 }
 
 .textoRet {
@@ -88,10 +89,37 @@
 
 }
 
+.textoIcon{
+    text-align: left;
+    font-family: 'Rubik';
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 22px;
+    color: #054943;
+}
+
+.icon {
+    margin-right: 10px;
+    font-size: 3em;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #054943;
+}
+
+.proposito {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
 .container {
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
+
 
 
 .justificado {

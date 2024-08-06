@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ToastrService } from 'ngx-toastr';
 import { BtnVoltarMenuComponent } from '../../components/btn-voltar-menu/btn-voltar-menu.component';
 import { Especialidade } from '../../model/especialidade.model';
 import { TipoAbordagem } from '../../model/tipo-abordagem.model';
@@ -39,6 +40,7 @@ export class EditarPerfilComponent implements OnInit {
   especialidadeSelecionadas: Especialidade[] = [];
   selectedFile?: File;
   selectedFileDataUrl?: string | ArrayBuffer = undefined;
+  carregando: boolean = false;
 
   perfil = {
     nome: null,
@@ -63,14 +65,18 @@ export class EditarPerfilComponent implements OnInit {
     linkAtendimentoOnline: null,
     formacaoECursos: null,
     sobreMim: null,
-    breveDescricao: null
+    breveDescricao: null,
+    atendePlano: null,
+    atendeParticular: null
+
   };
   curriculo!: File;
   constructor(private fb: FormBuilder,
     private tipoAbordagemService: TipoAbordagemService,
     private especialidadeService: EspecialidadeService,
     private perfilService: PerfilService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -84,20 +90,23 @@ export class EditarPerfilComponent implements OnInit {
 
 
   buscarPerfil() {
+    this.carregando = true;
     this.perfilService.getPerfil(this.variavel).subscribe(
       (resposta) => {
-
+       
         this.perfil = resposta.perfil;
         this.perfil.linkAtendimentoOnline = resposta.perfil.linkAtendimento;
-        this.selectedFileDataUrl = `data:image/${resposta.foto.tipo};base64,${resposta.foto.fotoBase64}`;
-        const blob = this.base64ToBlob(resposta.foto.fotoBase64, `image/${resposta.foto.tipo}`);
-        this.selectedFile = new File([blob], resposta.foto.outrasInformacoes, { type: `image/${resposta.foto.tipo}` });
+        if (resposta.foto && resposta.foto.fotoBase64) {
+          this.selectedFileDataUrl = `data:image/${resposta.foto.tipo};base64,${resposta.foto.fotoBase64}`;
+          const blob = this.base64ToBlob(resposta.foto.fotoBase64, `image/${resposta.foto.tipo}`);
+          this.selectedFile = new File([blob], resposta.foto.outrasInformacoes, { type: `image/${resposta.foto.tipo}` });
+        } 
         this.buscaTipoAbordagem();
         this.buscaEspecialidade();
-        console.log(this.perfil);
+        this.carregando = false;
       },
       (error) => {
-
+        this.carregando = false;
       }
     );
   }
@@ -220,17 +229,21 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   onSubmit() {
- 
-
+    this.carregando = true;
     if (this.perfilForm.valid && this.selectedFileDataUrl != undefined) {
-      this.ajusteDeCheckOptions();
       const json = JSON.stringify(this.perfil);
       this.perfilService.salvarPerfil(json, this.selectedFile).subscribe(
         (retorno) => {
-
+          this.carregando = false;
+          this.toastService.success("Perfil Alterado!", "Sucesso", {
+            timeOut: 7000,
+          });
         },
         (error) => {
-
+          this.carregando = false;
+          this.toastService.error("Não foi possível alterar o perfil! Entre em contato com o administrador.", "Erro!", {
+            timeOut: 7000,
+          });
         }
       );
 
@@ -251,6 +264,49 @@ export class EditarPerfilComponent implements OnInit {
         this.perfil.tiposAbordagem.push(tipoAbordagem);
       }
     });
+  }
+
+  limparForm() {
+    this.perfil = {
+      nome: null,
+      sobrenome: null,
+      crp: null,
+      sexo: null,
+      valorConsulta: null,
+      cartao: null,
+      pix: null,
+      transferencia: null,
+      plano: null,
+      particular: null,
+      tempoConsulta1: null,
+      tempoConsulta2: null,
+      atendeCrianca: null,
+      atendeAdolescente: null,
+      atendeAdulto: null,
+      atendeIdoso: null,
+      atendeCasais: null,
+      tiposAbordagem: [] as TipoAbordagem[],
+      especialidades: [] as Especialidade[],
+      linkAtendimentoOnline: null,
+      formacaoECursos: null,
+      sobreMim: null,
+      breveDescricao: null,
+      atendePlano: null,
+    atendeParticular: null
+    };
+  
+    // Limpar a seleção de foto
+    this.selectedFile = undefined;
+    this.selectedFileDataUrl = undefined;
+  
+    // Limpar as seleções de multiselect
+    this.tiposAbordagem.forEach(tipo => tipo.selected = false);
+    this.especialidades.forEach(especialidade => especialidade.selected = false);
+  
+    // Resetar o formulário
+    if (this.perfilForm) {
+      this.perfilForm.resetForm();
+    }
   }
 
 

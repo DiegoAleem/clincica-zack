@@ -24,7 +24,7 @@
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
           <th class="th" (click)="ordenarPor('crp')">CRP <span *ngIf="campoOrdenado === 'crp'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
-          <th class="th" (click)="ordenarPor('curriculoNome')">Curriculo <span *ngIf="campoOrdenado === 'curriculoNome'"
+          <th class="th" (click)="ordenarPor('curriculoNome')">Curriculo/Histórico <span *ngIf="campoOrdenado === 'curriculoNome'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
           <th class="th" (click)="ordenarPor('status')">Status <span *ngIf="campoOrdenado === 'status'"
               [class]="ordem == 'ASC' ? 'arrow-up' : 'arrow-down'"></span></th>
@@ -37,9 +37,14 @@
           <td>{{ candidato.email }}</td>
           <td>{{ candidato.telefone }}</td>
           <td>{{ candidato.crp }}</td>
-          <td><a (click)="downloadFile(candidato.curriculoNome)">
+          <td>
+            <a (click)="downloadFile(candidato.curriculoNome)">
               <p class="download">{{ candidato.curriculoNome }}</p>
-            </a></td> <!-- Exibindo o nome do arquivo do currículo -->
+            </a>
+            <a (click)="downloadFile(candidato.historicoNome)">
+              <p class="download">{{ candidato.historicoNome}}</p>
+            </a>
+          </td> <!-- Exibindo o nome do arquivo do currículo -->
           <td [ngClass]="{
             'status-aprovado': candidato.status === 'APROVADO',
             'status-arquivado': candidato.status === 'ARQUIVADO',
@@ -47,19 +52,19 @@
             'status-pendente': candidato.status === 'PARA ANÁLISE'
           }">{{ candidato.status }}</td>
           <td>
-            <div class="btn-group">
+            <div class="btn-group" *ngIf="candidato.status != 'APROVADO'">
               <button (click)="mudarStatus(candidato.id,'aprovar')" type="button"
                 class="btn btn-success btnAction">Aprovar</button>
             </div>
             <br>
             <br>
-            <div class="btn-group">
+            <div class="btn-group" *ngIf="candidato.status != 'ARQUIVADO' && candidato.status != 'APROVADO'" >
               <button (click)="mudarStatus(candidato.id,'arquivar')" type="button"
                 class="btn btn-warning btnAction">Arquivar</button>
             </div>
             <br>
             <br>
-            <div class="btn-group">
+            <div class="btn-group" *ngIf="candidato.status != 'APROVADO'">
               <button (click)="excluir(candidato.id)" type="button" class="btn btn-danger btnAction">Excluir</button>
             </div>
           </td>

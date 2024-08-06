@@ -23,7 +23,7 @@ export class MapaComponent implements OnInit {
 
   loadMap() {
     const script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5G6WmAHHa1Q4q8v-QRyXexylUHaDp7SM&libraries=places';
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCLLm9tXXhR7PRAXEqrA3GD9YONfZW0Zu4&libraries=places';
     script.onload = () => {
       this.initMap();
     };

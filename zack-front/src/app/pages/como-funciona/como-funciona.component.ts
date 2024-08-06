@@ -19,5 +19,9 @@ export class ComoFuncionaComponent implements OnInit {
   navigate(url: string){
     this.router.navigate([url])
   }
+
+  whatsApp(link: string){
+    window.open(link);
+  }
   
 }

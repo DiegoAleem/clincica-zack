@@ -21,6 +21,7 @@ import { PerfilAgendamento } from './perfil.agendamento.model';
   styleUrl: './agendamento.component.scss'
 })
 export class AgendamentoComponent implements OnInit{
+
   dropdownList: DropdownItem[] = [];
   selectedItems: DropdownItem[] = [];
   dropdownSettings: IDropdownSettings = {};  
@@ -40,16 +41,18 @@ export class AgendamentoComponent implements OnInit{
 
   ngOnInit() {
     this.instanciaPesquisa();
+    this.onSubmit();
     this.configurarDropDown();
     this.buscaTipoAbordagem();
-    this.onSubmit();
   }
 
   navigate(perfilSelecionado: PerfilAgendamento){
-    this.router.navigate(["/perfil"], {state:{perfil:perfilSelecionado}});
+    this.router.navigate(["/perfil"], {state:{perfil:perfilSelecionado}}).then(() => {
+      window.scrollTo(0, 0);
+    });
   }
 
-  whatsApp(link: string){
+  whatsApp(link: string|undefined){
     window.open(link);
   }
 
@@ -69,9 +72,9 @@ export class AgendamentoComponent implements OnInit{
 
   instanciaPesquisa(){
     this.pesquisa = {
-      isOnline: '1',
+      isOnline: 'null',
       nome: null,
-      tipoAtendimento: 'particular',
+      tipoAtendimento: 'null',
       formaPagamento: {
         pix: false,
         cartao: false,
@@ -90,16 +93,44 @@ export class AgendamentoComponent implements OnInit{
     }
   }
 
+  mudaLocal(local: string){
+    if(local == 'presencial') {
+      this.pesquisa.isOnline = 0;
+    } else if(local == 'online') {
+      this.pesquisa.isOnline = 1;
+    } else {
+      this.pesquisa.isOnline = null;
+    }
+  }
+
   limparForm(){
     this.instanciaPesquisa();
+    this.onSubmit();
   }
 
   onSubmit(){
     this.perfis = [];
     this.carregando = true;
+    const genericImageUrl = '../../../assets/generico.png';
+    const genericFile = new File([], 'generico.png', { type: 'image/png' });
     this.perfilService.getPerfilFiltroAvaliacao(this.pesquisa).subscribe(
       (resposta) => {
        resposta.forEach((perfil: any) => {
+        // Verificação se fotoBase64 é nulo
+        let selectedFileDataUrl: string;
+        let selectedFile: File;
+
+        if (perfil.foto && perfil.foto.fotoBase64) {
+          selectedFileDataUrl = `data:image/${perfil.foto.tipo};base64,${perfil.foto.fotoBase64}`;
+          selectedFile = new File(
+            [this.base64ToBlob(perfil.foto.fotoBase64, `image/${perfil.foto.tipo}`)],
+            perfil.foto.outrasInformacoes,
+            { type: `image/${perfil.foto.tipo}` }
+          );
+        } else {
+          selectedFileDataUrl = genericImageUrl;
+          selectedFile = genericFile;
+        }
         let p: PerfilAgendamento = {
           atendeAdolescente:  perfil.perfil.atendeAdolescente,
           atendeAdulto: perfil.perfil.atendeAdulto,
@@ -131,8 +162,8 @@ export class AgendamentoComponent implements OnInit{
           transferencia:  perfil.perfil.transferencia,
           usuario:  perfil.perfil.usuario,
           valorConsulta:  perfil.perfil.valorConsulta,
-          selectedFileDataUrl: `data:image/${perfil.foto.tipo};base64,${perfil.foto.fotoBase64}`,
-          selectedFile: new File([this.base64ToBlob(perfil.foto.fotoBase64, `image/${perfil.foto.tipo}`)], perfil.foto.outrasInformacoes, { type: `image/${perfil.foto.tipo}` }),
+          selectedFileDataUrl: selectedFileDataUrl,
+          selectedFile: selectedFile,
           mostrarTodasEspecialidades: false
 
         };

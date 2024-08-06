@@ -69,6 +69,18 @@ export class PerfilService {
     );
   }
 
+  getAllPerfis(pagina: number, filtro: string, campoOrdenado: string, ordemAscendente: string): Observable<any> {
+    const params = new HttpParams()
+      .set('pagina', pagina.toString())
+      .set('filtro', filtro)
+      .set('campoOrdenado', campoOrdenado)
+      .set('ordem', ordemAscendente);
+
+    return this.http.get<any[]>('http://localhost:8080/perfil/all-filtrados', { headers: this.getHeader(), params: params }).pipe(
+      catchError((error: any) => this.handleError(error))
+    );
+  }
+
   salvarPerfil(json: string, foto: File | undefined) {
     const formData = new FormData();
     formData.append('json', json);
@@ -105,6 +117,13 @@ export class PerfilService {
   desativarUsuario(id: number): Observable<any> {
 
     return this.http.put<any>(`http://localhost:8080/usuario/desativar/${id}`, null, { headers: this.getHeader() }).pipe(
+      catchError((error: any) => this.handleError(error))
+    );
+  }
+
+  ativarUsuario(id: number): Observable<any> {
+
+    return this.http.put<any>(`http://localhost:8080/usuario/ativar/${id}`, null, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CandidatoService } from '../../services/candidato.service';
 import { TelefonePipe } from '../../shared/pipes/TelefonePipe';
@@ -27,9 +28,13 @@ export class SouPsicologoComponent implements OnInit {
   enviado = false;
   carregando: boolean = false;
 
-  constructor(private candidatoService: CandidatoService, private toastService: ToastrService) { }
+  constructor(private candidatoService: CandidatoService, private toastService: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  navigate(url: string){
+    this.router.navigate([url])
   }
 
   removeSpaces() {
@@ -40,6 +45,7 @@ export class SouPsicologoComponent implements OnInit {
 
   submitForm() {
     this.carregando = true;
+  
     if (this.candidatoForm.valid && this.candidatoForm.submitted) {
       if (!this.validateEmail(this.candidato.email)) {
         this.candidatoForm.controls['email'].setErrors({ 'invalidEmail': true });
@@ -56,25 +62,35 @@ export class SouPsicologoComponent implements OnInit {
         this.carregando = false;
         return;
       }
+  
       const json = JSON.stringify(this.candidato);
       this.candidatoService.registrarCandidato(json, this.curriculo, this.historico).subscribe(
         response => {
           this.enviado = true;
-          this.carregando = false;
           this.curriculo = new File([], '', { type: '' });
           this.historico = new File([], '', { type: '' });
-          this.toastService.success("Cadastro feito com sucesso!  Mais informações por e-mail.", "Sucesso", {
+          this.toastService.success("Cadastro feito com sucesso! Mais informações por e-mail.", "Sucesso", {
             timeOut: 7000,
           });
+          this.carregando = false;
+          this.enviado = true;
         },
         error => {
-          this.carregando = false;
-          this.toastService.error("Tente novamente mais tarde.", "Erro inesperado!", {
+          this.carregando = false; // Carregamento concluído com erro
+          const errorCode = error.status;
+          var msgErro = "Tente novamente mais tarde.";
+          var tlErro = "Erro inesperado!"; 
+          if (errorCode == 404) {
+            msgErro = "E-mail ou CRP já cadastrados em nossa base";
+            tlErro = "Erro!";
+          }
+          this.toastService.error(msgErro, tlErro, {
             timeOut: 7000,
           });
         }
       );
-      this.carregando = false;
+    } else {
+      this.carregando = false; 
     }
   }
 

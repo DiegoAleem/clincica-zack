@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +49,11 @@ public class PerfilServiceImpl implements PerfilService {
     public Page<Perfil> getPerfis(String filtro, Pageable pageable) {
         return perfilRepository.findByAnyFieldContainingIgnoreCase(filtro, pageable);
     }
+    
+    @Override
+    public Page<Perfil> getPerfisAll(String filtro, Pageable pageable) {
+        return perfilRepository.findAllByAnyFieldContainingIgnoreCase(filtro, pageable);
+    }
 
     @Override
     public Perfil salvarPerfil(PerfilDTO perfilDTO, String arquivoFoto) {
@@ -56,12 +62,13 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setAtendeAdulto(perfilDTO.atendeAdulto());
         perfil.setAtendeCrianca(perfilDTO.atendeCrianca());
         perfil.setAtendeIdoso(perfilDTO.atendeIdoso());
+        perfil.setAtendeCasais(perfilDTO.atendeCasais());
         perfil.setCrp(perfilDTO.crp());
         perfil.setFormacaoECursos(perfilDTO.formacaoECursos());
-        perfil.setCartao(perfilDTO.isCartao());
-        perfil.setPix(perfilDTO.isPix());
-        perfil.setPlano(perfilDTO.isPlano());
-        perfil.setTransferencia(perfilDTO.isTransferencia());
+        perfil.setCartao(perfilDTO.cartao());
+        perfil.setPix(perfilDTO.pix());
+        perfil.setPlano(perfilDTO.plano());
+        perfil.setTransferencia(perfilDTO.transferencia());
         perfil.setNome(perfilDTO.nome());
         perfil.setSexo(perfilDTO.sexo());
         perfil.setSobreMim(perfilDTO.sobreMim());
@@ -72,6 +79,8 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setNomeFoto(arquivoFoto);
         perfil.setLinkAtendimento(perfilDTO.linkAtendimentoOnline());
         perfil.setBreveDescricao(perfilDTO.breveDescricao());
+        perfil.setAtendePlano(perfilDTO.plano());
+        perfil.setAtendeParticular(perfilDTO.particular());
         try {
             removerAssociacoes(perfil);
             perfil.setEspecialidades(perfilDTO.especialidades());
@@ -119,7 +128,8 @@ public class PerfilServiceImpl implements PerfilService {
 
     @Override
     public List<Perfil> getTop3ProfilesWithHighestAverageRating() {
-        return perfilRepository.findTop3ByOrderByMediaAvaliacoesDesc();
+        Pageable topThree = PageRequest.of(0, 3);
+        return perfilRepository.findTop3ByOrderByMediaAvaliacoesDesc(topThree);
     }
 
     @SuppressWarnings("unchecked")
@@ -129,24 +139,30 @@ public class PerfilServiceImpl implements PerfilService {
         sqlBuilder.append("SELECT DISTINCT p.* FROM PERFIL p ");
         sqlBuilder.append("LEFT JOIN PERFIL_TIPO_ABORDAGEM pta ON p.ID = pta.PERFIL_ID ");
         sqlBuilder.append("LEFT JOIN TIPO_ABORDAGEM ta ON pta.TIPO_ABORDAGEM_ID = ta.ID ");
-        sqlBuilder.append("WHERE 1=1 ");
+        sqlBuilder.append("WHERE p.SOBRE_MIM IS NOT NULL AND p.FORMACAO_E_CURSOS IS NOT NULL ");
+        
+        if(pesquisa.nome() != null) {
+            sqlBuilder.append("AND (UPPER(p.NOME) LIKE '%' || UPPER( '"+pesquisa.nome()+"' ) || '%' OR UPPER(p.SOBRENOME) LIKE '%' || UPPER( '"+pesquisa.nome()+"' ) || '%') ");
+        }
         
         if (pesquisa.isOnline().equalsIgnoreCase("1")) {
-            sqlBuilder.append("AND p.ATENDE_ONLINE = 'Y' ");
-        } else {
-            sqlBuilder.append("AND p.ATENDE_PRESENCIAL = 'Y' ");
+            sqlBuilder.append("AND p.ATENDE_ONLINE = 1 ");
+        } else if(pesquisa.isOnline().equalsIgnoreCase("2")) {
+            sqlBuilder.append("AND p.ATENDE_PRESENCIAL = 1 ");
         }
                 
-        if (pesquisa.tipoAtendimento().equalsIgnoreCase("particular")) {
-            sqlBuilder.append("AND p.ATENDE_PARTICULAR = 'Y' ");
+        if (!pesquisa.tipoAtendimento().equalsIgnoreCase("plano")) {
+            if(pesquisa.tipoAtendimento().equalsIgnoreCase("particular")) {
+                sqlBuilder.append("AND p.ATENDE_PARTICULAR = 1 ");
+            }
             if (pesquisa.formaPagamento().pix()) {
-                sqlBuilder.append("AND p.IS_PIX =  'Y'");
+                sqlBuilder.append("AND p.IS_PIX =  1 ");
             }
             if (pesquisa.formaPagamento().cartao()) {
-                sqlBuilder.append("AND p.IS_CARTAO = 'Y' ");
+                sqlBuilder.append("AND p.IS_CARTAO = 1 ");
             }
             if (pesquisa.formaPagamento().transferencia()) {
-                sqlBuilder.append("AND p.IS_TRANSFERENCIA = 'Y' ");
+                sqlBuilder.append("AND p.IS_TRANSFERENCIA = 1 ");
             }
             
          // Adicionando condições para o valor da consulta
@@ -182,25 +198,26 @@ public class PerfilServiceImpl implements PerfilService {
             }
 
         } else {
-            sqlBuilder.append("AND p.ATENDE_PLANO = 'Y' ");
+            sqlBuilder.append("AND p.ATENDE_PLANO = 1 ");
         }
         
-        if (pesquisa.atendimento().crianca()) {
-            sqlBuilder.append("AND p.ATENDE_CRIANCA = 'Y' ");
+        if(pesquisa.atendimento() != null) {
+            if (pesquisa.atendimento().crianca()) {
+                sqlBuilder.append("AND p.ATENDE_CRIANCA = 1 ");
+            }
+            if (pesquisa.atendimento().adolescente()) {
+                sqlBuilder.append("AND p.ATENDE_ADOLESCENTE = 1 ");
+            }
+            if (pesquisa.atendimento().adultos()) {
+                sqlBuilder.append("AND p.ATENDE_ADULTO = 1 ");
+            }
+            if (pesquisa.atendimento().idosos()) {
+                sqlBuilder.append("AND p.ATENDE_IDOSO = 1 ");
+            }
+            if (pesquisa.atendimento().casal()) {
+                sqlBuilder.append("AND p.ATENDE_CASAIS = 1 ");
+            }
         }
-        if (pesquisa.atendimento().adolescente()) {
-            sqlBuilder.append("AND p.ATENDE_ADOLESCENTE = 'Y' ");
-        }
-        if (pesquisa.atendimento().adultos()) {
-            sqlBuilder.append("AND p.ATENDE_ADULTO = 'Y' ");
-        }
-        if (pesquisa.atendimento().idosos()) {
-            sqlBuilder.append("AND p.ATENDE_IDOSO = 'Y' ");
-        }
-        if (pesquisa.atendimento().casal()) {
-            sqlBuilder.append("AND p.ATENDE_CASAIS = 'Y' ");
-        }
-        
         // Adicionando condições para abordagens específicas
         if (pesquisa.abordagem() != null && !pesquisa.abordagem().isEmpty()) {
             sqlBuilder.append("AND ta.ID IN (");

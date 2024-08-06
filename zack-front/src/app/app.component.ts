@@ -28,4 +28,9 @@ import { SubHeaderComponent } from './shared/sub-header/sub-header.component';
 })
 export class AppComponent {
   title = 'login-page';
+
+  yourFunction() {
+    alert('Botão flutuante clicado!');
+    // Ou qualquer outra lógica que você deseja implementar
+  }
 }

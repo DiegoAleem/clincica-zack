@@ -10,4 +10,8 @@ import { MapaComponent } from '../../shared/mapa/mapa.component';
 })
 export class AtendimentoPresencialComponent {
 
+
+  whatsApp(link: string){
+    window.open(link);
+  }
 }

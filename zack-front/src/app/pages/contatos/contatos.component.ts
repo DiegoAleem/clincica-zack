@@ -12,5 +12,7 @@ import { MapaComponent } from '../../shared/mapa/mapa.component';
 })
 
 export class ContatosComponent {
-
+  whatsApp(link: string){
+    window.open(link);
+  }
 }

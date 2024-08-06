@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zack.domain.model.Candidato;
+import com.zack.domain.model.Perfil;
 import com.zack.domain.model.Usuario;
 import com.zack.dto.LoginRequestDTO;
 import com.zack.dto.RegisterRequestDTO;
@@ -23,6 +24,7 @@ import com.zack.infra.security.TokenService;
 import com.zack.repositories.CandidatoRepository;
 import com.zack.repositories.UsuarioRepository;
 import com.zack.service.ArquivoService;
+import com.zack.service.PerfilService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,14 +38,19 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
     private final ArquivoService arquivoService;
+    private final PerfilService perfilService;
    
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body) {
 
-        Usuario usuario = usuarioRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário: " + body.email() + " não encontrado"));
+        Usuario usuario = usuarioRepository.findByEmail(body.email())
+            .orElseThrow(() -> new RuntimeException("Usuário: " + body.email() + " não encontrado"));
+
+        // Verifica se a senha fornecida corresponde à senha codificada armazenada no banco de dados
         if (passwordEncoder.matches(body.password(), usuario.getSenha()) || body.password().equals(usuario.getSenha())) {
-            String token = this.tokenService.generateToken(usuario);
+            Perfil perfil = perfilService.getPerfilPorUsuario(usuario);
+            String token = this.tokenService.generateToken(usuario, perfil);
             return ResponseEntity.ok(new ResponseDTO(usuario.getEmail(), token, usuario.getRoles().toString()));
         }
 
@@ -73,7 +80,7 @@ public class AuthController {
                 return ResponseEntity.badRequest().build();
             }
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
     
 

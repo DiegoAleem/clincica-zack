@@ -5,5 +5,6 @@ export interface Usuario {
     nome: string;
     email: string;
     senha: string;
+    ativo: boolean;
     roles: Role[];
   }

@@ -4,11 +4,11 @@
         <div class="card" style="background: #75C6BE;">
             <div class="col-md-8">
                 <div class="row">
-                    <div class="card-img-body" style="margin-top: 2%;">
+                    <div class="card-img-body d-md-flex flex-md-column" style="margin-top: 2%;">
                         <img class="img-thumbnail" style="height: 210px !important; border-radius: 30px;"
                             [src]="perfil.selectedFileDataUrl" alt="Card image cap">
                     </div>
-                    <div class="card-body" style="margin-top: 2%;">
+                    <div class="card-body card-img-body d-md-flex flex-md-column" style="margin-top: 2%;">
                         <div class="row">
                             <div class="col-md-9">
                                 <h4 class="card-title nomePsicologo">{{perfil.nome}}</h4>
@@ -69,49 +69,71 @@
                 <div class="row">
                     <div class="sobre">
                         <h5 class="sobrePsicologo">Pagamento</h5>
-                       
-                            <button type="button" class="btn btn-light" disabled><i class="fa-brands fa-pix"></i>PIX</button>
-                            <button type="button" class="btn btn-light" disabled>CARTÃO</button>
-                            <button type="button" class="btn btn-light" disabled>TRANSFERÊNCIA</button>
-                       
+                            <button *ngIf="perfil.pix" type="button" class="btn btn-light me-3 btn-pagamento" disabled><fa-icon [icon]="['fab', 'pix']" class="me-1"></fa-icon>PIX</button>
+                            <button *ngIf="perfil.cartao" type="button" class="btn btn-light me-3 btn-pagamento" disabled><fa-icon [icon]="['far', 'credit-card']" class="me-1"></fa-icon>CARTÃO</button>
+                            <button *ngIf="perfil.transferencia" type="button" class="btn btn-light me-3 btn-pagamento" disabled><fa-icon [icon]="['fas', 'money-bill']" class="me-1"></fa-icon>TRANSFERÊNCIA</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="sobre">
+                        <h5 class="sobrePsicologo">Duração da Consulta</h5>
+                            <button type="button" class="btn btn-light me-3 btn-pagamento" disabled>50 min</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="sobre">
+                        <h5 class="sobrePsicologo">Atende</h5>
+                            <button *ngIf="perfil.atendeCrianca" type="button" class="btn btn-light me-3 btn-pagamento" disabled>Crianças</button>
+                            <button *ngIf="perfil.atendeAdolescente" type="button" class="btn btn-light me-3 btn-pagamento" disabled>Adolescentes</button>
+                            <button *ngIf="perfil.atendeAdulto" type="button" class="btn btn-light me-3 btn-pagamento" disabled>Adultos</button>
+                            <button *ngIf="perfil.atendeIdoso" type="button" class="btn btn-light me-3 btn-pagamento" disabled>Idosos</button>
+                            <button *ngIf="perfil.atendeCasais" type="button" class="btn btn-light me-3 btn-pagamento" disabled>Casais</button>
+                            <br/>
+                            <br/>
+                            <br/>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 fundoBranco d-md-flex flex-md-column justify-content-center align-items-center">
                 <div class="mb-3 row col-md-12" style="margin-top: 4%;">
-                    <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
-                        style="height: 100%;">
-                        <div class="align-items-center circle" style="margin-right: 5rem;">
-                            <i class="bi bi-whatsapp icon"></i>
+                    <button class="fundoRoxo d-flex align-items-center justify-content-between flex-fill"
+                        style="height: 100%;" (click)='whatsApp("https://wa.me/5561982607070?text=Ol%C3%A1%2C+gostaria+de+tirar+uma+duvida.")'>
+                        <div class="d-flex align-items-center">
+                            <div class="circle" style="margin-right: 1rem;">
+                                <i class="bi bi-whatsapp icon"></i>
+                            </div>
                         </div>
-                        <div class="d-flex flex-column align-items-start text-center">
+                        <div class="d-flex flex-column align-items-center text-center flex-grow-1">
                             <h6 class="textoRoxo mb-0">Dúvidas? Fale Conosco</h6>
                             <p class="subtexto mb-0">Enviar Mensagem No Whatsapp</p>
                         </div>
                     </button>
                 </div>
-                <div class="mb-3 row col-md-12">
-                    <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
-                        style="height: 100%;">
-                        <div class="align-items-center circle me-5">
-                            <i class="bi bi-globe icon"></i>
+                <div class="mb-3 row col-md-12" *ngIf="perfil.linkAtendimento != null">
+                    <button class="fundoRoxo d-flex align-items-center justify-content-between flex-fill"
+                        style="height: 100%;" (click)="whatsApp(perfil.linkAtendimento)">
+                        <div class="d-flex align-items-center">
+                            <div class="circle me-2">
+                                <i class="bi bi-globe icon"></i>
+                            </div>
                         </div>
-                        <div class="d-flex flex-column align-items-start">
+                        <div class="d-flex flex-column align-items-center text-center flex-grow-1">
                             <h6 class="textoRoxo mb-0">Agende Sua Consulta Online</h6>
-                            <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                            <p class="subtexto mb-0" >Agendar Agora</p>
                         </div>
                     </button>
                 </div>
                 <div class="mb-3 row col-md-12">
-                    <button class="fundoRoxo d-flex align-items-center justify-content-center flex-fill"
-                        style="height: 100%;"
-                        (click)='whatsApp("https://wa.me/5561982573833?text=Ol%C3%A1%2C+gostaria+de+agendar+uma+consulta.")'>
-                        <div class="align-items-center circle me-4">
-                            <i class="bi bi-geo-alt icon"></i>
+                    <button class="fundoRoxo d-flex align-items-center justify-content-between flex-fill"
+                        style="height: 100%;" (click)='whatsApp("https://wa.me/5561982607070?text=Ol%C3%A1%2C+gostaria+de+agendar+uma+consulta.")'>
+                        <div class="d-flex align-items-center">
+                            <div class="circle me-2">
+                                <i class="bi bi-geo-alt icon"></i>
+                            </div>
                         </div>
-                        <div class="d-flex flex-column align-items-start">
+                        <div class="d-flex flex-column align-items-center text-center flex-grow-1">
                             <h6 class="textoRoxo mb-0">Agende Sua Consulta Presencial</h6>
-                            <p class="subtexto mb-0" style="margin-left: 30%;">Agendar Agora</p>
+                            <p class="subtexto mb-0">Agendar Agora</p>
                         </div>
                     </button>
                 </div>

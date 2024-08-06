@@ -17,4 +17,8 @@ export class AreaPsicologoComponent {
   navigate(url: string){
     this.router.navigate([url])
   }
+
+  whatsApp(link: string){
+    window.open(link);
+  }
 }

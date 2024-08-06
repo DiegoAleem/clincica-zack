@@ -6,6 +6,7 @@ export interface Candidato {
     crp: string;
     curriculo: File;
     curriculoNome: string;
+    historicoNome: string;
     status: string;
     selecionado: boolean;
   }
