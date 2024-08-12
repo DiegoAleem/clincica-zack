@@ -131,19 +131,9 @@ img {
     }
 }
 
-.btnContato {
-    width: Hug (296.18px)px;
-    height: Hug (62px)px;
-    top: 1230px;
-    left: 127px;
-    gap: 25px;
-    border-radius: 20px;
-    border: 2px 0px 0px 0px;
-    opacity: 0px;
-    background-color: #397C76;
-    color: #FFFFFF;
-    margin-bottom: 3%;
-
+.check{
+    width: 150px;
+    height: 150px;
 }
 
 .center {
@@ -182,108 +172,9 @@ h2 {
     }
 }
 
-.vetor-cima2 {
-    width: 475.76px;
-    height: 100.67px;
-    background: transparent;
-    margin-top: -3%;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-
-}
-
-.vetor-baixo {
-    width: 534.96px;
-    height: 113.2px;
-    top: 1512.74px;
-    left: 1447.34px;
-    margin-top: 3%;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-}
-
-.vetor-baixo2 {
-    width: 450.76px;
-    height: 120.67px;
-    margin-bottom: 1%;
-    top: 2931.18px;
-    left: 1615.3px;
-    gap: 0px;
-    opacity: 0px;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-}
-
-.titulo {
-    width: 500px;
-    height: 215px;
-    top: 758px;
-    left: 60px;
-    gap: 0px;
-    opacity: 0px;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        height: 110px;
-        width: 80%;
-        text-align: end;
-        margin: auto;
-    }
-
-}
-
-.sub-titulo {
-    margin-top: 3%;
-    color: black;
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
-    text-align: -webkit-center;
-    ;
-}
-
-.paragrafo {
-    font-family: "Rubik";
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 32px;
-    letter-spacing: normal;
-    text-align: left;
-    margin-bottom: 4%;
-
-    @media screen and (max-width: 768px) {
-        width: 75%;
-        font-size: 15px;
-        text-align: center;
-        margin: auto;
-    }
-
-}
-
-.linha {
-    margin-top: 3%;
-    width: 100%;
-    height: 2px;
-    background-color: #49654E;
-}
-
-
 i {
     font-size: 65px;
     color: #49654E;
-}
-
-.check {
-    height: 130px;
-    width: 130px;
 }
 
 .no-border {
@@ -324,69 +215,6 @@ i {
     }
 }
 
-
-.comoFunciona {
-    text-align: center;
-    background: #ecede9;
-    opacity: 0.8px;
-    width: auto;
-    display: flex;
-    flex-wrap: wrap;
-
-    @media screen and (max-width: 768px) {
-        display: flex;
-        flex-direction: column;
-        width: auto;
-        align-items: center;
-    }
-}
-
-.imagem-pesquise {
-    width: 123.01px;
-    height: 184.98px;
-    top: 1533px;
-    left: 172px;
-    gap: 0px;
-    opacity: 0px;
-
-
-}
-
-.imagem-mulher {
-    width: 637px;
-    height: 605px;
-    border-radius: 37px 0px 0px 0px;
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    margin-top: 10%;
-    margin-left: auto;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-}
-
-.imagem-agendamento {
-    width: 192.01px;
-    height: 158px;
-    top: 1535px;
-    left: 629px;
-    gap: 0px;
-    opacity: 0px;
-
-}
-
-.imagem-compromisso {
-    width: 171.16px;
-    height: 118.4px;
-    top: 1565px;
-    left: 1123px;
-    gap: 0px;
-    opacity: 0px;
-}
-
 .titulo2 {
     height: 133px;
     top: 2214px;
@@ -408,102 +236,7 @@ i {
     }
 }
 
-.sobreNos {
-    background: #A0A1DF;
-    width: auto;
-    display: flex;
-    flex-wrap: wrap;
 
-    @media screen and (max-width: 768px) {
-        display: flex;
-        flex-direction: column;
-        width: auto;
-        align-items: center;
-    }
-}
-
-.saibaMais {
-    width: 244px;
-    height: 62px;
-    top: 2825px;
-    left: 120px;
-    gap: 0px;
-    border-radius: 20px;
-    border: 2px;
-    opacity: 0px;
-    background: #397C76;
-    border: 2px solid #4B67B1;
-    font-family: "Rubik";
-    font-size: 20px;
-    margin-top: 2%;
-    margin-bottom: 3%;
-    color: white;
-
-    @media screen and (max-width: 768px) {
-        margin-left: 20%;
-    }
-}
-
-
-.logo-laranja1 {
-    width: 180.64px;
-    height: 178.55px;
-    top: 2107.98px;
-    left: 1165px;
-    gap: 0px;
-    opacity: 0px;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-
-}
-
-.logo-verde {
-    width: 145.41px;
-    height: 143.73px;
-    top: 2294px;
-    left: 1312.23px;
-    gap: 0px;
-    opacity: 0px;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-}
-
-.logo-azul {
-    width: 125.67px;
-    height: 124.21px;
-    top: 2504px;
-    left: 1241.44px;
-    gap: 0px;
-    opacity: 0px;
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-}
-
-.logo-laranja2 {
-    width: 163.38px;
-    height: 161.48px;
-    top: 2650px;
-    left: 1385.13px;
-    gap: 0px;
-    opacity: 0px;
-    rotate: -35.4 deg;
-
-
-    @media screen and (max-width: 768px) {
-        /* Celulares */
-        display: none;
-    }
-
-}
 
 .vantagem {
     margin-bottom: 20px;
