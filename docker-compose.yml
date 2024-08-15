@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  spring-app:
+    image: zack-back:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - arquivos-data:/app/arquivos  
+
+  spa-app:
+    build:
+      context: ./zack-front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - spring-app
+      
+volumes:
+  arquivos-data:
+    driver: local

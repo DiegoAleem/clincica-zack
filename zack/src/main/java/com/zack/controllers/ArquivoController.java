@@ -9,6 +9,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/arquivo")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class ArquivoController {
     
     private final ArquivoService arquivoService;
