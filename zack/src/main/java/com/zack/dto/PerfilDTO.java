@@ -39,7 +39,7 @@ public record PerfilDTO(
         List<TipoAbordagem> tiposAbordagem,
         String nomeFoto,
         String breveDescricao,
-        String usuarioAlt
+        String usuarioIns
         ) {
 
 }

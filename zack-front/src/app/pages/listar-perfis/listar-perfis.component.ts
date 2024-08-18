@@ -22,6 +22,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class ListarPerfisComponent implements OnInit {
 
   perfis: Perfil[] = [];
+  private jwtHelper: JwtHelperService;
   filtro: string = '';
   paginaAtual: number = 1;
   totalPaginas: number = 1;
@@ -30,7 +31,8 @@ export class ListarPerfisComponent implements OnInit {
   ordem: string = 'ASC';
   carregando: boolean = false;
 
-  constructor(private perfilService: PerfilService, private router: Router,private toastService: ToastrService, private jwtHelper: JwtHelperService) {
+  constructor(private perfilService: PerfilService, private router: Router,private toastService: ToastrService) {
+    this.jwtHelper = new JwtHelperService();
   }
 
   ngOnInit(): void {
