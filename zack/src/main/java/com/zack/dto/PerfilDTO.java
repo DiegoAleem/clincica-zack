@@ -1,5 +1,6 @@
 package com.zack.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.zack.domain.model.Especialidade;
@@ -39,7 +40,10 @@ public record PerfilDTO(
         List<TipoAbordagem> tiposAbordagem,
         String nomeFoto,
         String breveDescricao,
-        String usuarioIns
+        String usuarioIns,
+        String usuarioAlt,
+        Date dataAlt,
+        Date dataIns
         ) {
 
 }

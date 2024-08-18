@@ -84,10 +84,10 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setAtendeParticular(perfilDTO.particular());
         if(perfil.getDataIns() != null) {
             perfil.setDataAlt(new Date());
-            perfil.setUsuarioAlt(perfilDTO.usuarioIns());
+            perfil.setUsuarioAlt(perfilDTO.usuarioAlt());
         } else {
             perfil.setDataIns(new Date());
-            perfil.setUsuarioIns(perfilDTO.usuarioIns());
+            perfil.setUsuarioIns(perfilDTO.usuarioAlt());
         }
         try {
             removerAssociacoes(perfil);
