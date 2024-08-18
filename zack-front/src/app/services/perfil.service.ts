@@ -114,16 +114,16 @@ export class PerfilService {
     );
   }
 
-  desativarUsuario(id: number): Observable<any> {
+  desativarUsuario(id: number, usuario: String | null): Observable<any> {
 
-    return this.http.put<any>(`http://92.112.177.53:8080/usuario/desativar/${id}`, null, { headers: this.getHeader() }).pipe(
+    return this.http.put<any>(`http://92.112.177.53:8080/usuario/desativar/${id}/${usuario}`, null, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
 
-  ativarUsuario(id: number): Observable<any> {
+  ativarUsuario(id: number, usuario: String | null): Observable<any> {
 
-    return this.http.put<any>(`http://92.112.177.53:8080/usuario/ativar/${id}`, null, { headers: this.getHeader() }).pipe(
+    return this.http.put<any>(`http://92.112.177.53:8080/usuario/ativar/${id}/${usuario}`, null, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }

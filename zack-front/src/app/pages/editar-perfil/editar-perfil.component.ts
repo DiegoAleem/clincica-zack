@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { BtnVoltarMenuComponent } from '../../components/btn-voltar-menu/btn-voltar-menu.component';
@@ -29,6 +30,7 @@ export class EditarPerfilComponent implements OnInit {
   @ViewChild('perfilForm')
   perfilForm!: NgForm;
 
+  private jwtHelper: JwtHelperService;
   dropdownList: DropdownItem[] = [];
   selectedItems: DropdownItem[] = [];
   dropdownSettingsAbordagem: IDropdownSettings = {};  
@@ -41,6 +43,7 @@ export class EditarPerfilComponent implements OnInit {
   selectedFile?: File;
   selectedFileDataUrl?: string | ArrayBuffer = undefined;
   carregando: boolean = false;
+  usuarioAlt: any = '';
 
   perfil = {
     nome: null,
@@ -67,7 +70,8 @@ export class EditarPerfilComponent implements OnInit {
     sobreMim: null,
     breveDescricao: null,
     atendePlano: null,
-    atendeParticular: null
+    atendeParticular: null,
+    usuarioAlt: this.usuarioAlt
 
   };
   curriculo!: File;
@@ -76,14 +80,19 @@ export class EditarPerfilComponent implements OnInit {
     private especialidadeService: EspecialidadeService,
     private perfilService: PerfilService,
     private route: ActivatedRoute,
-    private toastService: ToastrService) { }
+    private toastService: ToastrService) { 
+      this.jwtHelper = new JwtHelperService();
+    }
 
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
       this.variavel = params['id'];
       this.buscarPerfil();   
       this.configurarDropDownAbordagem();  
       this.configurarDropDownEspecialidades();  
+      this.usuarioAlt = this.getUserFromToken();
+      this.perfil.usuarioAlt = this.usuarioAlt;
     });
 
   }
@@ -266,6 +275,21 @@ export class EditarPerfilComponent implements OnInit {
     });
   }
 
+  getToken(): string | null {
+    return sessionStorage.getItem('auth-token');
+  }
+
+  getUserFromToken(): String | null {
+    var token = this.getToken();
+    if(token == null)
+     token = '';
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.sub) {
+      return decodedToken.sub;
+    }
+    return null;
+  }
+
   limparForm() {
     this.perfil = {
       nome: null,
@@ -292,7 +316,8 @@ export class EditarPerfilComponent implements OnInit {
       sobreMim: null,
       breveDescricao: null,
       atendePlano: null,
-    atendeParticular: null
+      atendeParticular: null,
+      usuarioAlt: this.usuarioAlt
     };
   
     // Limpar a seleção de foto

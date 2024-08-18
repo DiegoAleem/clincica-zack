@@ -28,21 +28,21 @@ public class UsuarioController {
         return ResponseEntity.ok("sucesso!");
     }
     
-    @PutMapping("/desativar/{id}")
-    public ResponseEntity<String> desativarUsuario(@PathVariable String id){
+    @PutMapping("/desativar/{id}/{usuarioLogin}")
+    public ResponseEntity<String> desativarUsuario(@PathVariable String id, @PathVariable String usuarioLogin){
         Optional<Usuario> usuario = usuarioService.findById(id);
         if(usuario.isPresent()) {
-            usuarioService.desativarUsuario(usuario.get());
+            usuarioService.desativarUsuario(usuario.get(), usuarioLogin);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
     
-    @PutMapping("/ativar/{id}")
-    public ResponseEntity<String> ativarUsuario(@PathVariable String id){
+    @PutMapping("/ativar/{id}/{usuarioLogin}")
+    public ResponseEntity<String> ativarUsuario(@PathVariable String id, @PathVariable String usuarioLogin){
         Optional<Usuario> usuario = usuarioService.findById(id);
         if(usuario.isPresent()) {
-            usuarioService.ativarUsuario(usuario.get());
+            usuarioService.ativarUsuario(usuario.get(), usuarioLogin);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

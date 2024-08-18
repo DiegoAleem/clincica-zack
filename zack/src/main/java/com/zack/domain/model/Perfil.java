@@ -1,5 +1,6 @@
 package com.zack.domain.model;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -124,5 +125,17 @@ public class Perfil {
     
     @Column(name = "BREVE_DESCRICAO")
     private String breveDescricao;
+    
+    @Column(name = "USUARIO_INS", length = 255)
+    private String usuarioIns;
+
+    @Column(name = "USUARIO_ALT", length = 255)
+    private String usuarioAlt;
+
+    @Column(name = "DATA_INS")
+    private Date dataIns;
+
+    @Column(name = "DATA_ALT")
+    private Date dataAlt;
 
 }

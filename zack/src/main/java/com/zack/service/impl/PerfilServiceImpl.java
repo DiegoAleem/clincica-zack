@@ -1,5 +1,6 @@
 package com.zack.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +82,13 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setBreveDescricao(perfilDTO.breveDescricao());
         perfil.setAtendePlano(perfilDTO.plano());
         perfil.setAtendeParticular(perfilDTO.particular());
+        if(perfil.getDataIns() != null) {
+            perfil.setDataAlt(new Date());
+            perfil.setUsuarioAlt(perfilDTO.usuarioAlt());
+        } else {
+            perfil.setDataIns(new Date());
+            perfil.setUsuarioIns(perfilDTO.usuarioAlt());
+        }
         try {
             removerAssociacoes(perfil);
             perfil.setEspecialidades(perfilDTO.especialidades());

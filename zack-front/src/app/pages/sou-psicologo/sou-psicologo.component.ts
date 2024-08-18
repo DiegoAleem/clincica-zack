@@ -24,7 +24,7 @@ export class SouPsicologoComponent implements OnInit {
     crp: '',
   };
   curriculo!: File;
-  historico!: File;
+  historico?: File;
   enviado = false;
   carregando: boolean = false;
 
@@ -45,26 +45,41 @@ export class SouPsicologoComponent implements OnInit {
 
   submitForm() {
     this.carregando = true;
-  
-    if (this.candidatoForm.valid && this.candidatoForm.submitted) {
+    console.log(this.candidatoForm);
+    if ( this.candidatoForm.submitted) {
       if (!this.validateEmail(this.candidato.email)) {
         this.candidatoForm.controls['email'].setErrors({ 'invalidEmail': true });
         this.carregando = false;
+        var msgErro = "E-MAIL inválido.";
+        var tlErro = "Dados incorretos!";
+        this.toastService.error(msgErro, tlErro, {
+          timeOut: 7000,
+        });
         return;
       }
       if (this.candidato.crp.length !== 8) {
         this.candidatoForm.controls['crp'].setErrors({ 'invalidCRP': true });
         this.carregando = false;
+        var msgErro = "CRP inválido.";
+        var tlErro = "Dados incorretos!";
+        this.toastService.error(msgErro, tlErro, {
+          timeOut: 7000,
+        });
         return;
       }
       if (this.candidato.telefone.length < 10) {
         this.candidatoForm.controls['telefone'].setErrors({ 'invalidTelefone': true });
         this.carregando = false;
+        var msgErro = "TELEFONE inválido.";
+        var tlErro = "Dados incorretos!";
+        this.toastService.error(msgErro, tlErro, {
+          timeOut: 7000,
+        });
         return;
       }
   
       const json = JSON.stringify(this.candidato);
-      this.candidatoService.registrarCandidato(json, this.curriculo, this.historico).subscribe(
+      this.candidatoService.registrarCandidato(json, this.curriculo, this.historico != undefined? this.historico : new File([], '')).subscribe(
         response => {
           this.enviado = true;
           this.curriculo = new File([], '', { type: '' });
@@ -76,7 +91,7 @@ export class SouPsicologoComponent implements OnInit {
           this.enviado = true;
         },
         error => {
-          this.carregando = false; // Carregamento concluído com erro
+          this.carregando = false; 
           const errorCode = error.status;
           var msgErro = "Tente novamente mais tarde.";
           var tlErro = "Erro inesperado!"; 
@@ -132,12 +147,10 @@ export class SouPsicologoComponent implements OnInit {
     if (fileControl) {
       // Definir tipos e tamanho permitidos
       const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      const maxSize = 5 * 1024 * 1024; // 5MB em bytes
+      const maxSize = 20 * 1024 * 1024; //20MB em bytes
 
       // Validar tipo de arquivo
       if (!allowedTypes.includes(file.type)) {
-        console.log(file);
-        console.log(fileControl);
         fileControl.setErrors({ fileType: true });
         return;
       }

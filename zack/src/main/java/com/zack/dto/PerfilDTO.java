@@ -38,8 +38,8 @@ public record PerfilDTO(
         List<Especialidade> especialidades,
         List<TipoAbordagem> tiposAbordagem,
         String nomeFoto,
-        String breveDescricao
-        
+        String breveDescricao,
+        String usuarioAlt
         ) {
 
 }

@@ -7,6 +7,7 @@ import { TipoAbordagem } from '../../model/tipo-abordagem.model';
 import { PerfilService } from '../../services/perfil.service';
 import { TipoAbordagemService } from '../../services/tipo-abordagem.service';
 import { PerfilAgendamento } from './perfil.agendamento.model';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-agendamento',
@@ -33,10 +34,12 @@ export class AgendamentoComponent implements OnInit{
   @ViewChild('pesquisaForm')
   pesquisaForm!: NgForm;
   pesquisa: any;
+  isMobile: boolean = false;
 
   constructor( 
      private tipoAbordagemService: TipoAbordagemService,
      private perfilService: PerfilService,
+     private breakpointObserver: BreakpointObserver,
      private router: Router){}
 
   ngOnInit() {
@@ -44,6 +47,20 @@ export class AgendamentoComponent implements OnInit{
     this.onSubmit();
     this.configurarDropDown();
     this.buscaTipoAbordagem();
+    this.breakpointObserver.observe([Breakpoints.Handset])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+        this.configureAcordeon();
+      });
+  }
+
+  configureAcordeon(): void {
+    const collapseElement = document.getElementById('collapseTwo');
+    if (this.isMobile) {
+      collapseElement?.classList.remove('show');
+    } else {
+      collapseElement?.classList.add('show');
+    }
   }
 
   navigate(perfilSelecionado: PerfilAgendamento){

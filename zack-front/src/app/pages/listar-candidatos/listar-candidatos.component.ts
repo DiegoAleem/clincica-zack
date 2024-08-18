@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
 import { BtnVoltarMenuComponent } from '../../components/btn-voltar-menu/btn-voltar-menu.component';
 import { Candidato } from '../../model/candidato.model';
@@ -21,6 +22,7 @@ import { TokenInterceptor } from '../../services/HttpInterceptor.service';
 })
 export class ListarCandidatosComponent implements OnInit {
 
+  private jwtHelper: JwtHelperService;
   candidatos: Candidato[] = [];
   filtro: string = '';
   paginaAtual: number = 1;
@@ -31,10 +33,26 @@ export class ListarCandidatosComponent implements OnInit {
   carregando: boolean = false;
 
   constructor(private candidatoService: CandidatoService,  private toastService: ToastrService) {
+    this.jwtHelper = new JwtHelperService();
   }
 
   ngOnInit(): void {
     this.getCandidatos();
+  }
+
+  getToken(): string | null {
+    return sessionStorage.getItem('auth-token');
+  }
+
+  getUserFromToken(): String | null {
+    var token = this.getToken();
+    if(token == null)
+     token = '';
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.sub) {
+      return decodedToken.sub;
+    }
+    return null;
   }
 
   getCandidatos(): void {
@@ -54,7 +72,7 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   filtrarCandidatos(): void {
-    this.paginaAtual = 1; // Resetar para a primeira página ao filtrar
+    this.paginaAtual = 1;
     this.getCandidatos();
   }
 

@@ -5,7 +5,7 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="card-img-body d-md-flex flex-md-column" style="margin-top: 2%;">
-                        <img class="img-thumbnail" style="height: 210px !important; border-radius: 30px;"
+                        <img class="img-thumbnail" style="border-radius: 30px;"
                             [src]="perfil.selectedFileDataUrl" alt="Card image cap">
                     </div>
                     <div class="card-body card-img-body d-md-flex flex-md-column" style="margin-top: 2%;">
@@ -20,7 +20,7 @@
                         </div>
                         <h6 class="crp">CRP {{perfil.crp}}</h6>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="d-flex flex-wrap">
                                     <ng-container
                                         *ngFor="let especialidade of perfil.especialidades?.slice(0, 4); let i = index">
@@ -31,20 +31,17 @@
                                     </ng-container>
                                     <div *ngIf="perfil.mostrarTodasEspecialidades" class="d-flex flex-wrap">
                                         <ng-container *ngFor="let especialidade of perfil.especialidades?.slice(4)">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-light" disabled>{{
-                                                    especialidade.nome }}</button>
-                                            </div>
+                                          <div class="p-2">
+                                            <button type="button" class="btn btn-light" disabled>{{ especialidade.nome }}</button>
+                                          </div>
                                         </ng-container>
                                     </div>
                                 </div>
-                                <div *ngIf="perfil.especialidades != null && perfil.especialidades.length > 4"
-                                    class="mt-2">
-                                    <a type="button" class="btn btn-link"
-                                        (click)="perfil.mostrarTodasEspecialidades = !perfil.mostrarTodasEspecialidades">
-                                        {{ perfil.mostrarTodasEspecialidades ? 'Mostrar menos' : 'Mostrar mais' }}
+                                <div *ngIf="perfil.especialidades != null && perfil.especialidades.length > 4" class="mt-2">
+                                    <a type="button" class="btn btn-link" (click)="perfil.mostrarTodasEspecialidades = !perfil.mostrarTodasEspecialidades">
+                                      {{ perfil.mostrarTodasEspecialidades ? 'Mostrar menos' : 'Mostrar mais' }}
                                     </a>
-
+                                    
                                 </div>
                             </div>
                         </div>

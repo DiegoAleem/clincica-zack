@@ -80,10 +80,6 @@
             <label for="historico">Histórico Acadêmico</label> <br>
             <input type="file" class="form-control-file" id="historico" name="historico" (change)="onFileChange($event, 'historico')"
               accept=".pdf,.doc,.docx" required [(ngModel)]="historico">
-            <div *ngIf="candidatoForm.submitted &&  candidatoForm.controls['historico']?.errors?.['required']"
-              class="text-danger">
-              O histórico é obrigatório.
-            </div>
             <div *ngIf="candidatoForm.controls['historico']?.errors?.['fileType']" class="text-danger">
               Apenas arquivos PDF, DOC e DOCX são permitidos.
             </div>
@@ -94,7 +90,7 @@
         </div>
         <br/>
         <div class="center-div">
-          <button type="submit" class="btn w-100 btnEnviar" [disabled]="!this.candidatoForm.valid">
+          <button type="submit" class="btn w-100 btnEnviar">
             <i class="bi bi-send" style="font-size: 20px; color: white;"></i> Enviar
           </button>
         </div>

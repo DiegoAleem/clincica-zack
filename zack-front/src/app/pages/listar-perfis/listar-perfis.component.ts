@@ -6,6 +6,7 @@ import { Perfil } from '../../model/perfil.model';
 import { PerfilService } from '../../services/perfil.service';
 import { BtnVoltarMenuComponent } from '../../components/btn-voltar-menu/btn-voltar-menu.component';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-listar-perfis',
@@ -29,7 +30,7 @@ export class ListarPerfisComponent implements OnInit {
   ordem: string = 'ASC';
   carregando: boolean = false;
 
-  constructor(private perfilService: PerfilService, private router: Router,private toastService: ToastrService) {
+  constructor(private perfilService: PerfilService, private router: Router,private toastService: ToastrService, private jwtHelper: JwtHelperService) {
   }
 
   ngOnInit(): void {
@@ -54,8 +55,23 @@ export class ListarPerfisComponent implements OnInit {
     );
   }
 
+  getToken(): string | null {
+    return sessionStorage.getItem('auth-token');
+  }
+
+  getUserFromToken(): String | null {
+    var token = this.getToken();
+    if(token == null)
+     token = '';
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.sub) {
+      return decodedToken.sub;
+    }
+    return null;
+  }
+
   filtrarPerfis(): void {
-    this.paginaAtual = 1; // Resetar para a primeira página ao filtrar
+    this.paginaAtual = 1;
     this.getPerfis();
   }
 
@@ -81,14 +97,13 @@ export class ListarPerfisComponent implements OnInit {
   
   desativar(id: number){
     this.carregando = true;
-    this.perfilService.desativarUsuario(id).subscribe(
+    this.perfilService.desativarUsuario(id, this.getUserFromToken()).subscribe(
       (retorno) => {
         this.getPerfis();
         this.toastService.success("Usuário desativado com sucesso!", "Sucesso", {
           timeOut: 7000,
           closeButton: true 
         });
-        console.log(retorno);
       },
       (error) => {
         this.getPerfis();
@@ -103,14 +118,13 @@ export class ListarPerfisComponent implements OnInit {
 
   ativar(id: number){
     this.carregando = true;
-    this.perfilService.ativarUsuario(id).subscribe(
+    this.perfilService.ativarUsuario(id, this.getUserFromToken()).subscribe(
       (retorno) => {
         this.getPerfis();
         this.toastService.success("Usuário ativado com sucesso!", "Sucesso", {
           timeOut: 7000,
           closeButton: true 
         });
-        console.log(retorno);
       },
       (error) => {
         this.getPerfis();
