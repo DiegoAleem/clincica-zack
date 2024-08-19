@@ -28,7 +28,7 @@ input {
   font-family: Oswald;
   font-size: 55px;
   font-weight: 500;
-  line-height: 133.38px;
+  line-height: 85px;
   text-align: center;
   color: #4B67B1;
 
@@ -56,6 +56,12 @@ label {
   margin-top: 10%;
   margin-bottom: 15%;
   width: 55%;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    margin-top: 5%;
+    margin-bottom: 20%;
+  }
 }
 
 .center-div {
