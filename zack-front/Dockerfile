@@ -5,7 +5,7 @@ RUN npm install --legacy-peer-deps
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=build /app/dist/browser usr/share/nginx/html
+COPY --from=build /app/dist/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY mime.types /etc/nginx/mime.types
 EXPOSE 80
