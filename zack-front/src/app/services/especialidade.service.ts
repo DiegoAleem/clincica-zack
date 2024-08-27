@@ -9,7 +9,7 @@ export class EspecialidadeService {
   constructor(private http: HttpClient) {  }
 
   getAll(): Observable<any> {
-    return this.http.get<any[]>('https://www.clinicazack.com.br/api/especialidade/todos').pipe(
+    return this.http.get<any[]>('https://92.112.177.53:8080/especialidade/todos').pipe(
       catchError((error: any) => this.handleError(error)) 
     );
   }
