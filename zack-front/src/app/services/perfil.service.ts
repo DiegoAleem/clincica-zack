@@ -9,7 +9,7 @@ import { TokenInterceptor } from './HttpInterceptor.service';
 export class PerfilService {
 
 
-  apiUrl: string = "https://92.112.177.53:8080/auth"
+  apiUrl: string = "https://92.112.177.53:8443/auth"
 
   private tokenInterceptor: TokenInterceptor;
   constructor(private http: HttpClient) {
@@ -28,7 +28,7 @@ export class PerfilService {
   }
 
   getPerfil(id: string): Observable<any> {
-    return this.http.get<any>(`https://92.112.177.53:8080/perfil/${id}`, { headers: this.getHeader() }).pipe(
+    return this.http.get<any>(`https://92.112.177.53:8443/perfil/${id}`, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
@@ -38,7 +38,7 @@ export class PerfilService {
     const params = new HttpParams().set('filtro', filtroString);
 
     return this.http.get<any>(
-        'https://92.112.177.53:8080/perfil/filtrados-melhor-avaliados', 
+        'https://92.112.177.53:8443/perfil/filtrados-melhor-avaliados', 
         { headers: this.getHeader(), params: params }
     ).pipe(
         catchError((error: any) => this.handleError(error))
@@ -46,13 +46,13 @@ export class PerfilService {
   }
 
   getMaisAvalidaosPerfil() {
-    return this.http.get<any>(`https://92.112.177.53:8080/perfil/top-rated`, { headers: this.getHeader() }).pipe(
+    return this.http.get<any>(`https://92.112.177.53:8443/perfil/top-rated`, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
 
   getPerfilPorUsuario(id: string): Observable<any> {
-    return this.http.get<any>(`https://92.112.177.53:8080/perfil/buscarPorUsuario/${id}`, { headers: this.getHeader() }).pipe(
+    return this.http.get<any>(`https://92.112.177.53:8443/perfil/buscarPorUsuario/${id}`, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
@@ -64,7 +64,7 @@ export class PerfilService {
       .set('campoOrdenado', campoOrdenado)
       .set('ordem', ordemAscendente);
 
-    return this.http.get<any[]>('https://92.112.177.53:8080/perfil/filtrados', { headers: this.getHeader(), params: params }).pipe(
+    return this.http.get<any[]>('https://92.112.177.53:8443/perfil/filtrados', { headers: this.getHeader(), params: params }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
@@ -76,7 +76,7 @@ export class PerfilService {
       .set('campoOrdenado', campoOrdenado)
       .set('ordem', ordemAscendente);
 
-    return this.http.get<any[]>('https://92.112.177.53:8080/perfil/all-filtrados', { headers: this.getHeader(), params: params }).pipe(
+    return this.http.get<any[]>('https://92.112.177.53:8443/perfil/all-filtrados', { headers: this.getHeader(), params: params }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
@@ -93,13 +93,13 @@ export class PerfilService {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
 
-    return this.http.put<any>(`https://92.112.177.53:8080/perfil/editar`, formData, { headers: this.getHeader() }).pipe(
+    return this.http.put<any>(`https://92.112.177.53:8443/perfil/editar`, formData, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
 
   downloadFile(fileName: string): Observable<Blob> {
-    const url = `https://92.112.177.53:8080/arquivo/download/${fileName}`;
+    const url = `https://92.112.177.53:8443/arquivo/download/${fileName}`;
 
     return this.http.get(url, {
       responseType: 'blob',
@@ -109,21 +109,21 @@ export class PerfilService {
 
   mudarStatus(id: number, status: string): Observable<any> {
 
-    return this.http.put<any>(`https://92.112.177.53:8080/candidato/editar/${id}/${status}`, null, { headers: this.getHeader() }).pipe(
+    return this.http.put<any>(`https://92.112.177.53:8443/candidato/editar/${id}/${status}`, null, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
 
   desativarUsuario(id: number, usuario: String | null): Observable<any> {
 
-    return this.http.put<any>(`https://92.112.177.53:8080/usuario/desativar/${id}/${usuario}`, null, { headers: this.getHeader() }).pipe(
+    return this.http.put<any>(`https://92.112.177.53:8443/usuario/desativar/${id}/${usuario}`, null, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }
 
   ativarUsuario(id: number, usuario: String | null): Observable<any> {
 
-    return this.http.put<any>(`https://92.112.177.53:8080/usuario/ativar/${id}/${usuario}`, null, { headers: this.getHeader() }).pipe(
+    return this.http.put<any>(`https://92.112.177.53:8443/usuario/ativar/${id}/${usuario}`, null, { headers: this.getHeader() }).pipe(
       catchError((error: any) => this.handleError(error))
     );
   }

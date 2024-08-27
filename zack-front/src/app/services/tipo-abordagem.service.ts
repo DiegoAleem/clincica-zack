@@ -9,7 +9,7 @@ export class TipoAbordagemService {
   constructor(private http: HttpClient) {  }
 
   getAll(): Observable<any> {
-    return this.http.get<any[]>('https://92.112.177.53:8080/tipo-abordagem/todos').pipe(
+    return this.http.get<any[]>('https://92.112.177.53:8443/tipo-abordagem/todos').pipe(
       catchError((error: any) => this.handleError(error)) 
     );
   }
