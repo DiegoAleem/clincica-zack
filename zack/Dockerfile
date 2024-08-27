@@ -8,8 +8,10 @@ COPY src /app/src
 RUN mkdir -p /app/wallet
 COPY src/main/resources/wallet /app/wallet
 COPY src/main/resources/arquivos /app/arquivos
+COPY src/main/resources/keystore.jks /app/keystore.jks
 RUN chmod -R 755 /app/wallet
 RUN chmod -R 755 /app/arquivos
+RUN chmod -R 755 /app
 RUN mvn clean package
 
 # Fase 2: Configuração do ambiente de runtime
