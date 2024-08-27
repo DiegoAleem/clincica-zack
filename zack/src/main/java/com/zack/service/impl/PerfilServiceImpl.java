@@ -147,7 +147,8 @@ public class PerfilServiceImpl implements PerfilService {
         sqlBuilder.append("SELECT DISTINCT p.* FROM PERFIL p ");
         sqlBuilder.append("LEFT JOIN PERFIL_TIPO_ABORDAGEM pta ON p.ID = pta.PERFIL_ID ");
         sqlBuilder.append("LEFT JOIN TIPO_ABORDAGEM ta ON pta.TIPO_ABORDAGEM_ID = ta.ID ");
-        sqlBuilder.append("WHERE p.SOBRE_MIM IS NOT NULL AND p.FORMACAO_E_CURSOS IS NOT NULL ");
+        sqlBuilder.append("LEFT JOIN USUARIO u ON u.ID_USUARIO = p.USUARIO_ID ");
+        sqlBuilder.append("WHERE p.SOBRE_MIM IS NOT NULL AND p.FORMACAO_E_CURSOS IS NOT NULL AND u.ATIVO = 1");
         
         if(pesquisa.nome() != null) {
             sqlBuilder.append("AND (UPPER(p.NOME) LIKE '%' || UPPER( '"+pesquisa.nome()+"' ) || '%' OR UPPER(p.SOBRENOME) LIKE '%' || UPPER( '"+pesquisa.nome()+"' ) || '%') ");
