@@ -4,7 +4,7 @@ services:
   spring-app:
     image: zack-back:latest
     ports:
-      - "8080:8080"
+      - "8443:8443"
     volumes:
       - arquivos-data:/app/arquivos
 
@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:80"
-      
+
 volumes:
   arquivos-data:
     driver: local
