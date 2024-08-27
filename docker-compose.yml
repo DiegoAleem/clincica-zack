@@ -22,8 +22,8 @@ services:
       - "8082:80"
       - "8443:443"
     volumes:
-      - ./zack-front//nginx.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./zack-front/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt/live/www.clinicazack.com.br:/etc/letsencrypt/live/www.clinicazack.com.br
     depends_on:
       - spa-app
       - spring-app
