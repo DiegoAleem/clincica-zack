@@ -7,7 +7,7 @@ import { tap } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  apiUrl: string = "https://92.112.177.53:8443/auth"
+  apiUrl: string = "https://www.clinicazack.com.br:8443/auth"
 
   constructor(private httpClient: HttpClient) { }
 
