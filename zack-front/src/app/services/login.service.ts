@@ -7,7 +7,7 @@ import { tap } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  apiUrl: string = "https://92.112.177.53:8080/auth"
+  apiUrl: string = "http://92.112.177.53:8080/auth"
 
   constructor(private httpClient: HttpClient) { }
 

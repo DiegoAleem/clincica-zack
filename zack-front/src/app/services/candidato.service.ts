@@ -8,7 +8,7 @@ import { TokenInterceptor } from './HttpInterceptor.service';
 })
 export class CandidatoService {
  
-  apiUrl: string = "https://92.112.177.53:8080/auth"
+  apiUrl: string = "http://92.112.177.53:8080/auth"
 
   private tokenInterceptor: TokenInterceptor;
   constructor(private http: HttpClient) { 
@@ -34,13 +34,13 @@ export class CandidatoService {
     .set('campoOrdenado', campoOrdenado)
     .set('ordem', ordemAscendente);
 
-    return this.http.get<any[]>('https://92.112.177.53:8080/candidato/filtrados', {headers: this.getHeader(), params: params}).pipe(
+    return this.http.get<any[]>('http://92.112.177.53:8080/candidato/filtrados', {headers: this.getHeader(), params: params}).pipe(
       catchError((error: any) => this.handleError(error)) 
     );
   }
 
   downloadFile(fileName: string): Observable<Blob> {
-    const url = `https://92.112.177.53:8080/arquivo/download/${fileName}`;
+    const url = `http://92.112.177.53:8080/arquivo/download/${fileName}`;
     
     return this.http.get(url, {
       responseType: 'blob',
@@ -50,14 +50,14 @@ export class CandidatoService {
 
   mudarStatus(id: number, status: string):  Observable<any> {
 
-    return this.http.put<any>(`https://92.112.177.53:8080/candidato/editar/${id}/${status}`, null ,{headers:this.getHeader()}).pipe(
+    return this.http.put<any>(`http://92.112.177.53:8080/candidato/editar/${id}/${status}`, null ,{headers:this.getHeader()}).pipe(
       catchError((error: any) => this.handleError(error)) 
     );
   }
 
   excluirCandidato(id: number):  Observable<any> {
 
-    return this.http.delete<any>(`https://92.112.177.53:8080/candidato/excluir/${id}`, {headers:this.getHeader()}).pipe(
+    return this.http.delete<any>(`http://92.112.177.53:8080/candidato/excluir/${id}`, {headers:this.getHeader()}).pipe(
       catchError((error: any) => this.handleError(error)) 
     );
   }
