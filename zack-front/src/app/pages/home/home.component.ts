@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ListaPsicologosComponent } from "../../shared/lista-psicologos/lista-psicologos.component";
@@ -7,9 +8,10 @@ import { ListaPsicologosComponent } from "../../shared/lista-psicologos/lista-ps
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [ListaPsicologosComponent]
+    imports: [ListaPsicologosComponent, CommonModule]
 })
 export class HomeComponent {
+  isDataLoaded: boolean = false;
 
   constructor(
     private router: Router){
@@ -17,6 +19,10 @@ export class HomeComponent {
 
   navigate(url: string){
     this.router.navigate([url])
+  }
+
+  onDataLoaded(event: boolean) {
+    this.isDataLoaded = event;
   }
 
 }

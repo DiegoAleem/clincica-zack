@@ -80,8 +80,10 @@ public class PerfilServiceImpl implements PerfilService {
         perfil.setNomeFoto(arquivoFoto);
         perfil.setLinkAtendimento(perfilDTO.linkAtendimentoOnline());
         perfil.setBreveDescricao(perfilDTO.breveDescricao());
-        perfil.setAtendePlano(perfilDTO.plano());
-        perfil.setAtendeParticular(perfilDTO.particular());
+        perfil.setAtendePlano(perfilDTO.atendePlano());
+        perfil.setAtendeParticular(perfilDTO.atendeParticular());
+        perfil.setAtendePresencial(perfilDTO.atendePresencial());
+        perfil.setAtendeOnline(perfilDTO.atendeOnline());
         if(perfil.getDataIns() != null) {
             perfil.setDataAlt(new Date());
             perfil.setUsuarioAlt(perfilDTO.usuarioAlt());

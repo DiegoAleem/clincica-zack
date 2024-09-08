@@ -11,6 +11,7 @@ import { ContatosComponent } from './pages/contatos/contatos.component';
 import { ConvenioComponent } from './pages/convenio/convenio.component';
 import { DuvidasFrequentesComponent } from './pages/duvidas-frequentes/duvidas-frequentes.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
+import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ListarCandidatosComponent } from './pages/listar-candidatos/listar-candidatos.component';
 import { ListarPerfisComponent } from './pages/listar-perfis/listar-perfis.component';
@@ -133,6 +134,11 @@ export const routes: Routes = [
    {
       path: "editar-perfil/:id",
       component: EditarPerfilComponent,
+      canActivate: [EditarGuard]
+   },
+   {
+      path: "editar-usuario/:id",
+      component: EditarUsuarioComponent,
       canActivate: [EditarGuard]
    },
    {

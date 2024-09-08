@@ -63,6 +63,8 @@ export class EditarPerfilComponent implements OnInit {
     atendeAdulto: null,
     atendeIdoso: null,
     atendeCasais: null,
+    atendeOnline: null,
+    atendePresencial: null,
     tiposAbordagem: [] as TipoAbordagem[],
     especialidades: [] as Especialidade[],
     linkAtendimentoOnline: null,
@@ -102,7 +104,7 @@ export class EditarPerfilComponent implements OnInit {
     this.carregando = true;
     this.perfilService.getPerfil(this.variavel).subscribe(
       (resposta) => {
-       
+        console.log(resposta.perfil);
         this.perfil = resposta.perfil;
         this.perfil.linkAtendimentoOnline = resposta.perfil.linkAtendimento;
         if (resposta.foto && resposta.foto.fotoBase64) {
@@ -241,6 +243,7 @@ export class EditarPerfilComponent implements OnInit {
     this.carregando = true;
     if (this.perfilForm.valid && this.selectedFileDataUrl != undefined) {
       const json = JSON.stringify(this.perfil);
+      console.log(this.perfil);
       this.perfilService.salvarPerfil(json, this.selectedFile).subscribe(
         (retorno) => {
           this.carregando = false;
@@ -256,6 +259,11 @@ export class EditarPerfilComponent implements OnInit {
         }
       );
 
+    } else {
+      this.carregando = false;
+      this.toastService.error("Campos obrigatórios ou foto não preenchida.", "Erro!", {
+        timeOut: 7000,
+      });
     }
   }
 
@@ -309,6 +317,8 @@ export class EditarPerfilComponent implements OnInit {
       atendeAdulto: null,
       atendeIdoso: null,
       atendeCasais: null,
+      atendeOnline: null,
+      atendePresencial: null,
       tiposAbordagem: [] as TipoAbordagem[],
       especialidades: [] as Especialidade[],
       linkAtendimentoOnline: null,

@@ -1,4 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="loading-overlay" *ngIf="!isDataLoaded">
+    <div class="loader"></div>
+</div>
 <div class="body">
     <div class="background-image-container">
         <img src="../../../assets/woman-with-hands-together-talking-with-counselor 1.png" alt="Cinque Terre">
@@ -13,7 +16,7 @@
             <button type="button" (click)="navigate('/agendamento')" class="btn btn-agendamento">Agende sua consulta</button>
         </div>
     </div>
-    <app-lista-psicologos></app-lista-psicologos>
+    <app-lista-psicologos (dataLoaded)="onDataLoaded($event)"></app-lista-psicologos>
     <div class="justify-content-center">
         <div class="card-group">
             <div class="row row-cols-md-3 col-md-10 celular">

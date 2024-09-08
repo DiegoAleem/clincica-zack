@@ -237,7 +237,6 @@ export class AgendamentoComponent implements OnInit{
   }
 
   buscaTipoAbordagem() {
-    this.carregando = true;
     this.tipoAbordagemService.getAll().subscribe(
       (resposta) => {
         this.tiposAbordagem = resposta;
@@ -247,10 +246,8 @@ export class AgendamentoComponent implements OnInit{
             this.dropdownList.push(item);
           }
         );
-        this.carregando = false;
       },
       (error) => {
-        this.carregando = false;
       }
     );
   }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Perfil } from '../../model/perfil.model';
@@ -17,6 +17,7 @@ import { PerfilService } from '../../services/perfil.service';
   styleUrl: './lista-psicologos.component.scss'
 })
 export class ListaPsicologosComponent implements OnInit {
+  @Output() dataLoaded = new EventEmitter<boolean>();
 
   perfis?: PerfilAgendamento[] = [];
 
@@ -102,7 +103,7 @@ export class ListaPsicologosComponent implements OnInit {
          };
          this.perfis?.push(p);
         });
-
+        this.dataLoaded.emit(true);
     });
 
   }
