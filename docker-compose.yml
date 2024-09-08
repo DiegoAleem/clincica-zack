@@ -6,7 +6,7 @@ services:
     ports:
       - "8443:8443"
     volumes:
-      - arquivos-data:/app/arquivos
+      - /home/user/backup/arquivos:/app/arquivos
 
   spa-app:
     build:
