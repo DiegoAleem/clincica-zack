@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zack.domain.model.Candidato;
 import com.zack.domain.model.Perfil;
@@ -26,7 +27,6 @@ import com.zack.service.PerfilService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -40,6 +40,7 @@ public class PerfilServiceImpl implements PerfilService {
     private final PerfilTipoAbordagemRepository perfilTipoAbordagemRepository;
 
     @Override
+    @Transactional
     public Perfil criarPerfil(Candidato candidato, Usuario usuario) {
         Perfil perfil = new Perfil();
         perfil.setNome(candidato.getNome().substring(0, candidato.getNome().indexOf(" ")));
@@ -49,6 +50,7 @@ public class PerfilServiceImpl implements PerfilService {
     }
 
     @Override
+    @Transactional
     public Page<Perfil> getPerfis(String filtro, Pageable pageable) {
         return perfilRepository.findByAnyFieldContainingIgnoreCase(filtro, pageable);
     }

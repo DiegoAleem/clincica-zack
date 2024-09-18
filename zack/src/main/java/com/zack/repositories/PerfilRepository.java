@@ -7,11 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zack.domain.model.Perfil;
 import com.zack.domain.model.Usuario;
-
-import jakarta.transaction.Transactional;
 
 public interface PerfilRepository extends JpaRepository<Perfil, String> {
     @Transactional
