@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.zack.domain.model.Candidato;
 import com.zack.domain.model.Perfil;
@@ -40,7 +39,6 @@ public class PerfilServiceImpl implements PerfilService {
     private final PerfilTipoAbordagemRepository perfilTipoAbordagemRepository;
 
     @Override
-    @Transactional
     public Perfil criarPerfil(Candidato candidato, Usuario usuario) {
         Perfil perfil = new Perfil();
         perfil.setNome(candidato.getNome().substring(0, candidato.getNome().indexOf(" ")));
@@ -50,13 +48,11 @@ public class PerfilServiceImpl implements PerfilService {
     }
 
     @Override
-    @Transactional
     public Page<Perfil> getPerfis(String filtro, Pageable pageable) {
         return perfilRepository.findByAnyFieldContainingIgnoreCase(filtro, pageable);
     }
     
     @Override
-    @Transactional
     public Page<Perfil> getPerfisAll(String filtro, Pageable pageable) {
         return perfilRepository.findAllByAnyFieldContainingIgnoreCase(filtro, pageable);
     }
@@ -123,7 +119,6 @@ public class PerfilServiceImpl implements PerfilService {
     }
 
     @Override
-    @Transactional
     public Perfil getPerfil(String id) {
         Optional<Perfil> perfil = perfilRepository.findById(id);
         if (perfil.isPresent()) {
@@ -133,7 +128,6 @@ public class PerfilServiceImpl implements PerfilService {
     }
 
     @Override
-    @Transactional
     public Perfil getPerfilPorUsuario(Usuario usuario) {
         Optional<Perfil> perfil = perfilRepository.findByUsuario(usuario);
         if (perfil.isPresent()) {
@@ -143,7 +137,6 @@ public class PerfilServiceImpl implements PerfilService {
         }
     }
     
-    @Transactional
     @Override
     public List<Perfil> getTop3ProfilesWithHighestAverageRating() {
         Pageable topThree = PageRequest.of(0, 3);
@@ -152,7 +145,6 @@ public class PerfilServiceImpl implements PerfilService {
 
     @SuppressWarnings("unchecked")
     @Override
-    @Transactional
     public Page<Perfil> getPerfisFiltroMelhorAvaliados(PesquisaDTO pesquisa, Pageable pageable) {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT DISTINCT p.* FROM PERFIL p ");
