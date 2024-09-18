@@ -26,6 +26,7 @@ import com.zack.service.PerfilService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -53,6 +54,7 @@ public class PerfilServiceImpl implements PerfilService {
     }
     
     @Override
+    @Transactional
     public Page<Perfil> getPerfisAll(String filtro, Pageable pageable) {
         return perfilRepository.findAllByAnyFieldContainingIgnoreCase(filtro, pageable);
     }
@@ -119,6 +121,7 @@ public class PerfilServiceImpl implements PerfilService {
     }
 
     @Override
+    @Transactional
     public Perfil getPerfil(String id) {
         Optional<Perfil> perfil = perfilRepository.findById(id);
         if (perfil.isPresent()) {
@@ -128,6 +131,7 @@ public class PerfilServiceImpl implements PerfilService {
     }
 
     @Override
+    @Transactional
     public Perfil getPerfilPorUsuario(Usuario usuario) {
         Optional<Perfil> perfil = perfilRepository.findByUsuario(usuario);
         if (perfil.isPresent()) {
@@ -136,7 +140,8 @@ public class PerfilServiceImpl implements PerfilService {
             return new Perfil();
         }
     }
-
+    
+    @Transactional
     @Override
     public List<Perfil> getTop3ProfilesWithHighestAverageRating() {
         Pageable topThree = PageRequest.of(0, 3);
@@ -145,6 +150,7 @@ public class PerfilServiceImpl implements PerfilService {
 
     @SuppressWarnings("unchecked")
     @Override
+    @Transactional
     public Page<Perfil> getPerfisFiltroMelhorAvaliados(PesquisaDTO pesquisa, Pageable pageable) {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT DISTINCT p.* FROM PERFIL p ");
