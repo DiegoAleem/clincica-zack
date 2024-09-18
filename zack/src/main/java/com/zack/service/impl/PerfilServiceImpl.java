@@ -151,112 +151,108 @@ public class PerfilServiceImpl implements PerfilService {
         sqlBuilder.append("LEFT JOIN TIPO_ABORDAGEM ta ON pta.TIPO_ABORDAGEM_ID = ta.ID ");
         sqlBuilder.append("LEFT JOIN USUARIO u ON u.ID_USUARIO = p.USUARIO_ID ");
         sqlBuilder.append("WHERE p.SOBRE_MIM IS NOT NULL AND p.FORMACAO_E_CURSOS IS NOT NULL AND u.ATIVO = 1");
-        
-        if(pesquisa.nome() != null) {
-            sqlBuilder.append("AND (UPPER(p.NOME) LIKE '%' || UPPER( '"+pesquisa.nome()+"' ) || '%' OR UPPER(p.SOBRENOME) LIKE '%' || UPPER( '"+pesquisa.nome()+"' ) || '%') ");
+
+        // Filtrar por nome
+        if (pesquisa.nome() != null) {
+            sqlBuilder.append(" AND (UPPER(p.NOME) LIKE :nome OR UPPER(p.SOBRENOME) LIKE :nome) ");
         }
-        
+
+        // Filtrar por tipo de atendimento (online ou presencial)
         if (pesquisa.isOnline().equalsIgnoreCase("1")) {
-            sqlBuilder.append("AND p.ATENDE_ONLINE = 1 ");
-        } else if(pesquisa.isOnline().equalsIgnoreCase("2")) {
-            sqlBuilder.append("AND p.ATENDE_PRESENCIAL = 1 ");
+            sqlBuilder.append(" AND p.ATENDE_ONLINE = 1 ");
+        } else if (pesquisa.isOnline().equalsIgnoreCase("2")) {
+            sqlBuilder.append(" AND p.ATENDE_PRESENCIAL = 1 ");
         }
-                
+
+        // Filtrar por tipo de pagamento e atendimento particular
         if (!pesquisa.tipoAtendimento().equalsIgnoreCase("plano")) {
-            if(pesquisa.tipoAtendimento().equalsIgnoreCase("particular")) {
-                sqlBuilder.append("AND p.ATENDE_PARTICULAR = 1 ");
+            if (pesquisa.tipoAtendimento().equalsIgnoreCase("particular")) {
+                sqlBuilder.append(" AND p.ATENDE_PARTICULAR = 1 ");
             }
             if (pesquisa.formaPagamento().pix()) {
-                sqlBuilder.append("AND p.IS_PIX =  1 ");
+                sqlBuilder.append(" AND p.IS_PIX = 1 ");
             }
             if (pesquisa.formaPagamento().cartao()) {
-                sqlBuilder.append("AND p.IS_CARTAO = 1 ");
+                sqlBuilder.append(" AND p.IS_CARTAO = 1 ");
             }
             if (pesquisa.formaPagamento().transferencia()) {
-                sqlBuilder.append("AND p.IS_TRANSFERENCIA = 1 ");
+                sqlBuilder.append(" AND p.IS_TRANSFERENCIA = 1 ");
             }
-            
-         // Adicionando condições para o valor da consulta
+
+            // Filtrar por faixa de valor da consulta
             Integer valor1 = null;
             Integer valor2 = null;
             switch (pesquisa.valorConsulta()) {
-                case "1":
-                    valor1 = 50;
-                    valor2 = 100;
-                    break;
-                case "2":
-                    valor1 = 105;
-                    valor2 = 150;
-                    break;
-                case "3":
-                    valor1 = 155;
-                    valor2 = 200;
-                    break;
-                case "4":
-                    valor1 = 205;
-                    valor2 = 250;
-                    break;
-                case "5":
-                    valor1 = 255;
-                    valor2 = 300;
-                    break;
-                default:
-                    break;
+                case "1": valor1 = 50; valor2 = 100; break;
+                case "2": valor1 = 105; valor2 = 150; break;
+                case "3": valor1 = 155; valor2 = 200; break;
+                case "4": valor1 = 205; valor2 = 250; break;
+                case "5": valor1 = 255; valor2 = 300; break;
+                default: break;
             }
 
             if (valor1 != null && valor2 != null) {
-                sqlBuilder.append("AND (p.VALOR_CONSULTA BETWEEN ").append(valor1).append(" AND ").append(valor2).append(") ");
+                sqlBuilder.append(" AND p.VALOR_CONSULTA BETWEEN :valor1 AND :valor2 ");
             }
-
         } else {
-            sqlBuilder.append("AND p.ATENDE_PLANO = 1 ");
+            sqlBuilder.append(" AND p.ATENDE_PLANO = 1 ");
         }
-        
-        if(pesquisa.atendimento() != null) {
+
+        // Filtrar por categorias de atendimento (crianças, adultos, etc.)
+        if (pesquisa.atendimento() != null) {
             if (pesquisa.atendimento().crianca()) {
-                sqlBuilder.append("AND p.ATENDE_CRIANCA = 1 ");
+                sqlBuilder.append(" AND p.ATENDE_CRIANCA = 1 ");
             }
             if (pesquisa.atendimento().adolescente()) {
-                sqlBuilder.append("AND p.ATENDE_ADOLESCENTE = 1 ");
+                sqlBuilder.append(" AND p.ATENDE_ADOLESCENTE = 1 ");
             }
             if (pesquisa.atendimento().adultos()) {
-                sqlBuilder.append("AND p.ATENDE_ADULTO = 1 ");
+                sqlBuilder.append(" AND p.ATENDE_ADULTO = 1 ");
             }
             if (pesquisa.atendimento().idosos()) {
-                sqlBuilder.append("AND p.ATENDE_IDOSO = 1 ");
+                sqlBuilder.append(" AND p.ATENDE_IDOSO = 1 ");
             }
             if (pesquisa.atendimento().casal()) {
-                sqlBuilder.append("AND p.ATENDE_CASAIS = 1 ");
+                sqlBuilder.append(" AND p.ATENDE_CASAIS = 1 ");
             }
         }
-        // Adicionando condições para abordagens específicas
+
+        // Filtrar por abordagens específicas
         if (pesquisa.abordagem() != null && !pesquisa.abordagem().isEmpty()) {
-            sqlBuilder.append("AND ta.ID IN (");
-            for (int i = 0; i < pesquisa.abordagem().size(); i++) {
-                if (i > 0) {
-                    sqlBuilder.append(",");
-                }
-                sqlBuilder.append(pesquisa.abordagem().get(i).getId());
-            }
-            sqlBuilder.append(") ");
+            sqlBuilder.append(" AND ta.ID IN (:abordagens) ");
+        }
+
+        // Ordenar por média de avaliações
+        sqlBuilder.append(" ORDER BY p.MEDIA_AVALIACOES DESC ");
+
+        // Criar a query nativa
+        Query query = entityManager.createNativeQuery(sqlBuilder.toString(), Perfil.class);
+
+        // Definir parâmetros
+        if (pesquisa.nome() != null) {
+            query.setParameter("nome", "%" + pesquisa.nome().toUpperCase() + "%");
         }
         
-        // Adicionando cláusula ORDER BY
-        sqlBuilder.append("ORDER BY p.MEDIA_AVALIACOES ");
-        
-        Query query = entityManager.createNativeQuery(sqlBuilder.toString(), Perfil.class);
-        
-        List<Perfil> resultados = query.getResultList();
+        if (pesquisa.abordagem() != null && !pesquisa.abordagem().isEmpty()) {
+            query.setParameter("abordagens", pesquisa.abordagem().stream().map(a -> a.getId()).toList());
+        }
 
-        // Paginando os resultados manualmente (exemplo simplificado)
-        int pageNumber = pageable.getPageNumber();
-        int pageSize = pageable.getPageSize();
-        int startIndex = pageNumber * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, resultados.size());
-        
-        List<Perfil> perfisPaginados = resultados.subList(startIndex, endIndex);
-        return new PageImpl<>(perfisPaginados, pageable, resultados.size());
+        // Aplicar paginação
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
 
+        // Executar a consulta e obter os resultados
+        List<Perfil> perfis = query.getResultList();
+
+        // Obter o total de resultados sem a paginação
+        Query countQuery = entityManager.createNativeQuery("SELECT COUNT(DISTINCT p.ID) FROM PERFIL p " +
+                "LEFT JOIN USUARIO u ON u.ID_USUARIO = p.USUARIO_ID " +
+                "WHERE p.SOBRE_MIM IS NOT NULL AND p.FORMACAO_E_CURSOS IS NOT NULL AND u.ATIVO = 1");
+        Long total = ((Number) countQuery.getSingleResult()).longValue();
+
+        // Retornar os resultados paginados
+        return new PageImpl<>(perfis, pageable, total);
     }
+
 
 }
